@@ -156,7 +156,7 @@ Para facilitar o entedimento do conceito de _index_, _type_ e _document_, vamos 
 | ------------- | mycompany| funcionarios|1|Documento JSON|nome, idade...|
 
 
-__Importante:__ Os termos indexar e index, representam significados diferentes no universo do Elasticsearch e também, se diferenciam do conceito de índices utilizados em Banco de Dados. Indexar no Elasticsearch é o mesmo que adicionar um documento JSON e index é uma forma de separar dados de diferentes propósitos. 
+__Importante:__ Os termos indexar e index, possuem significados diferentes no universo do Elasticsearch e também, se diferenciam do conceito de índices utilizados em Banco de Dados. Indexar no Elasticsearch é o mesmo que adicionar um documento JSON e index é uma forma de separar dados de diferentes propósitos. 
 
 Ok, temos o nosso primeiro funcionário João Silva indexado no nosso index mycompany ! Vamos fazer a nossa primeira consulta:
 
@@ -164,5 +164,69 @@ Ok, temos o nosso primeiro funcionário João Silva indexado no nosso index myco
 $ curl -XGET http://localhost:9200/mycompany/funcionarios/_search?pretty
 ```
 
-Neste comando, chamamos a API ___search__, que é a API padrão de buscas do Elasticsearch (o parâmetro __?pretty__ é opcional e só serve para formatar a saída em JSON). Como não passamos nenhum parâmetro, a API sempre nos retorna os 10 primeiros resultados, que neste caso nos trouxe apenas o João (we're hiring). Sinta-se livre para criar e consultar mais funcionários para fixar a sintáxe :) .
+Neste comando, chamamos a API ___search__, que é a API padrão de buscas do Elasticsearch (o parâmetro __?pretty__ é opcional e só serve para formatar a saída em JSON). Como não passamos nenhum parâmetro, a API sempre nos retorna os 10 primeiros resultados, que neste caso nos trouxe apenas o João (we're hiring). Sinta-se livre para criar e consultar mais funcionários para exercitar a sintáxe :) .
+
+## Query-string x Query DSL 
+
+No Elasticsearch existem três _tipos_ de pesquisa (full-text, estruturada e analítica) e duas _formas_ básicas de se pesquisar (query-string e query DSL).
+
+Para este exemplo, utilize o script [tweets.sh](../elastic-stack/scripts/tweets.sh) para criar o indice twitter que irá conter diversos tweets de usuários diferentes. Agora que geramos a massa de dados, vamos as queries !
+
+Primeiro, vamos ver como a query-string funciona. Vamos pesquisar todos os tweets do usuário Tom:
+
+```
+$ curl -XGET http://localhost:9200/twitter/tweet/_search?q=name:Tom
+```
+
+Apesar de parecer bastante simples de se utilizar, esse formato é o menos utilizado. A medida que colocamos mais parâmetros e condições, a busca começa a aparecer mais complicada do que realmente é. Por exemplo, vamos pesquisar pelo nome Phill no campo "name" __e__ lina no campo "tweet":
+
+```
+$ curl -XGET http://localhost:9200/twitter/tweet/_search?q=%2Bname%3Aphill+%2Btweet%3Alina
+```
+
+Agora, vamos realizar primeira pesquisa com a query DSL:
+
+```
+curl -XGET http://localhost:9200/twitter/tweet/_search?pretty -d '
+{
+  "query": {
+    "match": { "name": "Tom"}
+  }
+}'
+```
+
+Neste formato, passamos um documento JSON como parâmetro de pesquisa. Antes de mais nada, vamos entender o que nos é retornado quando realizamos uma query. Utilizando o exemplo de retorno das queries acima, temos o resultado abaixo:
+
+```
+{
+  "took" : 8,                 # Tempo em milissegundos que a query demorou para                                 # retornar.
+  "timed_out" : false,        # Houve Time Out na busca ? (True or False)
+  "_shards" : {               # Falaremos sobre shards mais tarde...
+    "total" : 5,
+    "successful" : 5,
+    "failed" : 0
+  },
+  "hits" : {                
+    "total" : 1,                # Quantidade de documentos que foram encontrados.
+    "max_score" : 0.25811607,   # Falaremos sobre score mais tarde também...
+    "hits" : [                  # Dentro deste array, possuímos informações sobre                                 # os resultados
+      {
+        "_index" : "twitter",   # Qual o index do documento retornado.
+        "_type" : "tweet",      # Qual o type do documento retornado.
+        "_id" : "14",           # Qual o id do documento retornado.
+        "_score" : 0.25811607,  # Ó o score ai denovo...
+        "_source" : {           # Todos os dados do documento encontrado.
+          "date" : "2014-09-23", 
+          "name" : "Tom Michael",
+          "tweet" : "Just one is sufficient.",
+          "user_id" : 3
+        }
+      }
+    ]
+  }
+}
+```
+
+
+
 
