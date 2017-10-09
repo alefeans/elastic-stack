@@ -84,4 +84,73 @@ Se um retorno parecido com esse ocorreu, quer dizer que tudo está funcionando c
 }
 
 ```
-Legal, mas o que realmente aconteceu aqui ? Lembra que o Elasticsearch possui uma API RESTful ? Basicamente, fizemos uma chamada REST solicitando uma resposta para o nosso Elasticsearch através do método http __GET__ e como resposta à nossa requisição, recebemos uma resposta no formato JSON com algumas informações sobre a nossa instância de Elasticsearch. Vamos ver o que cada uma quer dizer:
+Legal, mas o que realmente aconteceu aqui ? Lembra que o Elasticsearch possui uma API RESTful ? Basicamente, fizemos uma chamada __REST__ solicitando uma resposta para o nosso Elasticsearch através do método http __GET__ e como retorno à nossa requisição, recebemos uma resposta no formato __JSON__ com algumas informações básicas sobre a nossa instância de Elasticsearch. 
+
+Analisando a resposta recebida, podemos ver o nome da nossa instância, o nome do cluster a qual ela pertence, o _uuid_ do cluster (identificador único universal) e dentro da tag "version" (perceba que mais um par de __"{ }"__ é aberto para esta tag), possuímos todas as informações sobre a versão do Elasticsearch instalada. Por fim, uma mensagem amigável: "You Know, for Search".
+
+Trabalhando com o Elasticsearch, sempre usaremos o formato JSON, tanto para enviar requisições, quanto na resposta (como no exemplo acima). 
+
+Sobre o JSON, imagine que você precise fazer duas aplicações totalmente distintas se comunicarem entre si ? Como fazer essa troca de informação ? O JSON por ser um formato padrão aceito pela maioria das linguagens de programação, pode ser utilizado para garantir que as duas aplicações possam "entender" o que a outra está querendo dizer de forma mais simples e legível se comparada com outros padrões como o _XML_ por exemplo. Vamos ver como este padrão funciona ?
+
+```
+{ # Abertura de sequência.
+                            # O padrão é "campo", ":" e "valor".
+                            # Caso hajam vários campos, colocar uma "," no final.
+  "nome": "John Will",      # Strings precisam estar entre aspas. 
+  "idade": 19,              # Inteiros são apresentados sem aspas.
+  "deficiente": True,       # Booleanos são bem-vindos.
+  "interesses": [ "musica", # Arrays sao representados entre [].
+                "esportes"]
+} # Fechamento da sequência. Fim do documento JSON.
+```
+
+Agora que sabemos como criar um _documento_ JSON, vamos entender a sintaxe utilizada para as chamadas REST:
+
+```
+curl -X<VERB> '<PROTOCOLO>://<HOST>:<PORTA>/<PATH>?<QUERY_STRING>' -d '<BODY>'
+```
+
+O __curl__ é uma ferramenta para transferência de dados através de uma URL. Usaremos ela para realizarmos as nossas requisições. Segue a explicação para os demais campos:
+
+__VERB__ -> GET, POST, PUT, DELETE.
+__PROTOCOLO__ -> http, https...
+__HOST__ -> Servidor do Elasticsearch.
+__PORTA__ -> Porta do Elasticsearch (9200 é a porta padrão).
+__PATH__ -> Aonde você quer pesquisar, atualizar ou deletar (qual o _index_, _type_ e _document id_ ?).
+__QUERY_STRING__ -> A pesquisa propriamente dita.
+__BODY__ -> O documento JSON que você quer enviar ou utilizar como parâmetro de pesquisa. 
+
+## Index, Type, Document ?
+
+Agora que fizemos a instalação e garantimos que o nosso Elasticsearch está operacional, vamos entender na __prática__ o que é um _index_, _type_ e um _document_.
+
+Vamos começar a colocar alguns dados no nosso Elasticsearch ! Execute o comando abaixo:
+
+```
+$ curl -XPUT http://localhost:9200/mycompany/funcionarios/1 -d '
+{
+  "nome": "João Silva",
+  "idade": 19,
+  "Endereco": "Avenida da Magia",
+  "Hobbies": ["Tocar guitarra", "Acampar com a familia"]
+}'
+```
+
+Provavelmente você recebeu uma resposta parecida com esta:
+
+{"_index":"__mycompany__","_type":"__funcionarios__","_id":"__1__","_version":1,"result":"__created__","_shards":{"total":2,"__successful":1__,"__failed":0__},"__created":true__}
+
+Isto significa que o nosso documento JSON foi _indexado_ com sucesso. O verbo PUT basicamente diz para o Elasticsearch, "guarde este documento __NESTA__ url" (o POST se assemelha em funcionalidade, porém dizendo a frase: "guarde o documento __ABAIXO__ desta url". Entenderemos a diferença posteriormente).
+
+Para facilitar o entedimento do conceito de _index_, _type_ e _document_, vamos fazer uma analogia com um banco de dados SQL padrão:
+
+| MySQL        | Banco de Dados           | Tabela  | Chave Primária | Linha | Coluna
+| ------------- |:-------------:| -----:|-----:|-----:|-----:|
+| __Elasticsearch__        | __Index__           | __Type__  | __Id__ | __Document__ | __Field__
+| ------------- | mycompany| funcionarios|1|Documento JSON|nome, idade...|
+
+
+__Importante:__ Os termos __indexar__ e __index__, representam significados diferentes no universo do Elasticsearch e também, se diferenciam do conceito de índices utilizados em Banco de Dados. Indexar no Elasticsearch é o mesmo que incluir um documento JSON e index é uma forma de separar os dados. 
+
+Beleza, temos o nosso primeiro documento indexado, um documento sobre o funcionário João Silva. Vamos consultá-lo ?
+
