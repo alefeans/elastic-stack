@@ -2,18 +2,17 @@
    
    O objetivo desse repositório é apresentar o `Elastic Stack` de uma forma simples e amigável para quem está iniciando no assunto.
    
-   Quando comecei a estudar sobre o Elastic Stack, encontrei diversos conteúdos que traziam explicações muito "pesadas" e que em alguns segundos, te faziam abrir várias janelas do browser para pesquisar o significado de cada sub-tópico, conceito ou ferramenta adjacente.
+   Quando comecei a estudar sobre o Elastic Stack, encontrei diversos conteúdos que traziam explicações muito "pesadas" e que em alguns segundos de leitura, te levavam a realizar várias pesquisas para entender o significado de cada sub-tópico, conceito ou ferramenta adjacente.
    
-   Sendo assim, decidi criar este repositório com uma linguagem mais informal e direta para explicar a _stack_, sem deixar de apresentar os conceitos essenciais. Não se preocupe se em alguns momentos aparecerem termos confusos ainda não explicados, pois ao longo do treinamento eles se tornarão claros para você :)
+   
+   Sendo assim, decidi criar este repositório com uma linguagem mais informal e direta para explicar a _stack_, sem deixar de apresentar os conceitos essenciais. Não se preocupe se em alguns momentos aparecerem termos confusos que ainda não foram explicados, pois ao longo do treinamento eles se tornarão claros para você :)
    
    Inicialmente, vamos conceituar o que cada ferramenta é e o seu propósito.
 
 ## Elasticsearch
 
 
-  O `elasticsearch` é uma ferramenta de buscas _open source_ desenvolvido em Java, assim como é uma solução NoSQL, ou seja, não segue os padrões de bancos de dados SQL comuns (como o MySQL, por exemplo). Ele tem como base o [Apache Lucene](https://github.com/apache/lucene-solr), que é uma biblioteca Java de pesquisa _full text_ e que é também, o motor de busca open source mais avançado oferecido hoje em dia. 
-  
-  Porém, Lucene é apenas uma library. Para usar o seu poder de fogo, você precisa trabalhar com o Java para integrar o Lucene com a sua aplicação. 
+  O `elasticsearch` é uma ferramenta de buscas _open source_ desenvolvido em Java, assim como é uma solução NoSQL, ou seja, não segue os padrões de bancos de dados SQL comuns (como o MySQL, por exemplo). Ele tem como base o [Apache Lucene](https://github.com/apache/lucene-solr), que é uma biblioteca Java de pesquisa _full text_ e que é também, o motor de busca open source mais avançado oferecido hoje em dia. Porém, usar todo o poder de fogo do Lucene exige um certo esforço. Afinal, por ser uma biblioteca, você precisa trabalhar com o Java para integrá-lo com sua aplicação, algo que pode ser um pouco complexo.
   
   O Elasticsearch no entanto, se aproveita do Lucene na _indexação_ e pesquisa de documentos, retirando a sua complexidade através de uma API RESTful super fácil de se utilizar. Além disso, vamos citar algumas características que o tornam uma ferramenta excelente e extremamente veloz:
   
@@ -34,7 +33,9 @@ Bem, um dos cenários mais comuns é utiliza-lo como um agregador de logs em con
 
 A partir disso, você sysadmin ou desenvolvedor, pode centralizar qualquer tipo de log gerado por _"qualquer coisa que gere log"_ e então, realizar análises, pesquisas de baseline ou montar dashboards de métricas pré-definidas. 
 
-Vamos imaginar a seguinte situação: você é responsável por um sistema computacional, que possui 30 servidores e em cada um, 30 _microserviços_ diferentes. De repente, algum problema crítico acontece com este sistema e você precisa descobrir o que ocorreu. Por instinto, você irá ler as logs do sistema para tentar entender o que houve, certo ? Mas... será que você pode se dar ao luxo de logar em 30 servidores e procurar a log entre 30 microserviços diferentes ? Agora, se você possuir um ponto central que lhe permita realizar uma busca através de uma sintaxe super simples ou ainda que lhe permita gerar um gráfico que contabilize a quantidade de vezes que esse erro ocorre, será muito mais fácil de identificar o problema não concorda ? Prazer, `Elastic Stack`.
+Vamos imaginar a seguinte situação: você é responsável por um sistema computacional, que possui 30 servidores e em cada um, 30 _microserviços_ diferentes. De repente, algum problema crítico acontece com este sistema e você precisa descobrir o que ocorreu. Por instinto, você irá ler as logs do sistema para tentar entender o que houve, certo ? Mas... será que você pode se dar ao luxo de logar em 30 servidores e procurar a log entre 30 microserviços diferentes em um momento de crise ? 
+
+Agora, se você possuir um ponto central que lhe permita realizar uma busca através de uma sintaxe super simples ou ainda que lhe permita gerar um gráfico que contabilize a quantidade de vezes que esse erro ocorre, será muito mais fácil de identificar o problema não concorda ? Prazer, `Elastic Stack`.
 
 __Exemplo 2:__
 Outra forma de se usar o Elasticsearch é como uma solução NoSQL. Como ele escala horizontalmente com extrema facilidade (escalar horizontalmente nada mais é do que adicionar novos servidores com instâncias de Elasticsearch, atuando como se fosse uma (_cluster_)), é comum ver empresas utilizando-o como um _Big Data_, já que a quantidade de dados e servidores gerenciados, não é um problema para o Elasticsearch (_deal with it_).
@@ -45,13 +46,15 @@ Enfim, chega de conversa. Vamos ver como isso funciona na prática !
 
 Instalar o Elasticsearch é a segunda coisa mais fácil do mundo de se fazer. A primeira é desinstalar. Vamos ver como se faz ?
 
-Podemos fazer o download pelo repositório da Elastic atravéz de um gerenciador de pacotes como `dnf` ou `apt-get` e inicia-lo como um serviço no Linux (SO que usaremos para todos os exemplos neste repositório), ou podemos realizar o download do .zip no site da [Elastic]( https://www.elastic.co/downloads/elasticsearch ) (nada impede de registrá-lo como um serviço no SO também, mas enfim...). Não se esqueça de garantir pelo menos 3GB de memória para sua máquina, VM ou container ok ?
+Podemos fazer o download pelo repositório da Elastic atravéz de um gerenciador de pacotes como `dnf` ou `apt-get` ou podemos realizar o download do .zip no site da [Elastic]( https://www.elastic.co/downloads/elasticsearch ). Para conseguir realizar todo o treinamento, não se esqueça de garantir pelo menos 3GB de memória para sua máquina, VM ou container ok ?
 
 
 Para este exemplo, vamos utilizar a segunda opção:
 
-__1°__ - Realizar o download do .zip mais atual.
-__2°__ - Realizar o unzip do pacote baixado.
+__1°__ - Realizar o download do .zip mais atual do Elasticsearch.
+
+__2°__ - Realizar o unzip do pacote baixado em algum diretório do seu servidor.
+
 __3°__ - Pronto, Elasticsearch instalado. Fácil né ? Agora vamos ver se tudo ocorreu bem ?
 
 Dentro do diretório gerado após a descompactação, vamos executar:
