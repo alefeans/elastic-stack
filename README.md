@@ -199,7 +199,7 @@ Neste formato, passamos um documento JSON como parâmetro de pesquisa. Antes de 
 
 ```
 {
-  "took" : 8,                 # Tempo em milissegundos que a query demorou para                                 # retornar.
+  "took" : 8,                 # Tempo em milissegundos que a query demorou retornar.
   "timed_out" : false,        # Houve Time Out na busca ? (True or False)
   "_shards" : {               # Falaremos sobre shards mais tarde...
     "total" : 5,
@@ -209,7 +209,7 @@ Neste formato, passamos um documento JSON como parâmetro de pesquisa. Antes de 
   "hits" : {                
     "total" : 1,                # Quantidade de documentos que foram encontrados.
     "max_score" : 0.25811607,   # Falaremos sobre score mais tarde também...
-    "hits" : [                  # Dentro deste array, possuímos informações sobre                                 # os resultados
+    "hits" : [                  # Dentro deste array, possuímos informações os resultados
       {
         "_index" : "twitter",   # Qual o index do documento retornado.
         "_type" : "tweet",      # Qual o type do documento retornado.
