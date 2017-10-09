@@ -128,7 +128,7 @@ __BODY__ -> O documento JSON que você quer enviar ou utilizar como parâmetro d
 
 ## Index, Type, Document ?
 
-Agora que fizemos a instalação e garantimos que o nosso Elasticsearch está operacional, vamos entender na __prática__ o que é um _index_, _type_ e um _document_.
+Agora que fizemos a instalação e garantimos que o nosso Elasticsearch está operacional, vamos entender na prática o que é um _index_, _type_ e um _document_.
 
 Vamos começar a colocar alguns dados no nosso Elasticsearch ! Execute o comando abaixo:
 
@@ -156,7 +156,7 @@ Para facilitar o entedimento do conceito de _index_, _type_ e _document_, vamos 
 | ------------- | mycompany| funcionarios|1|Documento JSON|nome, idade...|
 
 
-__Importante:__ Os termos __indexar__ e __index__, representam significados diferentes no universo do Elasticsearch e também, se diferenciam do conceito de índices utilizados em Banco de Dados. Indexar no Elasticsearch é o mesmo que adicionar um documento JSON e index é uma forma de separar dados de diferentes propósitos. 
+__Importante:__ Os termos indexar e index, representam significados diferentes no universo do Elasticsearch e também, se diferenciam do conceito de índices utilizados em Banco de Dados. Indexar no Elasticsearch é o mesmo que adicionar um documento JSON e index é uma forma de separar dados de diferentes propósitos. 
 
 Ok, temos o nosso primeiro funcionário João Silva indexado no nosso index mycompany ! Vamos fazer a nossa primeira consulta:
 
