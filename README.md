@@ -113,11 +113,17 @@ curl -X<VERB> '<PROTOCOLO>://<HOST>:<PORTA>/<PATH>?<QUERY_STRING>' -d '<BODY>'
 O __curl__ é uma ferramenta para transferência de dados através de uma URL. Usaremos ela para realizarmos as nossas requisições. Segue a explicação para os demais campos:
 
 __VERB__ -> GET, POST, PUT, DELETE.
+
 __PROTOCOLO__ -> http, https...
+
 __HOST__ -> Servidor do Elasticsearch.
+
 __PORTA__ -> Porta do Elasticsearch (9200 é a porta padrão).
+
 __PATH__ -> Aonde você quer pesquisar, atualizar ou deletar (qual o _index_, _type_ e _document id_ ?).
+
 __QUERY_STRING__ -> A pesquisa propriamente dita.
+
 __BODY__ -> O documento JSON que você quer enviar ou utilizar como parâmetro de pesquisa. 
 
 ## Index, Type, Document ?
