@@ -7,12 +7,11 @@
    
    Sendo assim, decidi criar este repositório com uma linguagem mais informal e direta para explicar a _stack_, sem deixar de apresentar os conceitos essenciais. Não se preocupe se em alguns momentos aparecerem termos confusos que ainda não foram explicados, pois ao longo do treinamento eles se tornarão claros para você :)
    
-   Inicialmente, vamos conceituar o que cada ferramenta é e o seu propósito.
 
 ## Elasticsearch
 
 
-  O `elasticsearch` é uma ferramenta de buscas _open source_ desenvolvido em Java, assim como é uma solução NoSQL, ou seja, não segue os padrões de bancos de dados SQL comuns (como o MySQL, por exemplo). Ele tem como base o [Apache Lucene](https://github.com/apache/lucene-solr), que é uma biblioteca Java de pesquisa _full text_ e que é também, o motor de busca open source mais avançado oferecido hoje em dia. Porém, usar todo o poder de fogo do Lucene exige um certo esforço. Afinal, por ser uma biblioteca, você precisa trabalhar com o Java para integrá-lo com sua aplicação, algo que pode ser um pouco complexo.
+  O `elasticsearch` é uma ferramenta de buscas _open source_ desenvolvido em Java, assim como é uma solução NoSQL de armazenamento de dados, ou seja, não segue os padrões de bancos de dados SQL comuns (como o MySQL, por exemplo). Ele tem como base o [Apache Lucene](https://github.com/apache/lucene-solr), que é uma biblioteca Java de pesquisa _full text_ e que é também, o motor de busca open source mais avançado oferecido hoje em dia. Porém, usar todo o poder de fogo do Lucene exige um certo esforço, afinal, por ser apenas uma biblioteca, você precisa trabalhar com o Java para integrá-lo com sua aplicação, podendo apresentar uma certa complexidade. 
   
   O Elasticsearch no entanto, se aproveita do Lucene na _indexação_ e pesquisa de documentos, retirando a sua complexidade através de uma API RESTful super fácil de se utilizar. Além disso, vamos citar algumas características que o tornam uma ferramenta excelente e extremamente veloz:
   
@@ -38,7 +37,7 @@ Vamos imaginar a seguinte situação: você é responsável por um sistema compu
 Agora, se você possuir um ponto central que lhe permita realizar uma busca através de uma sintaxe super simples ou ainda que lhe permita gerar um gráfico que contabilize a quantidade de vezes que esse erro ocorre, será muito mais fácil de identificar o problema não concorda ? Prazer, `Elastic Stack`.
 
 __Exemplo 2:__
-Outra forma de se usar o Elasticsearch é como uma solução NoSQL. Como ele escala horizontalmente com extrema facilidade (escalar horizontalmente nada mais é do que adicionar novos servidores com instâncias de Elasticsearch, atuando como se fosse uma (_cluster_)), é comum ver empresas utilizando-o como um _Big Data_, já que a quantidade de dados e servidores gerenciados, não é um problema para o Elasticsearch (_deal with it_).
+Outra forma de se usar o Elasticsearch é como uma solução NoSQL. Como ele escala horizontalmente com extrema facilidade (escalar horizontalmente nada mais é do que adicionar novos servidores com instâncias de Elasticsearch atuando como se fosse uma, representando o que chamamos de _cluster_), é comum ver empresas utilizando-o como um _Big Data_, já que a quantidade de dados e servidores gerenciados, não é um problema para o Elasticsearch (_deal with it_).
 
 Enfim, chega de conversa. Vamos ver como isso funciona na prática !
 
@@ -46,7 +45,7 @@ Enfim, chega de conversa. Vamos ver como isso funciona na prática !
 
 Instalar o Elasticsearch é a segunda coisa mais fácil do mundo de se fazer. A primeira é desinstalar. Vamos ver como se faz ?
 
-Podemos fazer o download pelo repositório da Elastic atravéz de um gerenciador de pacotes como `dnf` ou `apt-get` ou podemos realizar o download do .zip no site da [Elastic]( https://www.elastic.co/downloads/elasticsearch ). Para conseguir realizar todo o treinamento, não se esqueça de garantir pelo menos 3GB de memória para sua máquina, VM ou container ok ?
+Podemos fazer o download pelo repositório da Elastic atravéz de um gerenciador de pacotes como `dnf` ou `apt-get`, ou podemos realizar o download do .zip no site da [Elastic]( https://www.elastic.co/downloads/elasticsearch ). Para conseguir realizar todo o treinamento, não se esqueça de garantir pelo menos 3GB de memória para sua máquina, VM ou container ok ?
 
 
 Para este exemplo, vamos utilizar a segunda opção:
@@ -59,34 +58,36 @@ __3°__ - Pronto, Elasticsearch instalado. Fácil né ? Agora vamos ver se tudo 
 
 Dentro do diretório gerado após a descompactação, vamos executar:
 ```
-$ nohup bin/elasticsearch &
+nohup bin/elasticsearch &
 ```
 
 Dessa forma, o processo do Elasticsearch se iniciará em background. Após alguns segundos (ou se você acompanhou o start pelo nohup.out), execute o seguinte comando:
 
 ```
-$ curl -XGET http://localhost:9200/
+curl -XGET http://localhost:9200/
 ```
-Se um retorno parecido com esse ocorreu, quer dizer que tudo está funcionando como deveria:
+Se você recebeu um retorno parecido com esse, quer dizer que tudo está funcionando como deveria:
 ```
 {
-  "name" : "XJWzjDi",
-  "cluster_name" : "elasticsearch",
-  "cluster_uuid" : "ZH9GequzQX-oobJVGPlbjg",
-  "version" : {
-    "number" : "5.6.2",
-    "build_hash" : "57e20f3",
-    "build_date" : "2017-09-23T13:16:45.703Z",
-    "build_snapshot" : false,
-    "lucene_version" : "6.6.1"
+  "name" : "XJWzjDi",                           # Nome da instância (relaxa que dá pra mudar isso)
+  "cluster_name" : "elasticsearch",             # Nome do cluster a qual essa instância pertence
+  "cluster_uuid" : "ZH9GequzQX-oobJVGPlbjg",    # Identificador universal do seu cluster (como um CPF do seu cluster)
+  "version" : {                                 # Dentro desta "tag" temos todas as informações sobre versão de produto
+    "number" : "5.6.2",                         # Versão do Elasticsearch
+    "build_hash" : "57e20f3",                   # "ID" da geração deste pacote de Elasticsearch
+    "build_date" : "2017-09-23T13:16:45.703Z",  # Data de geração da versão
+    "build_snapshot" : false,                   # Irrelevante
+    "lucene_version" : "6.6.1"                  # Versão do Lucene utilizada
   },
-  "tagline" : "You Know, for Search"
+  "tagline" : "You Know, for Search"            # Uma frase amigável
 }
 
 ```
-Legal, mas o que realmente aconteceu aqui ? Lembra que o Elasticsearch possui uma API RESTful ? Basicamente, fizemos uma chamada __REST__ solicitando uma resposta para o nosso Elasticsearch através do método http __GET__ e como retorno à nossa requisição, recebemos uma resposta no formato __JSON__ com algumas informações básicas sobre a nossa instância de Elasticsearch. 
+Legal, mas o que realmente aconteceu aqui ? Lembra que o Elasticsearch possui uma API RESTful ? Lembra o que é API RESTful ? Lembra o que é REST ? Não ? Que vergonha...
 
-Analisando a resposta recebida, podemos ver o nome da nossa instância, o nome do cluster a qual ela pertence, o _uuid_ do cluster (identificador único universal) e dentro da tag "version" (perceba que mais um par de __"{ }"__ é aberto para esta tag), possuímos todas as informações sobre a versão do Elasticsearch instalada. Por fim, uma mensagem amigável: "You Know, for Search".
+Falando da forma mais simples possível, uma API RESTful é uma API que faz/aceita chamadas REST e REST, representa um conjunto de operações padronizadas que permitem a troca de informação entre sistemas através de simples métodos HTTP. 
+
+No exemplo acima, fizemos uma chamada __REST__ solicitando uma resposta para o nosso Elasticsearch através do método http __GET__ e como retorno à nossa requisição, recebemos uma resposta no formato __JSON__ com algumas informações básicas sobre a nossa instância de Elasticsearch. 
 
 Trabalhando com o Elasticsearch, sempre usaremos o formato JSON, tanto para enviar requisições, quanto na resposta (como no exemplo acima). 
 
@@ -128,12 +129,10 @@ __BODY__ -> O documento JSON que você quer enviar ou utilizar como parâmetro d
 
 ## Index, Type, Document ?
 
-Agora que fizemos a instalação e garantimos que o nosso Elasticsearch está operacional, vamos entender na prática o que é um _index_, _type_ e um _document_.
-
-Vamos começar a colocar alguns dados no nosso Elasticsearch ! Execute o comando abaixo:
+Agora que fizemos a instalação e garantimos que o nosso Elasticsearch está operacional, vamos entender na prática o que é um _index_, _type_ e um _document_. Para isto, vamos começar a colocar alguns dados no nosso Elasticsearch ! Execute o comando abaixo:
 
 ```
-$ curl -XPUT http://localhost:9200/mycompany/funcionarios/1 -d '
+curl -XPUT http://localhost:9200/mycompany/funcionarios/1 -d '
 {
   "nome": "João Silva",
   "idade": 19,
@@ -146,7 +145,7 @@ Provavelmente você recebeu uma resposta parecida com esta:
 ```
 {"_index":"mycompany","_type":"funcionarios","_id":"1","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"created":true}
 ```
-Isto significa que o nosso documento JSON foi _indexado_ com sucesso. O verbo PUT basicamente diz para o Elasticsearch, "guarde este documento __NESTA__ url" (o POST se assemelha em funcionalidade, porém dizendo a frase: "guarde o documento __ABAIXO__ desta url". Entenderemos a diferença posteriormente).
+Isto significa que o nosso documento JSON foi _indexado_ com sucesso. O verbo PUT basicamente diz para o Elasticsearch, "guarde este documento __NESTA__ url" (o POST se assemelha em funcionalidade, porém dizendo a frase: "guarde o documento __ABAIXO__ desta url". Entenderemos melhor a diferença posteriormente).
 
 Para facilitar o entedimento do conceito de _index_, _type_ e _document_, vamos fazer uma analogia com um banco de dados SQL padrão:
 
@@ -161,12 +160,12 @@ __Importante:__ Os termos indexar e index, possuem significados diferentes no un
 Ok, temos o nosso primeiro funcionário João Silva indexado no nosso index mycompany ! Vamos fazer a nossa primeira consulta:
 
 ```
-$ curl -XGET http://localhost:9200/mycompany/funcionarios/_search?pretty
+curl -XGET http://localhost:9200/mycompany/funcionarios/_search?pretty
 ```
 
 Neste comando, chamamos a API ___search__, que é a API padrão de buscas do Elasticsearch (o parâmetro __?pretty__ é opcional e só serve para formatar a saída em JSON). Como não passamos nenhum parâmetro, a API sempre nos retorna os 10 primeiros resultados, que neste caso nos trouxe apenas o João (we're hiring). Sinta-se livre para criar e consultar mais funcionários para exercitar a sintáxe :) .
 
-## Query-string x Query DSL 
+## Tipos e Formas de Pesquisa
 
 No Elasticsearch existem três _tipos_ de pesquisa (full-text, estruturada e analítica) e duas _formas_ básicas de se pesquisar (query-string e query DSL).
 
@@ -175,16 +174,18 @@ Para este exemplo, utilize o script [tweets.sh](../elastic-stack/scripts/tweets.
 Primeiro, vamos ver como a query-string funciona. Vamos pesquisar todos os tweets do usuário Tom:
 
 ```
-$ curl -XGET http://localhost:9200/twitter/tweet/_search?q=name:Tom
+curl -XGET http://localhost:9200/twitter/tweet/_search?q=name:Tom
 ```
 
-Apesar de parecer bastante simples de se utilizar, esse formato é o menos utilizado. A medida que colocamos mais parâmetros e condições, a busca começa a aparecer mais complicada do que realmente é. Por exemplo, vamos pesquisar pelo nome Phill no campo "name" __e__ lina no campo "tweet":
+Apesar de parecer bastante simples de se utilizar, esse formato é o menos utilizado. A medida que colocamos mais parâmetros e condições, a busca começa a aparecer mais complicada do que realmente é. Por exemplo, vamos pesquisar pelo nome Tom no campo "name" __e__ lina no campo "tweet":
 
 ```
-$ curl -XGET http://localhost:9200/twitter/tweet/_search?q=%2Bname%3Aphill+%2Btweet%3Alina
+curl -XGET http://localhost:9200/twitter/tweet/_search?q=%2Bname%3Atom+%2Btweet%3Alina
 ```
 
-Agora, vamos realizar primeira pesquisa com a query DSL:
+Perceba que mesmo sendo uma pesquisa relativamente simples, a string de pesquisa é mais "encriptada".
+
+Agora, vamos realizar a primeira pesquisa feita utilizando a query DSL:
 
 ```
 curl -XGET http://localhost:9200/twitter/tweet/_search?pretty -d '
@@ -195,11 +196,11 @@ curl -XGET http://localhost:9200/twitter/tweet/_search?pretty -d '
 }'
 ```
 
-Neste formato, passamos um documento JSON como parâmetro de pesquisa. Antes de mais nada, vamos entender o que nos é retornado quando realizamos uma query. Utilizando o exemplo de retorno das queries acima, temos o resultado abaixo:
+Neste formato, passamos um documento JSON como parâmetro de pesquisa. Antes de mais nada, vamos entender o que nos é retornado quando realizamos uma query. Utilizando o exemplo de retorno da query acima, temos o resultado abaixo:
 
 ```
 {
-  "took" : 8,                 		# Tempo em milissegundos que a query demorou retornar.
+  "took" : 8,                 		# Tempo em milissegundos que a query demorou para  retornar.
   "timed_out" : false,        		# Houve Time Out na busca (True or False) ? 
   "_shards" : {               		# Falaremos sobre shards mais tarde...
     "total" : 5,
@@ -227,6 +228,22 @@ Neste formato, passamos um documento JSON como parâmetro de pesquisa. Antes de 
 }
 ```
 
+Agora vamos aos três tipos básicos de pesquisa...
 
+## Full-Text
 
+Na pesquisa full text você simplesmente pesquisa o que você quer, sem passar nenhuma regra, agregação ou algo do tipo. Quando apresentarmos o Kibana, este tipo de pesquisa vai se apresentar de forma mais simples ainda, como uma pesquisa no Google.
+
+```
+curl -XGET http://localhost:9200/twitter/tweet/_search?pretty -d '
+{
+  "query": {
+    "match": {
+        "tweet": "easy to use"
+    }
+  }
+}'
+```
+
+Provavelmente você teve o retorno de 3 tweets diferentes. Vamos analisar apenas os campos ___score__, ___max_score__ e __tweet__:
 
