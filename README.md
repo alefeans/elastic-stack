@@ -69,17 +69,17 @@ curl -XGET http://localhost:9200/
 Se você recebeu um retorno parecido com esse, quer dizer que tudo está funcionando como deveria:
 ```
 {
-  "name" : "XJWzjDi",                           # Nome da instância (relaxa que dá pra mudar isso)
-  "cluster_name" : "elasticsearch",             # Nome do cluster a qual essa instância pertence
-  "cluster_uuid" : "ZH9GequzQX-oobJVGPlbjg",    # Identificador universal do seu cluster (como um CPF do seu cluster)
-  "version" : {                                 # Dentro desta "tag" temos todas as informações sobre versão de produto
-    "number" : "5.6.2",                         # Versão do Elasticsearch
-    "build_hash" : "57e20f3",                   # "ID" da geração deste pacote de Elasticsearch
-    "build_date" : "2017-09-23T13:16:45.703Z",  # Data de geração da versão
-    "build_snapshot" : false,                   # Irrelevante
-    "lucene_version" : "6.6.1"                  # Versão do Lucene utilizada
+  "name" : "XJWzjDi",                           # Nome da instância (iremos alterar isto mais tarde).
+  "cluster_name" : "elasticsearch",             # Nome do cluster que a nossa instância pertence.
+  "cluster_uuid" : "ZH9GequzQX-oobJVGPlbjg",    # Identificador universal do seu cluster (como um CPF do seu cluster).
+  "version" : {                                 # Dentro desta "tag" temos todas as informações sobre versão de produto.
+    "number" : "5.6.2",                         # Versão do Elasticsearch.
+    "build_hash" : "57e20f3",                   # "ID" da geração deste pacote de Elasticsearch.
+    "build_date" : "2017-09-23T13:16:45.703Z",  # Data de geração deste pacote.
+    "build_snapshot" : false,                   # Irrelevante (é irrelevante sim, para de reclamar).
+    "lucene_version" : "6.6.1"                  # Versão do Lucene utilizada.
   },
-  "tagline" : "You Know, for Search"            # Uma frase amigável
+  "tagline" : "You Know, for Search"            # Uma frase amigável.
 }
 
 ```
