@@ -169,7 +169,7 @@ Neste comando, chamamos a API ___search__, que é a API padrão de buscas do Ela
 
 No Elasticsearch existem três _tipos_ de pesquisa (full-text, estruturada e analítica) e duas _formas_ básicas de se pesquisar (query-string e query DSL).
 
-Para este exemplo, utilize o script [tweets.sh](../elastic-stack/scripts/tweets.sh) para criar o indice twitter que irá conter diversos tweets de usuários diferentes. Agora que geramos a massa de dados, vamos as queries !
+Para este exemplo, utilize o script [tweets.sh](https://github.com/alefeans/elastic-stack/tree/master/scripts/tweets.sh) para criar o indice twitter que irá conter diversos tweets de usuários diferentes. Agora que geramos a massa de dados, vamos as queries !
 
 Primeiro, vamos ver como a query-string funciona. Vamos pesquisar todos os tweets do usuário Tom:
 
