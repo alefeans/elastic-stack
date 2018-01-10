@@ -1,11 +1,11 @@
 # Elastic Stack para iniciantes
 
-   O objetivo desse repositório é apresentar o `Elastic Stack` de uma forma simples e amigável para quem está iniciando no assunto.
+   Quando comecei a estudar sobre o `Elastic Stack`, encontrei diversos conteúdos que traziam explicações muito "pesadas" e que em pouco tempo de leitura, te levavam a realizar várias pesquisas para entender o significado de cada sub-tópico, conceito ou ferramenta adjacente ao assunto principal.
 
-   Quando comecei a estudar sobre o Elastic Stack, encontrei diversos conteúdos que traziam explicações muito "pesadas" e que em alguns segundos de leitura, te levavam a realizar várias pesquisas para entender o significado de cada sub-tópico, conceito ou ferramenta adjacente.
+   Sendo assim, decidi criar este repositório para explicar um pouco sobre o que aprendi sobre a _stack_, com uma linguagem mais informal e amigável para quem está iniciando no assunto, mas sem deixar de apresentar os conceitos essenciais. Aviso desde já que o objetivo deste repositório não é ser um guia de referência ou apresentar um conteúdo nível expert, mas sim te tornar apto a utilizar a ferramenta no seu dia-a-dia, compreendendo o funcionamento básico de cada ferramenta que compõe a stack.
 
 
-   Sendo assim, decidi criar este repositório com uma linguagem mais informal e direta para explicar a _stack_, sem deixar de apresentar os conceitos essenciais. Não se preocupe se em alguns momentos aparecerem termos confusos que ainda não foram explicados, pois ao longo do treinamento eles se tornarão claros para você :)
+   Não se preocupe se em alguns momentos aparecerem termos confusos que ainda não foram explicados, pois ao longo do treinamento eles se tornarão claros para você :)
 
 
 ## Elasticsearch
@@ -89,7 +89,7 @@ Legal, mas o que realmente aconteceu aqui ? Lembra que o Elasticsearch possui um
 
 Falando da forma mais simples possível, uma API RESTful é uma API que faz/aceita chamadas REST e REST, representa um conjunto de operações padronizadas que permitem a troca de informação entre sistemas através de simples métodos HTTP.
 
-No exemplo acima, fizemos uma chamada __REST__ solicitando uma resposta para o nosso Elasticsearch através do método http __GET__ e como retorno à nossa requisição, recebemos uma resposta no formato __JSON__ com algumas informações básicas sobre a nossa instância de Elasticsearch.
+No exemplo acima, fizemos uma chamada __REST__ solicitando uma resposta para o nosso Elasticsearch através do método HTTP __GET__ e como retorno à nossa requisição, recebemos uma resposta no formato __JSON__ com algumas informações básicas sobre a nossa instância de Elasticsearch.
 
 Trabalhando com o Elasticsearch, sempre usaremos o formato JSON, tanto para enviar requisições, quanto na resposta (como no exemplo acima).
 
@@ -313,9 +313,9 @@ Se você não fez nenhuma alteração no script [tweets.sh](https://github.com/a
 
 Talvez você não tenha reparado, mas você acabou de fazer uma pesquisa full text. Mas calma ai... porque eu tenho três respostas para a pequisa "easy to use" se em apenas um dos tweets eu realmente tenho as palavras "easy to use" ?
 
-Bem, é ai que a graça (ou desgraça) do full text entra em ação. No primeiro resultado (tweet do Tom Michael), vemos que o campo "_score" possui o número "1.9187583" como valor, correto ? Compare este número com o "_score" dos outros resultados. O que isso significa afinal ?
+Bem, é ai que a graça (ou desgraça) do full text entra em ação. Repare que os três tweets retornados possuem a palavra "easy". Como a sua busca não possui nenhum filtro ou parametrização adicional, qualquer uma das trẽs palavras que compõe a sua busca (easy to use), serão pesquisadas no index informado . Porém no primeiro resultado (tweet do Tom Michael), vemos que o campo **"_score"** possui o número **"1.9187583"** como valor, correto ? Compare este número com o "_score" dos outros resultados. O que isso significa afinal ?
 
-O Elasticsearch verifica a relevância de um documento pela proximidade da busca realizada. Como o primeiro resultado é o que mais se aproxima da busca feita, este recebe um número de _score mais alto do que os demais. É assim que o Elasticsearch mede a relevância de uma pesquisa feita com o resultado encontrado.
+O Elasticsearch verifica a relevância de um documento pela proximidade da busca realizada. Como o primeiro resultado é o que mais se aproxima da busca feita, por possuir as três palavras pesquisadas, este documento recebe um número de _score mais alto do que os demais. É assim que o Elasticsearch mede a relevância de uma pesquisa feita com o resultado encontrado.
 
 Este é o tipo de pesquisa mais simples de se fazer, porém é também o mais suscetível a falhas por acabar retornando resultados que podem não ser relevantes (e por conta do campo **"_all"** que será explicado em breve). Agora, se quisermos pesquisar a sequência exata "easy to use", podemos utilizar o recurso "match_phrase" em nossa busca:
 
@@ -331,7 +331,7 @@ curl -XGET http://localhost:9200/twitter/tweet/_search?pretty -d '
 ```
 Repare que agora só obtivemos um retorno, correto ? Neste caso, a _frase_ é pesquisada como uma sequência única que deve ser respeitada.
 
-Veremos em breve que geralmente realizamos pesquisas utilizando filtros e agregações para refinarmos nossas buscas. Também veremos que ao utilizar o Kibana, podemos realizar buscas sem ao menos digitar um campo específico (como o "tweet": no exemplo acima). No primeiro caso fica fácil de entender como o Elasticsearch interpreta a busca. "Aonde tiver o valor "x" no campo "y", retorne o resultado para o usuário". Mas e no segundo caso, onde você simplesmente fala "bla" pro Elasticsearch e espera que ele te mostre aonde tem o valor "bla" ? Mais tecnicamente falando, como o Elasticsearch entende o full-text quando não passamos nenhum campo como parâmetro ?
+Veremos em breve que geralmente realizamos pesquisas utilizando filtros e agregações para refinarmos nossas buscas. Isto melhora os resultados encontrados e geram retornos mais rápidos, já que o Elasticsearch terá que buscar a informação em um local mais específico, ao invés de ter que varrer um index inteiro para encontrar o que foi pedido. Também veremos que ao utilizar o Kibana, podemos realizar buscas sem ao menos digitar um campo específico (como o "tweet": no exemplo acima). No primeiro caso fica fácil de entender como o Elasticsearch interpreta a busca. "Aonde tiver o valor "x" no campo "y", retorne o resultado para o usuário". Mas e no segundo caso, onde você simplesmente fala "bla" pro Elasticsearch e espera que ele te mostre aonde tem o valor "bla" ? Mais tecnicamente falando, como o Elasticsearch entende o full-text quando não passamos nenhum campo como parâmetro ?
 
 Ao indexarmos um documento, todos os valores dos campos do documento são indexados em uma única string em um campo default do Elasticsearch de nome "_all". Por exemplo, se eu estiver indexando o documento abaixo:
 
@@ -353,7 +353,40 @@ O campo "_all" deste documento ficaria assim:
 }
 ```
 
-Sendo assim, ao realizarmos uma busca full-text sem passarmos nenhum campo como parâmetro, o Elasticsearch realiza a pesquisa em todos os campos "_all" do index escolhido.
+Sendo assim, ao realizarmos uma busca full-text sem passarmos nenhum campo como parâmetro, o Elasticsearch realiza a pesquisa em todos os campos "_all" do index escolhido, o que é muito mais rápido do que ter que avaliar campo a campo de cada documento. Porém, pode acontecer de um campo diferente do que você quer buscar possuir um valor igual ao que você procura. Ficou estranho né ? Veja o exemplo abaixo:
+
+```
+{
+  "nome": "Carlos",
+  "idade": 21,
+  "endereco": "Rua Freitas",
+  "rg": 231496289,
+  "hobbies": "Jogar futebol"
+},
+{
+  "nome": "José",
+  "idade": 38,
+  "endereco": "Rua Carlos",
+  "rg": 987654321,
+  "hobbies": "Assistir Netflix"
+}
+
+```
+
+Ao inserir estes dois documentos, o Elasticsearch geraria para cada um, as seguintes strings em seus respectivos *_all*:
+
+```
+{
+  "_all": "Carlos 21 Rua Freitas 231496289 Jogar futebol
+},
+{
+  "_all": "José 38 Rua Carlos 987654321 Assistir Netflix
+}
+```
+
+Se eu quiser saber quantas pessoas de nome "Carlos" eu tenho no meu index e fizer uma pesquisa full-text para encontrar "Carlos", quantos retornos eu terei ? E se eu pesquisar por "Freitas", quantos retornos eu terei ?
+
+Se o meu index só possuir estes dois documentos apenas, o retorno da nossa pesquisa seria: **dois** Carlos e **um** Freitas, mesmo eu só possuindo **um** Carlos e **nenhum** Freitas.
 
 Estamos entendidos com o full-text ?
 
@@ -361,7 +394,7 @@ Estamos entendidos com o full-text ?
 
 Uma pesquisa estruturada diz respeito à pesquisas que possuem algum tipo de parametrização/regra envolvida. Para este exemplo, vamos usar o script [funcs.sh](https://github.com/alefeans/elastic-stack/tree/master/scripts/funcs.sh) para gerar os dados no nosso esquecido índice "mycompany".
 
-Após executar o script, execute a pesquisa estrutura abaixo. Tente interpretá-la juntamente com o seu resultado antes de ler a explicação, ok ?
+Após executar o script, execute a pesquisa estruturada abaixo. Tente interpretá-la juntamente com o seu resultado antes de ler a explicação, ok ?
 
 ```
 curl -XGET http://localhost:9200/mycompany/_search\?pretty -d '
@@ -396,12 +429,262 @@ __6°__ - Dentro de "filter", passamos um "range" para o nosso campo "idade", qu
 Após compreendermos cada passo, a tradução final da query seria esta:
 _"Elasticsearch, quais são os funcionários com mais de 30 anos que tem Silva no nome ?"_
 
-A medida que as pesquisas se tornam maiores e mais específicas, mais campos e parâmetros são encadeados para satisfazer as condições da busca. Existem diversos argumentos disponíveis para a refinação de queries que são facilmente encontrados na documentação da [Elastic](https://www.elastic.co/guide/index.html)
+A medida que as pesquisas se tornam maiores e mais específicas, mais campos e parâmetros são encadeados para satisfazer as condições da busca. Existem diversos argumentos disponíveis para a refinação de queries que são facilmente encontrados na documentação da [Elastic](https://www.elastic.co/guide/index.html). Alguns serão abordados mais a frente, após aprendermos o básico sobre os tipos de busca :) .
 
 ## Analítica
 
-Finalizando os tipos de pesquisa existentes, temos a pesquisa analítica. O Elasticsearch possui uma funcionalidade chamada _aggregations_, que permite a geração de análises sofisticadas sobre os seus dados (se parece com o GROUP BY do SQL, só que bem mais poderoso). Vamos pesquisar os interesses mais populares entre nossos funcionários:
+Finalizando os tipos de pesquisa existentes, temos a pesquisa analítica. O Elasticsearch possui uma funcionalidade chamada _aggregations_, que permite a geração de análises sofisticadas sobre os seus dados (se parece com o GROUP BY do SQL, só que bem mais poderoso). Vamos pesquisar quais são os interesses mais populares entre nossos funcionários. Mas antes, precisamos habilitar uma estrutura chamada __fielddata__ em nosso Elasticsearch, que vem desabilitada por padrão:
+
+```
+curl -XPUT http://localhost:9200/mycompany/_mapping/funcionarios -d '
+{
+  "properties": {
+    "interesses": {
+      "type":     "text",
+      "fielddata": true
+    }
+  }
+}'
+```
+
+Esta feature vem desabilitada por conta do consumo de memória que uma pesquisa de texto muito grande pode gerar (já que há outras formas de estruturar os seus dados à tornarem agregações mais simples de serem executadas). Como estamos apenas brincando com alguns dados fictícios, não há necessidade de se preocupar com isto agora ou se aprofundar neste assunto. Masssss, caso queira entender um pouco mais, acesse este link da [documentação da Elastic](https://www.elastic.co/guide/en/elasticsearch/reference/current/fielddata.html).
+
+Agora que habilitamos o fielddata, vamos fazer nossa pesquisa !
+
+```
+curl -XGET http://localhost:9200/mycompany/funcionarios/_search?pretty -d '
+{
+    "query" : {
+        "match_all" : {}
+    },
+    "aggs" : {
+        "maiores_interesses" : {
+            "terms" : {
+                "field" : "interesses"
+            }
+        }
+    }
+}'
+```
+
+O parâmetro **"aggs"** é utilizado para descrevermos todas as nossas agregações que serão realizadas. O **"maiores_interesses"** foi um nome fictício (como um _alias_), dado para o nosso conjunto de resultados e poderia ter sido qualquer outro (ex: total_de_interesses, interesses_gerais, etc). Após nomear o nosso conjunto de resultados, usamos o parâmetro **"terms"**, para descrevermos por qual(is) **"field(s)"** queremos agregar os resultados.
+
+Para facilitar a visualização, vamos observar apenas o final do resultado obtido:
+
+```
+  "aggregations" : {
+    "maiores_interesses" : {
+      "doc_count_error_upper_bound" : 0,
+      "sum_other_doc_count" : 0,
+      "buckets" : [
+        {
+          "key" : "esportes",
+          "doc_count" : 2
+        },
+        {
+          "key" : "musica",
+          "doc_count" : 2
+        },
+        {
+          "key" : "filmes",
+          "doc_count" : 1
+        },
+        {
+          "key" : "games",
+          "doc_count" : 1
+        },
+        {
+          "key" : "musculacao",
+          "doc_count" : 1
+        }
+      ]
+    }
+  }
+}
+
+```
+
+Dentro de **"maiores_interesses"**, temos a separação dos resultados por **"buckets"**, que nos revelam a quantidade de documentos que foram encontrados fazendo menção a cada resultado. Algo que mais "embelezado" ficaria assim:
+
+| Interesses        | Documentos Encontrados
+| ------------- |:-------------:|
+| Esportes | 2|
+| Musica |2|
+| Filmes | 1|
+| Games | 1|
+| Musculação | 1|
+
+Ou seja, com uma simples pesquisa conseguimos encontrar fatores em comum sobre nossos funcionários e agora sabemos quais sãos os maiores interesses dentro de nossa empresa. Possuímos poucos dados para brincar até o momento, mas imagine em uma empresa com 5.000 funcionários. Será que conseguimos tirar algum proveito disso ? Será que conseguimos correlacionar nossos dados para encontrar benefícios que possam ser mais úteis para nossos colaboradores ? Pense só, temos poucos dados, mas já sabemos que a maioria dos funcionários gostam de música e esportes.
+
+Apesar de abordarmos tarefas simples com os tipos de pesquisa do Elasticsearch, a quantidade de operações, agregações e filtros possíveis são quase infinitos ! Tudo vai depender da quantidade de dados que você possui e a quantidade de regras que você quer especificar em suas buscas.
 
 
+## Tudo muito fácil. O que mais eu posso fazer ?
 
-__OBS:__ Apesar de abordarmos tarefas simples com os tipos de pesquisa do Elasticsearch, a quantidade de operações, agregações e filtros possíveis são quase infinitos ! Tudo vai depender da quantidade de dados que você possui e a quantidade de regras que você quer especificar em suas buscas.
+Agora que entendemos sobre as formas e os tipos de pesquisa de forma básica, vamos aprender mais alguns comandos e funcionalidades utilizando as APIs do Elasticsearch, antes de partirmos para o Logstash e o Kibana.
+
+##### Shutdown
+
+Depois de tanto tempo no ar, vamos dar um descanço pro cara né ? Para finalizar o seu Elasticsearch, você pode OU pará-lo via __service management__  utilizando, por exemplo, o comando "_systemctl stop elasticsearch_" OU enviando um _SIGTERM_ para o seu processo. Como fizemoas a instalação diretamente do .zip, usaremos a segunda forma:
+
+```
+$ jps | grep Elasticsearch
+22223
+$ kill 22223
+```
+Ou se você for mais _oldschool_:
+```
+$ ps -ef | grep -i elasticsearch | grep -v grep | awk '{print $2}'
+22223
+$ kill 22223
+```
+
+##### Contagem de Documentos
+
+Eu odiava ver tutoriais que me ensinavam a baixar a aplicação, para logo em seguida pedir para subir e fazer alguma outra coisa. Chegou a hora de dar o troco ! Vamos subir novamente a nossa instância de Elasticsearch e vamos contar quantos documentos existem em nossos índices:
+
+```
+nohup ./elasticsearch &
+```
+Vamos utilizar a API **_count** para contar quantos documentos existem no index "mycompany":
+
+```
+curl -XGET http://localhost:9200/mycompany/_count?pretty
+```
+
+Caso você queira contar a quantidade de documentos totais em seu Elasticsearch, é só retirar o index mycompany da pesquisa:
+
+```
+curl -XGET http://localhost:9200/_count?pretty
+```
+
+##### Entendendo melhor os contextos
+
+Até agora, aprendemos a inserir dados em nosso Elasticsearch informando o __id__ que o documento irá possuir. Um exemplo disso foi a nossa primeira inserção e o conteúdo do script [funcs.sh](https://github.com/alefeans/elastic-stack/tree/master/scripts/funcs.sh), onde passamos o caminho completo que o documento será inserido:
+
+```
+curl -XPUT http://localhost:9200/mycompany/funcionarios/1
+```
+
+Neste tipo de inserção, informamos o index, o type e o id (1 no exemplo acima). O que nos ajuda no momendo de fazer uma busca, por já sabermos o caminho completo do dado. Por ex:
+
+```
+curl -XGET http://localhost:9200/mycompany/funcionarios/1
+```
+
+A nível de teste, não há problemas neste tipo de abordagem. Mas não é comum informarmos o id no momento da inserção do dado, por 'N' motivos. Para ids, geralmente deixamos o Elasticsearch fazer a criação dinamicamente. Ou seja, você pode inserir dados no contexto que desejar sem precisar se preocupar com um número de id. Vamos criar mais um type para o nosso index "mycompany" chamado "diretores":
+
+```
+curl -XPOST http://localhost:9200/mycompany/diretores/ -d '
+{
+  "nome": "Roberto Roberts",
+  "idade": 40,
+  "endereco": "Rua da Chiqueza",
+  "hobbies": ["Jogar golf", "Fazer chiquezas"],
+  "interesses": ["orquestras", "coisas chiques"]
+}'
+```
+
+Veja que utilizamos o verbo HTTP __POST__ ao invés de __PUT__. Como vimos muito anteriormente, o verbo __PUT__ fala para o Elasticsearch armazenar o dado em uma URL específica, ou seja, em um caminho completo. Já o __POST__ diz para o Elasticsearch armazenar o dado _ABAIXO_ de uma URL. Algo parecido com isso:
+```
+PUT:"Oi Elasticsearch."
+Elasticsearch:"Fala..."
+PUT:"Faz um favor ?"
+Elasticsearch:"Fala..."
+PUT:"Leva esse documento nesse endereço aqui ó... Bairro: mycompany, Rua: diretores no Numero: 1.
+Elasticsearch:"Beleza."
+```
+
+```
+POST:"E ai Elasticsearch, tudo bom :) ?"
+Elasticsearch:"Lá vem você denovo pra me dar trabalho..."
+POST:"Que nada ! Bom.. na verdade, eu gostaria que você enviasse um documento em um endereço pra mim."
+Elasticsearch:"Ta... ta... me passa o endereço."
+POST:"Então... é no Bairro: mycompany, na Rua: diretores e... hmmmm."
+Elasticsearch:"Hmmm o que ? Qual é o número ?"
+POST:"Esse é o problema.. eu não tenho o número, mas precisamos entregar isso agora :("
+Elasticsearch:"Ah.. que ótimo. Vou entregar em qualquer número que eu escolher então !"
+```
+
+Tirando o incrível mau humor do Elasticsearch em realizar inserções de dados, é mais ou menos isso que acontece. Se não informarmos o id, o Elasticsearch gera automaticamente um id para o nosso documento. Vamos ver qual o id que ele escolheu para o nosso fino diretor:
+
+```
+curl -XGET http://localhost:9200/mycompany/diretores/_search?pretty
+```
+
+O id que ele escolheu para o meu documento foi "AWDg5HpIZFpbSN2whJNa" e provavelmente, uma outra sequência bizarra de caractes foi escolhida para você.
+
+Outro ponto que talvez você não tenha reparado, é que podemos realizar consultas a nível de ids, types ou index. Por exemplo, se eu não souber em qual type o funcionário "Claudio Silva" está inserido, eu posso realizar uma pesquisa a nível de index. Por exemplo:
+
+```
+curl -XGET http://localhost:9200/mycompany/_search?pretty -d '
+{
+  "query": {
+    "match_phrase": { "nome": "Claudio Silva"}
+  }
+}'
+```
+
+Mude o valor de "nome" para "Robert Roberts" e sua busca também encontrará o resultado. Isto acontece, pois os types "funcionarios" e "diretores" estão inseridos no mesmo index (mycompany).
+
+##### Deletando
+
+Para remover algum dado do Elasticsearch, utilizamos o verbo HTTP, __DELETE__ e passamos o caminho completo do dado, conforme o exemplo abaixo:
+
+```
+curl -XDELETE http://localhost:9200/mycompany/funcionarios/1
+
+{"found":true,"_index":"mycompany","_type":"funcionarios","_id":"1","_version":2,"result":"deleted","_shards":{"total":2,"successful":1,"failed":0}}
+```
+Se pesquisarmos pelo funcionário de id "1", veremos que o mesmo não é mais encontrado:
+```
+curl -XGET http://localhost:9200/mycompany/funcionarios/1
+
+{"_index":"mycompany","_type":"funcionarios","_id":"1","found":false}
+```
+
+Tenha bastante cuidado ao apagar um dado, pois caso você esqueça de passar o "type" e o "id" do documento, podemos acabar apagando um index inteiro (types estão seguros nesta situação, pois estes são removidos utilizando um método chamado "[delete_by_query](https://www.elastic.co/guide/en/elasticsearch/reference/6.1/docs-delete-by-query.html)").
+
+Caso queira contratar o funcionário "João Silva" denovo, verifique a seção do treinamento de nome "Index, Type, Document ?" e execute a inserção novamente.
+
+## Cluster, Shards e Replicas
+
+Lembra que havia dito que o Elasticsearch foi feito para o _Cloud Computing_ ? Nesta seção explicaremos como a redundância e a alta escalabilidade são tratadas internamente pela ferramenta, através de alguns conceitos de clusterização e replicação de dados.
+
+Um __node__ é uma instância em execução de Elasticsearch, enquanto um __cluster__ consiste em um ou mais nodes trabalhando em conjunto, como se fossem uma só instância. Instâncias em um mesmo cluster compartilham o mesmo _cluster name_ e possuem uma organização que permite que mais instâncias sejam adicionadas ou removidas ao cluster sem prejudicar o armazenamento dos dados. Afinal, em um ambiente na nuvem, é comum servidores serem adicionados ou descartados a todo momento e isso de forma alguma pode impactar a disponibilidade do serviço ou a integridade dos dados.
+
+Em um cluster, uma instância é declarada como node _master_, o que signficia que esta instância agora é responsável por lidar com alterações a nível de cluster (ex: criação/remoção de um index, adicionar um node ao cluster e etc). Pequenas alterações a nível de documento não exigem a participação do node master, sendo assim, ter apenas um node master em seu cluster pode ser o suficiente. Porfim, nós como usuários podemos interagir com qualquer node do cluster, inclusive o master, de forma transparente.
+
+No nosso caso, temos apenas uma instância de Elasticsearch em execução, o que significa que nosso cluster possui apenas um node e que obviamente, é o master node. Vamos visualizar algumas informações sobre o nosso cluster:
+
+```
+curl -XGET http://localhost:9200/_cluster/health?pretty
+```
+
+O campo status pode indicar três cores como resposta:
+__Green__: Todos os shards primários e replicas estão ativos.  
+__Yellow__: Todos os shards primários estão ativos, mas nem todas as réplicas estão.
+__Red__: Nem todos os shards estão ativos.
+
+Você deve estar pensando "E o que isso signficia se eu nem sei o que é um shard ?". Vamos tentar entender isto melhor agora...
+
+Quando indexamos (lembre-se que _indexar_ é diferente de _index_) nossos documentos no Elasticsearch, estamos adicionando nossos dados em um __shard__, porém nossas aplicações não falam diretamente com o shard em si, mas sim com os índices (a prova disso foram nossas inserções apontando para os nossos índices criados). A realidade é que os índices (mycompany ou twitter por exemplo), são apenas _namespaces lógicos_ que apontam para um ou mais __shards__ e estes, são containers que armazenam os dados que indexamos no Elasticsearch. E para ficar mais simples, dentro de cada shard há uma instância de Apache Lucene utilizando seu motor de busca e indexação para cuidar dos nossos dados. Tranquilo de entender ?
+
+Vamos executar um comando que utilizamos no inicio do repositório para validarmos a quantidade de índices criados e visualizarmos algumas informações sobre os nossos shards:
+
+```
+curl -XGET http://localhost:9200/_cat/indices?v
+```
+
+Provavelmente você recebeu um retorno parecido com este (formatei em tabela para melhorar a visualização):
+
+| health| status | index | uuid | pri | rep | docs.count| docs.deleted| store.size| pri.store.size|
+| ----- |--------|----- |------|----- |--------|----- |--------|----|:------:|
+|yellow | open | mycompany | pUEvAXsjQIm | 5 | 1 | 3 | 0| 17.8kb | 17.8kb |
+|yellow | open | twitter | LKz87NMtTlShp | 5 | 1 | 14 | 0| 29.9kb | 29.9kb |
+
+Quando iniciamos uma instância de Elasticsearch, por default são criados 5 shards (coluna __pri__, que significa primary) e 1 réplica (coluna __rep__, que significa replica). A medida que vamos adicionando mais instâncias em nosso cluster, os shards são replicados/migrados entre os nodes pelo próprio Elasticsearch, que irá mantér o nosso cluster balanceado. Um shard pode ser tanto um _primary_, que terá a função de conter todos os documentos do seu index, quanto uma _replica_, que é uma cópia do seu shard primário feita para garantir a redundância dos seus dados entre os nodes do cluster e também para servir à requisições de leitura (busca de documentos, por exemplo).
+
+No nosso caso acima, vemos que estamos com o health em "yellow", certo ? Isso se deve ao fato de termos 5 shards primários armazenando nossos dados em um mesmo node e a perda de um deles pode nos resultar em uma perda real de dados, já que só temos apenas 1 réplica que também faz parte do mesmo node. Veja a imagem abaixo para entender melhor o cenário que estamos vivendo:
+
+Vamos adicionar outro node ao nosso cluster para resolvermos logo esse negócio de "alta disponibilidade".
