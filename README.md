@@ -649,8 +649,9 @@ Caso queira contratar o funcionário "João Silva" denovo, verifique a seção d
 
 ## Cluster, Shards e Replicas
 
-Lembra que eu havia dito que o Elasticsearch foi feito para o _Cloud Computing_ ? Nesta seção explicaremos como a redundância e a alta escalabilidade são tratadas internamente pela ferramenta, através de alguns conceitos de clusterização e replicação de dados.
+Lembra que eu havia dito que o Elasticsearch foi feito para o _Cloud Computing_ ? Nesta seção explicaremos como a redundância e a alta disponibilidade são tratadas internamente pela ferramenta, através de alguns conceitos de _clusterização_ e replicação de dados. Já adianto que esta seção pode ser um pouco pesada para quem está iniciando, portanto preste __bastante__ atenção em cada ponto aqui explicado, pois eles são essenciais para compreender a ferramenta mais a fundo.
 
+##### Node e Cluster
 Um __node__ é uma instância em execução de Elasticsearch, enquanto um __cluster__ consiste em um ou mais nodes trabalhando em conjunto, como se fossem uma só instância. Instâncias em um mesmo cluster compartilham do mesmo _cluster name_ e possuem uma organização que permite que mais instâncias sejam adicionadas ou removidas ao cluster sem prejudicar o armazenamento dos dados. Afinal, em um ambiente na nuvem, é comum servidores serem adicionados ou descartados a todo momento e isso de forma alguma pode impactar a disponibilidade do serviço ou a integridade dos dados.
 
 Em um cluster de Elasticsearch, sempre teremos uma instância declarada como node _master_, o que signficia que esta instância agora é responsável por lidar com alterações abrangentes, que modificam informações a nível de cluster (ex: criação/remoção de um index, adição de nodes ao cluster e etc). Pequenas alterações a nível de documento, não exigem a participação do node master, sendo assim, ter apenas um node master em seu cluster pode ser o suficiente. O interessante é que nós usuários podemos interagir com qualquer node do cluster de forma transparente para realizarmos as operações já realizadas (inclusão, pesquisa, remoção e etc), inclusive o node master.
@@ -667,6 +668,8 @@ __Yellow__: Todos os shards primários estão ativos, mas nem todas as réplicas
 __Red__: Nem todos os shards estão ativos.
 
 Você deve estar pensando "E o que isso signficia se eu nem sei o que é um shard ?". Vamos tentar entender isto melhor agora...
+
+##### Shards e Replicas
 
 Quando indexamos nossos documentos no Elasticsearch (lembre-se do significado de _indexar_ explicado anteriormente), estamos adicionando nossos dados em um __shard__, que são basicamente containers que armazenam os dados que indexamos no Elasticsearch. Porém nossas aplicações não falam diretamente com o shard em si, mas sim com os índices (lembre-se das inserções que fizemos anteriormente). A realidade é que os índices, mycompany ou twitter por exemplo, são apenas _namespaces lógicos_ que apontam para um ou mais __shards__. Ou seja, quando realizamos uma inserção de um documento em um index no Elasticsearch, passamos o caminho do index que queremos utilizar, e este, irá armazenar este documento em algum shard qualquer (como se fosse um balanceador que redireciona o tráfego de rede para um grupo de servidores).
 
@@ -780,12 +783,27 @@ Caso queira alterar para um outro caminho de sua preferência, sinta-se a vontad
 }
 ```
 
-Olha que lindo, nosso cluster status está como "green", possuimos um "number_of_nodes" de 2, 6 "active_shards" e nenhum "unassigned_shards". Apesar de estarmos utilizando o mesmo hardware (o que não garante nenhuma alta disponibilidade), por possuirmos 2 nodes diferentes, o Elasticsearch já o considera como "green" por conta da distribuilão dos shards primários e réplicas. Não é demais ?
+Olha que lindo, nosso cluster status está como "green", possuimos um "number_of_nodes" de 2, temos 6 "active_shards" e nenhum "unassigned_shards". Apesar de estarmos utilizando o mesmo hardware (o que não garante nenhuma alta disponibilidade), por possuirmos 2 nodes em nosso cluster, o Elasticsearch já o considera como "green" por conta da distribuilão dos shards primários e réplicas. Não é demais ?
 
 Mas vamos lá ... como esta nova instância _simplesmente_ começou a fazer parte do meu cluster ? E como minhas replicas e shards foram distribuidas pelo Elasticsearch ?
 
-Pois bem, o Elasticsearch na configuração padrão já vem com um cluster_name padrão nomeado de __"elasticsearch"__ e já procura por outro node master em sua máquina local. Ao subirmos outra instância com a mesma configuração, ele procurou por estas informações em minha máquina local e pronto, cluster no configurado com sucesso !
+Pois bem, o Elasticsearch em sua configuração padrão, vem com um cluster_name default nomeado de __"elasticsearch"__ e já procura por outro node master em sua máquina local. Ao subirmos outra instância com a mesma configuração, ele procurou por estas informações em minha máquina local e pronto, começou a fazer parte do nosso cluster.
 
-Se quisessemos configurar um node de Elasticsearch em uma máquina remota para fazer parte do nosso cluster, teríamos que configurar alguns parâmetros a mais (Ex: endereço do servidor remoto, bla bla bla), em seu arquivo de configuração principal: **config/elasticsearch.yml**. Mas isto não vem ao caso agora. Quer saber como os seus shards estão balanceados entre os seus nodes agora ? Veja a imagem abaixo:
+Se quisessemos configurar um node de Elasticsearch em uma máquina remota para fazer parte do nosso cluster, teríamos que configurar alguns parâmetros a mais (endereço do servidor remoto, node name e etc), em seu arquivo de configuração principal: **config/elasticsearch.yml**. Mas isto não vem ao caso agora. Quer saber como os seus shards estão balanceados entre os seus nodes agora ? Veja a imagem abaixo:
 
-![](images/two_nodes.png))
+![](images/two_nodes.png)
+
+__Legenda:__ P = Primary; R = Replica.
+
+Agora possuímos todas as nossas réplicas associadas ao nosso node 2. Perceba que qualquer requisição pode ser atendida por qualquer node, já que possuímos exatamente __todos__ os dados replicados em todos os nodes de nosso cluster. Para uma última ilustração, caso tivessemos 3 nodes e 2 réplicas, nosso cluster estaria representado mais ou menos desta forma:
+
+![](images/three_nodes.png)
+
+
+Caso haja alguma falha em qualquer um dos nodes, temos a garantia de que qualquer node restante será capaz de responder a qualquer tipo de requisição de inserção/leitura de documentos.
+
+Existem diversas configurações que podem ser feitas e melhoradas em um ambiente produtivo real à respeito de cluster, shards e replicas, mas este não é o foco deste repositório. Mais informações à respeito de configurações, redundância e performance, são encontradas facilmente na documentação oficial da Elastic já citada anteriormente no repositório :)
+
+## Inverted Index
+
+Nosso último ponto, antes de partirmos para as outras ferramentas da stack (até que enfim), fala sobre _uma das_ funcionalidades que tornam o Elasticsearch extremamente rápido na hora de fazer suas pesquisas, o __inveterd index__.
