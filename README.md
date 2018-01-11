@@ -788,4 +788,4 @@ Pois bem, o Elasticsearch na configuração padrão já vem com um cluster_name 
 
 Se quisessemos configurar um node de Elasticsearch em uma máquina remota para fazer parte do nosso cluster, teríamos que configurar alguns parâmetros a mais (Ex: endereço do servidor remoto, bla bla bla), em seu arquivo de configuração principal: **config/elasticsearch.yml**. Mas isto não vem ao caso agora. Quer saber como os seus shards estão balanceados entre os seus nodes agora ? Veja a imagem abaixo:
 
-![two_nodes]((https://github.com/alefeans/elastic-stack/tree/master/images/two_nodes.png))
+![](images/two_nodes.png))
