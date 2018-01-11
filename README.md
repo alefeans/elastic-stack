@@ -649,28 +649,30 @@ Caso queira contratar o funcionário "João Silva" denovo, verifique a seção d
 
 ## Cluster, Shards e Replicas
 
-Lembra que havia dito que o Elasticsearch foi feito para o _Cloud Computing_ ? Nesta seção explicaremos como a redundância e a alta escalabilidade são tratadas internamente pela ferramenta, através de alguns conceitos de clusterização e replicação de dados.
+Lembra que eu havia dito que o Elasticsearch foi feito para o _Cloud Computing_ ? Nesta seção explicaremos como a redundância e a alta escalabilidade são tratadas internamente pela ferramenta, através de alguns conceitos de clusterização e replicação de dados.
 
-Um __node__ é uma instância em execução de Elasticsearch, enquanto um __cluster__ consiste em um ou mais nodes trabalhando em conjunto, como se fossem uma só instância. Instâncias em um mesmo cluster compartilham o mesmo _cluster name_ e possuem uma organização que permite que mais instâncias sejam adicionadas ou removidas ao cluster sem prejudicar o armazenamento dos dados. Afinal, em um ambiente na nuvem, é comum servidores serem adicionados ou descartados a todo momento e isso de forma alguma pode impactar a disponibilidade do serviço ou a integridade dos dados.
+Um __node__ é uma instância em execução de Elasticsearch, enquanto um __cluster__ consiste em um ou mais nodes trabalhando em conjunto, como se fossem uma só instância. Instâncias em um mesmo cluster compartilham do mesmo _cluster name_ e possuem uma organização que permite que mais instâncias sejam adicionadas ou removidas ao cluster sem prejudicar o armazenamento dos dados. Afinal, em um ambiente na nuvem, é comum servidores serem adicionados ou descartados a todo momento e isso de forma alguma pode impactar a disponibilidade do serviço ou a integridade dos dados.
 
-Em um cluster, uma instância é declarada como node _master_, o que signficia que esta instância agora é responsável por lidar com alterações a nível de cluster (ex: criação/remoção de um index, adicionar um node ao cluster e etc). Pequenas alterações a nível de documento não exigem a participação do node master, sendo assim, ter apenas um node master em seu cluster pode ser o suficiente. Porfim, nós como usuários podemos interagir com qualquer node do cluster, inclusive o master, de forma transparente.
+Em um cluster de Elasticsearch, sempre teremos uma instância declarada como node _master_, o que signficia que esta instância agora é responsável por lidar com alterações abrangentes, que modificam informações a nível de cluster (ex: criação/remoção de um index, adição de nodes ao cluster e etc). Pequenas alterações a nível de documento, não exigem a participação do node master, sendo assim, ter apenas um node master em seu cluster pode ser o suficiente. O interessante é que nós usuários podemos interagir com qualquer node do cluster de forma transparente para realizarmos as operações já realizadas (inclusão, pesquisa, remoção e etc), inclusive o node master.
 
-No nosso caso, temos apenas uma instância de Elasticsearch em execução, o que significa que nosso cluster possui apenas um node e que obviamente, é o master node. Vamos visualizar algumas informações sobre o nosso cluster:
+No nosso caso, temos apenas uma instância de Elasticsearch em execução, o que significa que nosso cluster possui apenas um node e que, obviamente, é o node master. Vamos utilizar abaixo a API **_cluster** para verificarmos a saúde do nosso ambiente:
 
 ```
 curl -XGET http://localhost:9200/_cluster/health?pretty
 ```
 
-O campo status pode indicar três cores como resposta:
+O campo status utiliza cores básicas para indicar a saúde do nosso cluster:
 __Green__: Todos os shards primários e replicas estão ativos.  
 __Yellow__: Todos os shards primários estão ativos, mas nem todas as réplicas estão.
 __Red__: Nem todos os shards estão ativos.
 
 Você deve estar pensando "E o que isso signficia se eu nem sei o que é um shard ?". Vamos tentar entender isto melhor agora...
 
-Quando indexamos (lembre-se que _indexar_ é diferente de _index_) nossos documentos no Elasticsearch, estamos adicionando nossos dados em um __shard__, porém nossas aplicações não falam diretamente com o shard em si, mas sim com os índices (a prova disso foram nossas inserções apontando para os nossos índices criados). A realidade é que os índices (mycompany ou twitter por exemplo), são apenas _namespaces lógicos_ que apontam para um ou mais __shards__ e estes, são containers que armazenam os dados que indexamos no Elasticsearch. E para ficar mais simples, dentro de cada shard há uma instância de Apache Lucene utilizando seu motor de busca e indexação para cuidar dos nossos dados. Tranquilo de entender ?
+Quando indexamos nossos documentos no Elasticsearch (lembre-se do significado de _indexar_ explicado anteriormente), estamos adicionando nossos dados em um __shard__, que são basicamente containers que armazenam os dados que indexamos no Elasticsearch. Porém nossas aplicações não falam diretamente com o shard em si, mas sim com os índices (lembre-se das inserções que fizemos anteriormente). A realidade é que os índices, mycompany ou twitter por exemplo, são apenas _namespaces lógicos_ que apontam para um ou mais __shards__. Ou seja, quando realizamos uma inserção de um documento em um index no Elasticsearch, passamos o caminho do index que queremos utilizar, e este, irá armazenar este documento em algum shard qualquer (como se fosse um balanceador que redireciona o tráfego de rede para um grupo de servidores).
 
-Vamos executar um comando que utilizamos no inicio do repositório para validarmos a quantidade de índices criados e visualizarmos algumas informações sobre os nossos shards:
+Após o direcionamento para um shard, o Apache Lucene entra em ação. Dentro de cada shard, há uma instância de Lucene em execução, utilizando o seu motor de busca e indexação para acessar/armazenar os nossos dados. Isso nos garante toda a inteligência e velocidade que esta biblioteca possui na busca de documentos.
+
+Vamos executar um comando que utilizamos no inicio deste repositório para validarmos a quantidade de índices criados e consultarmos algumas informações sobre os nossos shards:
 
 ```
 curl -XGET http://localhost:9200/_cat/indices?v
@@ -683,8 +685,14 @@ Provavelmente você recebeu um retorno parecido com este (formatei em tabela par
 |yellow | open | mycompany | pUEvAXsjQIm | 5 | 1 | 3 | 0| 17.8kb | 17.8kb |
 |yellow | open | twitter | LKz87NMtTlShp | 5 | 1 | 14 | 0| 29.9kb | 29.9kb |
 
-Quando iniciamos uma instância de Elasticsearch, por default são criados 5 shards (coluna __pri__, que significa primary) e 1 réplica (coluna __rep__, que significa replica). A medida que vamos adicionando mais instâncias em nosso cluster, os shards são replicados/migrados entre os nodes pelo próprio Elasticsearch, que irá mantér o nosso cluster balanceado. Um shard pode ser tanto um _primary_, que terá a função de conter todos os documentos do seu index, quanto uma _replica_, que é uma cópia do seu shard primário feita para garantir a redundância dos seus dados entre os nodes do cluster e também para servir à requisições de leitura (busca de documentos, por exemplo).
+Quando iniciamos uma instância de Elasticsearch, por default são criados 5 shards (coluna __pri__, que significa "primary") e 1 réplica (coluna __rep__, que significa "replica"). A medida que adicionamos mais instâncias em nosso cluster, os shards são replicados/migrados entre os nodes pelo próprio Elasticsearch, que fará o possível para manter o nosso cluster balanceado. Um shard _primary_ possui a função de armazenar todos os documentos do seu index. Já um shard _replica_, garante a redundância dos seus dados, servindo como uma cópia do seu shard primary e também, respondendo à requisições de leitura/busca de documentos.
 
-No nosso caso acima, vemos que estamos com o health em "yellow", certo ? Isso se deve ao fato de termos 5 shards primários armazenando nossos dados em um mesmo node e a perda de um deles pode nos resultar em uma perda real de dados, já que só temos apenas 1 réplica que também faz parte do mesmo node. Veja a imagem abaixo para entender melhor o cenário que estamos vivendo:
+Avaliando a tabela com o resultado do nosso comando, vemos que o "health" do nosso cluster está em "yellow", certo ? Isso se deve ao fato de possuirmos cinco shards primários armazenando nossos dados em um mesmo node, e a perda de um deles (seja por uma falha de hardware por exemplo), pode resultar em uma perda real de dados. Outro ponto, é que só possuimos uma réplica e que também faz parte do mesmo node. Veja a imagem abaixo para entender melhor o cenário que estamos vivendo:
+
+![](https://github.com/alefeans/elastic-stack/tree/master/images/five_shards.png)
+
+__Legenda__: P = Primary; R = Replica.
+
+Sendo assim, o Elasticsearch avalia que o nosso cluster não possui uma _alta disponibilidade_ e o categoriza com o status "yellow".
 
 Vamos adicionar outro node ao nosso cluster para resolvermos logo esse negócio de "alta disponibilidade".
