@@ -689,7 +689,7 @@ Quando iniciamos uma instância de Elasticsearch, por default são criados 5 sha
 
 Avaliando a tabela com o resultado do nosso comando, vemos que o "health" do nosso cluster está em "yellow", certo ? Isso se deve ao fato de possuirmos cinco shards primários armazenando nossos dados em um mesmo node, e a perda de um deles, seja por uma falha de hardware por exemplo, pode resultar em uma perda real de dados. Veja a imagem abaixo para entender melhor em que cenário o nosso cluster se encontra:
 
-![](https://github.com/alefeans/elastic-stack/tree/master/images/five_shards.png)
+![](images/five_shards.png)
 
 __Legenda__: P = Primary.
 
