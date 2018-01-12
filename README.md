@@ -1,19 +1,19 @@
 # Elastic Stack para iniciantes
 
-   Quando comecei a estudar sobre o `Elastic Stack`, encontrei diversos conteúdos que traziam explicações muito "pesadas" e que em pouco tempo de leitura, te levavam a realizar várias pesquisas para entender o significado de cada sub-tópico, conceito ou ferramenta adjacente ao assunto principal.
+Quando comecei a estudar sobre o `Elastic Stack`, encontrei diversos conteúdos que traziam explicações muito "pesadas" e que em pouco tempo de leitura, te levavam a realizar várias pesquisas para entender o significado de cada sub-tópico, conceito ou ferramenta adjacente ao assunto principal.
 
-   Sendo assim, decidi criar este repositório para explicar um pouco sobre o que aprendi sobre a _stack_, com uma linguagem mais informal e amigável para quem está iniciando no assunto, mas sem deixar de apresentar os conceitos essenciais. Aviso desde já que o objetivo deste repositório não é ser um guia de referência ou apresentar um conteúdo nível expert, mas sim te tornar apto a utilizar a ferramenta no seu dia-a-dia, compreendendo o funcionamento básico de cada ferramenta que compõe a stack.
+Sendo assim, decidi criar este repositório para explicar um pouco sobre o que aprendi sobre a _stack_, com uma linguagem mais informal e amigável para quem está iniciando no assunto, mas sem deixar de apresentar os conceitos essenciais. Aviso desde já que o objetivo deste repositório não é ser um guia de referência ou apresentar um conteúdo nível expert, mas sim te tornar apto a utilizar a ferramenta no seu dia-a-dia, compreendendo o funcionamento básico de cada ferramenta que compõe a stack.
 
 
-   Não se preocupe se em alguns momentos aparecerem termos confusos que ainda não foram explicados, pois ao longo do treinamento eles se tornarão claros para você :)
+Não se preocupe se em alguns momentos aparecerem termos confusos que ainda não foram explicados, pois ao longo do treinamento eles se tornarão claros para você :)
 
 
 ## Elasticsearch
 
 
-  O `elasticsearch` é uma ferramenta de buscas _open source_ desenvolvido em Java, assim como é uma solução NoSQL de armazenamento de dados, ou seja, não segue os padrões de bancos de dados SQL comuns (como o MySQL, por exemplo). Ele tem como base o [Apache Lucene](https://github.com/apache/lucene-solr), que é uma biblioteca Java de pesquisa _full text_ e que é também, o motor de busca open source mais avançado oferecido hoje em dia. Porém, usar todo o poder de fogo do Lucene exige um certo esforço, afinal, por ser apenas uma biblioteca, você precisa trabalhar com o Java para integrá-lo com sua aplicação (e esta tarefa pode apresentar uma certa complexidade).
+O `elasticsearch` é uma ferramenta de buscas _open source_ desenvolvido em Java, assim como é uma solução NoSQL de armazenamento de dados, ou seja, não segue os padrões de bancos de dados SQL comuns (como o MySQL, por exemplo). Ele tem como base o [Apache Lucene](https://github.com/apache/lucene-solr), que é uma biblioteca Java de pesquisa _full text_ e que é também, o motor de busca open source mais avançado oferecido hoje em dia. Porém, usar todo o poder de fogo do Lucene exige um certo esforço, afinal, por ser apenas uma biblioteca, você precisa trabalhar com o Java para integrá-lo com sua aplicação (e esta tarefa pode apresentar uma certa complexidade).
 
-  O Elasticsearch no entanto, se aproveita do Lucene na _indexação_ e pesquisa de documentos, retirando a sua complexidade através de uma API RESTful super fácil de se utilizar. Além disso, vamos citar algumas características que o tornam uma ferramenta excelente e extremamente veloz:
+O Elasticsearch no entanto, se aproveita do Lucene na _indexação_ e pesquisa de documentos, retirando a sua complexidade através de uma API RESTful super fácil de se utilizar. Além disso, vamos citar algumas características que o tornam uma ferramenta excelente e extremamente veloz:
 
 * Uma API RESTful para inclusão, remoção e acesso aos dados utilizando o padrão JSON.
 * Totalmente livre de normalização.
@@ -25,7 +25,7 @@
 
 ## Onde usar ?
 
-  Tudo bem, ficou claro o que o Elasticsearch é. Mas aonde e como eu posso utilizá-lo ?
+Tudo bem, ficou claro o que o Elasticsearch é. Mas aonde e como eu posso utilizá-lo ?
 
 __Exemplo 1:__
 Bem, um dos cenários mais comuns é utiliza-lo como um agregador de logs em conjunto com o Logstash e o Kibana, que são outras ferramentas da organização _Elastic_, formando o que chamamos atualmente de `Elastic Stack` (o acrônimo `ELK` não é mais utilizado). Através desta _stack_, possuímos uma ferramenta de busca e armazenamento de documentos (Elasticsearch), uma ferramenta de agregação, filtro e envio de dados (Logstash) e por fim, uma _web view_ para pesquisa e análise gráfica dos dados já armazenados (o nosso querido Kibana).
@@ -71,17 +71,17 @@ curl -XGET http://localhost:9200/
 Se você recebeu um retorno parecido com esse, quer dizer que tudo está funcionando como deveria:
 ```
 {
-  "name" : "XJWzjDi",                           # Nome da instância (iremos alterar isto mais tarde).
-  "cluster_name" : "elasticsearch",             # Nome do cluster que a nossa instância pertence.
-  "cluster_uuid" : "ZH9GequzQX-oobJVGPlbjg",    # Identificador universal do seu cluster (como um CPF do seu cluster).
-  "version" : {                                 # Dentro desta "tag" temos todas as informações sobre versão de produto.
-    "number" : "5.6.5",                         # Versão do Elasticsearch.
-    "build_hash" : "57e20f3",                   # "ID" da geração deste pacote de Elasticsearch.
-    "build_date" : "2017-09-23T13:16:45.703Z",  # Data de geração deste pacote.
-    "build_snapshot" : false,                   # Irrelevante (é irrelevante sim, para de reclamar).
-    "lucene_version" : "6.6.1"                  # Versão do Lucene utilizada.
-  },
-  "tagline" : "You Know, for Search"            # Uma resposta amigável do Elasticsearch.
+"name" : "XJWzjDi",                           # Nome da instância (iremos alterar isto mais tarde).
+"cluster_name" : "elasticsearch",             # Nome do cluster que a nossa instância pertence.
+"cluster_uuid" : "ZH9GequzQX-oobJVGPlbjg",    # Identificador universal do seu cluster (como um CPF do seu cluster).
+"version" : {                                 # Dentro desta "tag" temos todas as informações sobre versão de produto.
+"number" : "5.6.5",                         # Versão do Elasticsearch.
+"build_hash" : "57e20f3",                   # "ID" da geração deste pacote de Elasticsearch.
+"build_date" : "2017-09-23T13:16:45.703Z",  # Data de geração deste pacote.
+"build_snapshot" : false,                   # Irrelevante (é irrelevante sim, para de reclamar).
+"lucene_version" : "6.6.1"                  # Versão do Lucene utilizada.
+},
+"tagline" : "You Know, for Search"            # Uma resposta amigável do Elasticsearch.
 }
 
 ```
@@ -97,13 +97,13 @@ Sobre o JSON, imagine que você precise fazer duas aplicações totalmente disti
 
 ```
 { # Abertura de sequência.
-                            # O padrão é "campo", ":" e "valor".
-                            # Caso hajam vários campos, colocar uma "," no final.
-  "nome": "John Will",      # Strings precisam estar entre aspas.
-  "idade": 19,              # Inteiros são apresentados sem aspas.
-  "deficiente": True,       # Booleanos são bem-vindos.
-  "interesses": [ "musica", # Arrays sao representados entre [].
-                "esportes"]
+                        # O padrão é "campo", ":" e "valor".
+                        # Caso hajam vários campos, colocar uma "," no final.
+"nome": "John Will",      # Strings precisam estar entre aspas.
+"idade": 19,              # Inteiros são apresentados sem aspas.
+"deficiente": True,       # Booleanos são bem-vindos.
+"interesses": [ "musica", # Arrays sao representados entre [].
+            "esportes"]
 } # Fechamento da sequência. Fim do documento JSON.
 ```
 
@@ -136,11 +136,11 @@ Agora que fizemos a instalação e garantimos que o nosso Elasticsearch está op
 ```
 curl -XPUT http://localhost:9200/mycompany/funcionarios/1 -d '
 {
-  "nome": "João Silva",
-  "idade": 19,
-  "endereco": "Avenida da Magia",
-  "hobbies": ["Tocar guitarra", "Acampar com a familia"],
-  "interesses": "musica"
+"nome": "João Silva",
+"idade": 19,
+"endereco": "Avenida da Magia",
+"hobbies": ["Tocar guitarra", "Acampar com a familia"],
+"interesses": "musica"
 }'
 ```
 
@@ -198,9 +198,9 @@ Agora, vamos realizar a primeira pesquisa feita no index twitter anteriormente, 
 ```
 curl -XGET http://localhost:9200/twitter/tweet/_search?pretty -d '
 {
-  "query": {
-    "match": { "name": "Phill"}
-  }
+"query": {
+"match": { "name": "Phill"}
+}
 }'
 ```
 
@@ -208,31 +208,31 @@ Neste formato, passamos um documento JSON como parâmetro de pesquisa. Antes de 
 
 ```
 {
-  "took" : 8,                 		# Tempo em milissegundos que a query demorou para  retornar.
-  "timed_out" : false,        		# Houve Time Out na busca (True or False) ?
-  "_shards" : {               		# Falaremos sobre shards mais tarde...
-    "total" : 5,
-    "successful" : 5,
-    "failed" : 0
-  },
-  "hits" : {                
-    "total" : 1,                	# Quantidade de documentos que foram encontrados.
-    "max_score" : 0.25811607,   	# Falaremos sobre score mais tarde também...
-    "hits" : [                  	# Dentro deste array, possuímos todos os resultados encontrados.
-      {
-        "_index" : "twitter",   	# Qual o index do documento.
-        "_type" : "tweet",      	# Qual o type do documento.
-        "_id" : "14",           	# Qual o id do documento.
-        "_score" : 0.25811607,  	# Ó o score ai denovo...
-        "_source" : {           	# Todos os dados do documento encontrado.
-          "date" : "2018-09-23",
-          "name" : "Phill Matt",
-          "tweet" : "Just one is sufficient.",
-          "user_id" : 3
-        }
-      }
-    ]
+"took" : 8,                 		# Tempo em milissegundos que a query demorou para  retornar.
+"timed_out" : false,        		# Houve Time Out na busca (True or False) ?
+"_shards" : {               		# Falaremos sobre shards mais tarde...
+"total" : 5,
+"successful" : 5,
+"failed" : 0
+},
+"hits" : {                
+"total" : 1,                	# Quantidade de documentos que foram encontrados.
+"max_score" : 0.25811607,   	# Falaremos sobre score mais tarde também...
+"hits" : [                  	# Dentro deste array, possuímos todos os resultados encontrados.
+  {
+    "_index" : "twitter",   	# Qual o index do documento.
+    "_type" : "tweet",      	# Qual o type do documento.
+    "_id" : "14",           	# Qual o id do documento.
+    "_score" : 0.25811607,  	# Ó o score ai denovo...
+    "_source" : {           	# Todos os dados do documento encontrado.
+      "date" : "2018-09-23",
+      "name" : "Phill Matt",
+      "tweet" : "Just one is sufficient.",
+      "user_id" : 3
+    }
   }
+]
+}
 }
 ```
 Inicialmente pode parecer estranho ou até um pouco frustrante ter que decifrar um documento JSON. Você tem que parar, analisar, entender o que está dentro de uma tag ou de outra... mas a medida que vamos praticando e brincando mais com o Elasticsearch, esta tarefa vai se tornando menos dolorosa ("_if it hurts, do it more often_", Martin Fowler). E relaxa, daqui a pouco estaremos usando o Kibana para nos ajudar nesta tarefa :)
@@ -246,11 +246,11 @@ Na pesquisa full text você simplesmente pesquisa o que você quer, sem passar n
 ```
 curl -XGET http://localhost:9200/twitter/tweet/_search?pretty -d '
 {
-  "query": {
-    "match": {
-        "tweet": "easy to use"
-    }
-  }
+"query": {
+"match": {
+    "tweet": "easy to use"
+}
+}
 }'
 ```
 
@@ -258,56 +258,56 @@ Se você não fez nenhuma alteração no script [tweets.sh](https://github.com/a
 
 ```
 {
-  "took" : 8,
-  "timed_out" : false,
-  "_shards" : {
-    "total" : 5,
-    "successful" : 5,
-    "skipped" : 0,
-    "failed" : 0
+"took" : 8,
+"timed_out" : false,
+"_shards" : {
+"total" : 5,
+"successful" : 5,
+"skipped" : 0,
+"failed" : 0
+},
+"hits" : {
+"total" : 3,
+"max_score" : 1.9187583,
+"hits" : [
+  {
+    "_index" : "twitter",
+    "_type" : "tweet",
+    "_id" : "6",
+    "_score" : 1.9187583,
+    "_source" : {
+      "date" : "2018-09-16",
+      "name" : "Tom Michael",
+      "tweet" : "The Elasticsearch API is really easy to use",
+      "user_id" : 1
+    }
   },
-  "hits" : {
-    "total" : 3,
-    "max_score" : 1.9187583,
-    "hits" : [
-      {
-        "_index" : "twitter",
-        "_type" : "tweet",
-        "_id" : "6",
-        "_score" : 1.9187583,
-        "_source" : {
-          "date" : "2018-09-16",
-          "name" : "Tom Michael",
-          "tweet" : "The Elasticsearch API is really easy to use",
-          "user_id" : 1
-        }
-      },
-      {
-        "_index" : "twitter",
-        "_type" : "tweet",
-        "_id" : "11",
-        "_score" : 0.84843254,
-        "_source" : {
-          "date" : "2018-09-21",
-          "name" : "Lina Jones",
-          "tweet" : "Elasticsearch is built for the cloud, easy to scale",
-          "user_id" : 2
-        }
-      },
-      {
-        "_index" : "twitter",
-        "_type" : "tweet",
-        "_id" : "3",
-        "_score" : 0.17669111,
-        "_source" : {
-          "date" : "2018-09-13",
-          "name" : "Lina Jones",
-          "tweet" : "Elasticsearch means full text search has never been so easy",
-          "user_id" : 2
-        }
-      }
-    ]
+  {
+    "_index" : "twitter",
+    "_type" : "tweet",
+    "_id" : "11",
+    "_score" : 0.84843254,
+    "_source" : {
+      "date" : "2018-09-21",
+      "name" : "Lina Jones",
+      "tweet" : "Elasticsearch is built for the cloud, easy to scale",
+      "user_id" : 2
+    }
+  },
+  {
+    "_index" : "twitter",
+    "_type" : "tweet",
+    "_id" : "3",
+    "_score" : 0.17669111,
+    "_source" : {
+      "date" : "2018-09-13",
+      "name" : "Lina Jones",
+      "tweet" : "Elasticsearch means full text search has never been so easy",
+      "user_id" : 2
+    }
   }
+]
+}
 }
 ```
 
@@ -322,11 +322,11 @@ Este é o tipo de pesquisa mais simples de se fazer, porém é também o mais su
 ```
 curl -XGET http://localhost:9200/twitter/tweet/_search?pretty -d '
 {
-  "query": {
-    "match_phrase": {
-        "tweet": "easy to use"
-    }
-  }
+"query": {
+"match_phrase": {
+    "tweet": "easy to use"
+}
+}
 }'
 ```
 Repare que agora só obtivemos um retorno, correto ? Neste caso, a _frase_ é pesquisada como uma sequência única que deve ser respeitada.
@@ -337,11 +337,11 @@ Ao indexarmos um documento, todos os valores dos campos do documento são indexa
 
 ```
 {
-  "nome": "Maria",
-  "idade": 28,
-  "endereco": "Rua Encantada",
-  "rg": 123456789,
-  "hobbies": ["Cantar", "Jogar xadrez"]
+"nome": "Maria",
+"idade": 28,
+"endereco": "Rua Encantada",
+"rg": 123456789,
+"hobbies": ["Cantar", "Jogar xadrez"]
 }
 ```
 
@@ -349,7 +349,7 @@ O campo "_all" deste documento ficaria assim:
 
 ```
 {
-  "_all": "Maria 28 Rua Encantada 123456789 Cantar Jogar xadrez
+"_all": "Maria 28 Rua Encantada 123456789 Cantar Jogar xadrez
 }
 ```
 
@@ -357,18 +357,18 @@ Sendo assim, ao realizarmos uma busca full-text sem passarmos nenhum campo como 
 
 ```
 {
-  "nome": "Carlos",
-  "idade": 21,
-  "endereco": "Rua Freitas",
-  "rg": 231496289,
-  "hobbies": "Jogar futebol"
+"nome": "Carlos",
+"idade": 21,
+"endereco": "Rua Freitas",
+"rg": 231496289,
+"hobbies": "Jogar futebol"
 },
 {
-  "nome": "José",
-  "idade": 38,
-  "endereco": "Rua Carlos",
-  "rg": 987654321,
-  "hobbies": "Assistir Netflix"
+"nome": "José",
+"idade": 38,
+"endereco": "Rua Carlos",
+"rg": 987654321,
+"hobbies": "Assistir Netflix"
 }
 
 ```
@@ -377,10 +377,10 @@ Ao inserir estes dois documentos, o Elasticsearch geraria para cada um, as segui
 
 ```
 {
-  "_all": "Carlos 21 Rua Freitas 231496289 Jogar futebol
+"_all": "Carlos 21 Rua Freitas 231496289 Jogar futebol
 },
 {
-  "_all": "José 38 Rua Carlos 987654321 Assistir Netflix
+"_all": "José 38 Rua Carlos 987654321 Assistir Netflix
 }
 ```
 
@@ -399,20 +399,20 @@ Após executar o script, execute a pesquisa estruturada abaixo. Tente interpret�
 ```
 curl -XGET http://localhost:9200/mycompany/_search\?pretty -d '
 {
-  "query": {
-    "bool": {
-      "must": {
-        "match": {
-          "nome":   "Silva"       
-           }
-        },     
-      "filter":  {
-       "range": {
-         "idade": {"gt": 30}
-        }    
-      }
-    }
+"query": {
+"bool": {
+  "must": {
+    "match": {
+      "nome":   "Silva"       
+       }
+    },     
+  "filter":  {
+   "range": {
+     "idade": {"gt": 30}
+    }    
   }
+}
+}
 }
 '
 ```
@@ -438,12 +438,12 @@ Finalizando os tipos de pesquisa existentes, temos a pesquisa analítica. O Elas
 ```
 curl -XPUT http://localhost:9200/mycompany/_mapping/funcionarios -d '
 {
-  "properties": {
-    "interesses": {
-      "type":     "text",
-      "fielddata": true
-    }
-  }
+"properties": {
+"interesses": {
+  "type":     "text",
+  "fielddata": true
+}
+}
 }'
 ```
 
@@ -454,16 +454,16 @@ Agora que habilitamos o fielddata, vamos fazer nossa pesquisa !
 ```
 curl -XGET http://localhost:9200/mycompany/funcionarios/_search?pretty -d '
 {
-    "query" : {
-        "match_all" : {}
-    },
-    "aggs" : {
-        "maiores_interesses" : {
-            "terms" : {
-                "field" : "interesses"
-            }
+"query" : {
+    "match_all" : {}
+},
+"aggs" : {
+    "maiores_interesses" : {
+        "terms" : {
+            "field" : "interesses"
         }
     }
+}
 }'
 ```
 
@@ -472,34 +472,34 @@ O parâmetro **"aggs"** é utilizado para descrevermos todas as nossas agregaç�
 Para facilitar a visualização, vamos observar apenas o final do resultado obtido:
 
 ```
-  "aggregations" : {
-    "maiores_interesses" : {
-      "doc_count_error_upper_bound" : 0,
-      "sum_other_doc_count" : 0,
-      "buckets" : [
-        {
-          "key" : "esportes",
-          "doc_count" : 2
-        },
-        {
-          "key" : "musica",
-          "doc_count" : 2
-        },
-        {
-          "key" : "filmes",
-          "doc_count" : 1
-        },
-        {
-          "key" : "games",
-          "doc_count" : 1
-        },
-        {
-          "key" : "musculacao",
-          "doc_count" : 1
-        }
-      ]
+"aggregations" : {
+"maiores_interesses" : {
+  "doc_count_error_upper_bound" : 0,
+  "sum_other_doc_count" : 0,
+  "buckets" : [
+    {
+      "key" : "esportes",
+      "doc_count" : 2
+    },
+    {
+      "key" : "musica",
+      "doc_count" : 2
+    },
+    {
+      "key" : "filmes",
+      "doc_count" : 1
+    },
+    {
+      "key" : "games",
+      "doc_count" : 1
+    },
+    {
+      "key" : "musculacao",
+      "doc_count" : 1
     }
-  }
+  ]
+}
+}
 }
 
 ```
@@ -577,11 +577,11 @@ A nível de teste, não há problemas neste tipo de abordagem. Mas não é comum
 ```
 curl -XPOST http://localhost:9200/mycompany/diretores/ -d '
 {
-  "nome": "Roberto Roberts",
-  "idade": 40,
-  "endereco": "Rua da Chiqueza",
-  "hobbies": ["Jogar golf", "Fazer chiquezas"],
-  "interesses": ["orquestras", "coisas chiques"]
+"nome": "Roberto Roberts",
+"idade": 40,
+"endereco": "Rua da Chiqueza",
+"hobbies": ["Jogar golf", "Fazer chiquezas"],
+"interesses": ["orquestras", "coisas chiques"]
 }'
 ```
 
@@ -619,9 +619,9 @@ Outro ponto que talvez você não tenha reparado, é que podemos realizar consul
 ```
 curl -XGET http://localhost:9200/mycompany/_search?pretty -d '
 {
-  "query": {
-    "match_phrase": { "nome": "Claudio Silva"}
-  }
+"query": {
+"match_phrase": { "nome": "Claudio Silva"}
+}
 }'
 ```
 
@@ -716,12 +716,12 @@ O número de shards primários é fixado no momento da criação do index, enqua
 ```
 curl -XPUT http://localhost:9200/market -d '
 {
-    "settings" : {
-        "index" : {
-            "number_of_shards" : 3,
-            "number_of_replicas" : 1
-        }
+"settings" : {
+    "index" : {
+        "number_of_shards" : 3,
+        "number_of_replicas" : 1
     }
+}
 }'
 ```
 
@@ -729,21 +729,21 @@ Legal, se chamarmos novamente a API _cluster para verificarmos a saúde novament
 
 ```
 {
-  "cluster_name" : "elasticsearch",
-  "status" : "yellow",
-  "timed_out" : false,
-  "number_of_nodes" : 1,
-  "number_of_data_nodes" : 1,
-  "active_primary_shards" : 3,
-  "active_shards" : 3,
-  "relocating_shards" : 0,
-  "initializing_shards" : 0,
-  "unassigned_shards" : 3,
-  "delayed_unassigned_shards" : 0,
-  "number_of_pending_tasks" : 0,
-  "number_of_in_flight_fetch" : 0,
-  "task_max_waiting_in_queue_millis" : 0,
-  "active_shards_percent_as_number" : 50.0
+"cluster_name" : "elasticsearch",
+"status" : "yellow",
+"timed_out" : false,
+"number_of_nodes" : 1,
+"number_of_data_nodes" : 1,
+"active_primary_shards" : 3,
+"active_shards" : 3,
+"relocating_shards" : 0,
+"initializing_shards" : 0,
+"unassigned_shards" : 3,
+"delayed_unassigned_shards" : 0,
+"number_of_pending_tasks" : 0,
+"number_of_in_flight_fetch" : 0,
+"task_max_waiting_in_queue_millis" : 0,
+"active_shards_percent_as_number" : 50.0
 }
 ```
 
@@ -765,21 +765,21 @@ Caso queira alterar para um outro caminho de sua preferência, sinta-se a vontad
 
 ```
 {
-  "cluster_name" : "elasticsearch",
-  "status" : "green",
-  "timed_out" : false,
-  "number_of_nodes" : 2,
-  "number_of_data_nodes" : 2,
-  "active_primary_shards" : 3,
-  "active_shards" : 6,
-  "relocating_shards" : 0,
-  "initializing_shards" : 0,
-  "unassigned_shards" : 0,
-  "delayed_unassigned_shards" : 0,
-  "number_of_pending_tasks" : 0,
-  "number_of_in_flight_fetch" : 0,
-  "task_max_waiting_in_queue_millis" : 0,
-  "active_shards_percent_as_number" : 100.0
+"cluster_name" : "elasticsearch",
+"status" : "green",
+"timed_out" : false,
+"number_of_nodes" : 2,
+"number_of_data_nodes" : 2,
+"active_primary_shards" : 3,
+"active_shards" : 6,
+"relocating_shards" : 0,
+"initializing_shards" : 0,
+"unassigned_shards" : 0,
+"delayed_unassigned_shards" : 0,
+"number_of_pending_tasks" : 0,
+"number_of_in_flight_fetch" : 0,
+"task_max_waiting_in_queue_millis" : 0,
+"active_shards_percent_as_number" : 100.0
 }
 ```
 
