@@ -1,9 +1,12 @@
 # Elastic Stack para iniciantes
 
-Quando comecei a estudar sobre o `Elastic Stack`, encontrei diversos conteúdos que traziam explicações muito "pesadas" e que em pouco tempo de leitura, te levavam a realizar várias pesquisas para entender o significado de cada sub-tópico, conceito ou ferramenta adjacente ao assunto principal.
+Quando iniciei meus estudos sobre o `Elastic Stack`, encontrei muitos livros e artigos que ofereciam ótimos conteúdos, porém com explicações muito "pesadas", o que em alguns momentos, me levavam a fazer várias pesquisas intermediárias para entender o significado de cada sub-tópico, conceito ou ferramenta adjacente, só para tentar entender o que assunto principal tratava. E geralmente, artigos técnicos são assim.
 
-Sendo assim, decidi criar este repositório para explicar um pouco sobre o que aprendi sobre a _stack_, com uma linguagem mais informal e amigável para quem está iniciando no assunto, mas sem deixar de apresentar os conceitos essenciais. Aviso desde já que o objetivo deste repositório não é ser um guia de referência ou apresentar um conteúdo nível expert, mas sim te tornar apto a utilizar a ferramenta no seu dia-a-dia, compreendendo o funcionamento básico de cada ferramenta que compõe a stack.
+Não que seja algo completamente ruim, afinal cada tecnologia é um universo composto por outros "_universos menores_". Mas será que é sempre necessário utilizar a linguagem mais técnica e complexa para descrever um conceito ou uma ferramenta ?
 
+Tendo esse pensamento em mente, decidi criar este repositório para explicar um pouco do que aprendi sobre a _stack_, utilizando uma linguagem mais informal e amigável, visando atingir o maior número de pessoas (sem deixar de apresentar os conceitos essenciais, é claro). O único pré-requisito que acho interessante pontuar para se obter um maior aproveitamento do conteúdo, é ter um conhecimento razoável em Linux.
+
+Aviso desde já que o objetivo deste repositório não é ser um guia de referência ou apresentar um conteúdo nível _expert_, mas sim te tornar apto a utilizar as ferramentas no seu dia-a-dia, compreendendo o funcionamento básico de cada componente que compõe a stack.
 
 Não se preocupe se em alguns momentos aparecerem termos confusos que ainda não foram explicados, pois ao longo do treinamento eles se tornarão claros para você :)
 
@@ -647,6 +650,41 @@ Tenha bastante cuidado ao apagar um dado, pois caso você esqueça de passar o "
 
 Caso queira contratar o funcionário "João Silva" denovo, verifique a seção do treinamento de nome "Index, Type, Document ?" e execute a inserção novamente.
 
+##### Atualizando
+
+Documentos no Elasticsearch são _imutáveis_. Caso haja a necessidade de atualizar um documento existente, nós o _reindexamos_ ou o substituimos completamente, utilizando a mesma API que usamos para inserir um documento. Vamos alterar o endereço da funcionária "Maria" de id "2":
+
+```
+curl -XPUT http://localhost:9200/mycompany/funcionarios/2 -d '
+{
+  "nome": "Maria Costa",
+  "idade": 34,
+  "endereco": "Avenida do Amor",
+  "hobbies": ["Ouvir musica", "Andar de bicicleta"],
+  "interesses": ["esportes", "musica"]
+}'
+```
+Observe a resposta do Elasticsearch ao seu comando:
+
+```
+{"_index":"mycompany","_type":"funcionarios","_id":"2","_version":2,"result":"updated","_shards":{"total":2,"successful":1,"failed":0},"created":false}%
+```
+
+Podemos ver que o campo **"_version"** foi incrementado e que o campo **"created"** possui o valor _false_ (pois o documento que atualizamos já existia anteriormente). Por debaixo dos panos, o Elasticsearch marca o documento antigo como removido e adiciona o novo documento inteiro.
+
+Existe uma forma de realizar atualizações parciais utilizando a API **_update**. Este tipo de atualização também segue a mesma regra descrita para o update total, diferenciando-se apenas nos fatos de que é possivel atualizar os campos necessários sem precisar digitar o documento inteiro como parâmetro, como fizemos anteriormente, e que o processo acontece no "interior de um shard", o que é transparente para nós usuários. Por exemplo:
+
+```
+curl -XPOST http://localhost:9200/mycompany/funcionarios/2/_update -d '
+{
+  "doc": {
+    "idade": 35
+  }
+}'
+```
+
+Podemos utilizar esta mesma API para acrescentarmos mais campos em nossos documentos. Faça o teste, altere o campo __"idade" : 35__ por um campo que não exista no nosso documento, atribuia um valor de sua preferência e acrescente-o no documento acima.
+
 ## Cluster, Shards e Replicas
 
 Lembra que eu havia dito que o Elasticsearch foi feito para o _Cloud Computing_ ? Nesta seção explicaremos como a redundância e a alta disponibilidade são tratadas internamente pela ferramenta, através de alguns conceitos de _clusterização_ e replicação de dados. Já adianto que esta seção pode ser um pouco pesada para quem está iniciando, portanto preste __bastante__ atenção em cada ponto aqui explicado, pois eles são essenciais para compreender a ferramenta mais a fundo.
@@ -783,11 +821,11 @@ Caso queira alterar para um outro caminho de sua preferência, sinta-se a vontad
 }
 ```
 
-Olha que lindo, nosso cluster status está como "green", possuimos um "number_of_nodes" de 2, temos 6 "active_shards" e nenhum "unassigned_shards". Apesar de estarmos utilizando o mesmo hardware (o que não garante nenhuma alta disponibilidade), por possuirmos 2 nodes em nosso cluster, o Elasticsearch já o considera como "green" por conta da distribuilão dos shards primários e réplicas. Não é demais ?
+Olha que legal, agora o nosso cluster status está como "green", possuimos um "number_of_nodes" de 2, temos 6 "active_shards" e nenhum "unassigned_shards". Apesar de estarmos utilizando o mesmo hardware (o que não garante nenhuma alta disponibilidade real), por possuirmos 2 nodes em nosso cluster, o Elasticsearch já o considera como "green" por conta da distribuilão dos shards primários e réplicas.
 
 Mas vamos lá ... como esta nova instância _simplesmente_ começou a fazer parte do meu cluster ? E como minhas replicas e shards foram distribuidas pelo Elasticsearch ?
 
-Pois bem, o Elasticsearch em sua configuração padrão, vem com um cluster_name default nomeado de __"elasticsearch"__ e já procura por outro node master em sua máquina local. Ao subirmos outra instância com a mesma configuração, ele procurou por estas informações em minha máquina local e pronto, começou a fazer parte do nosso cluster.
+Pois bem, o Elasticsearch em sua configuração padrão, já vem com o cluster_name __"elasticsearch"__ e ao ser iniciado, realiza a busca por outro node master em sua máquina local. Ao subirmos esta outra instância com a mesma configuração, ele procurou por estas informações em sua máquina local e pronto, começou a fazer parte do nosso cluster.
 
 Se quisessemos configurar um node de Elasticsearch em uma máquina remota para fazer parte do nosso cluster, teríamos que configurar alguns parâmetros a mais (endereço do servidor remoto, node name e etc), em seu arquivo de configuração principal: **config/elasticsearch.yml**. Mas isto não vem ao caso agora. Quer saber como os seus shards estão balanceados entre os seus nodes agora ? Veja a imagem abaixo:
 
@@ -800,10 +838,97 @@ Agora possuímos todas as nossas réplicas associadas ao nosso node 2. Perceba q
 ![](images/three_nodes.png)
 
 
-Caso haja alguma falha em qualquer um dos nodes, temos a garantia de que qualquer node restante será capaz de responder a qualquer tipo de requisição de inserção/leitura de documentos.
+Caso haja uma falha em qualquer um dos nodes, temos a garantia de que qualquer outro node restante será capaz de responder a qualquer tipo de requisição de inserção/leitura de documentos.
 
-Existem diversas configurações que podem ser feitas e melhoradas em um ambiente produtivo real à respeito de cluster, shards e replicas, mas este não é o foco deste repositório. Mais informações à respeito de configurações, redundância e performance, são encontradas facilmente na documentação oficial da Elastic já citada anteriormente no repositório :)
+Existem diversas configurações que podem ser feitas e melhoradas em um ambiente produtivo real à respeito de cluster, shards e replicas, mas este não é o foco deste repositório. Mais informações à respeito de configurações, redundância e performance, são encontradas facilmente na documentação oficial da Elastic.
 
 ## Inverted Index
 
-Nosso último ponto, antes de partirmos para as outras ferramentas da stack (até que enfim), fala sobre _uma das_ funcionalidades que tornam o Elasticsearch extremamente rápido na hora de fazer suas pesquisas, o __inveterd index__.
+Nosso último ponto, antes de partirmos para as outras ferramentas da stack, será totalmente teórico e irá abordar sobre _uma das_ funcionalidades que tornam o Elasticsearch extremamente rápido na hora de fazer suas pesquisas, o __inveterd index__.
+
+O inverted index ou índice invertido (_high level fluent traduction_), é uma estrutura que consiste em uma lista de todas as únicas palavras que aparecem em qualquer documento, e para cada palavra, uma lista de documentos em que ela aparece. Para facilitar o entendimento, vamos supor que possuímos dois documentos, cada um com um campo chamado __"informacao"__, contendo os seguintes valores:
+
+__1°__ - O bulldog frances gosta de pular na grama
+__2°__ - Bulldog frances saltou na grama com gosto
+
+Um índice invertido destes documentos, seriam criados da seguinte forma. Primeiro, o conteúdo do campo _informacao_ é dividido em palavras separadas (o que o Elasticsearch denomina de __"terms"__ ou __"tokens"__). Depois, criamos uma lista  de todos os "termos" únicos e então, listamos em quais documentos cada termo aparece. O resultado se parece como a tabela abaixo:
+
+| Termo   | Documento_1 | Documento_2 |
+| ------- |-----------|-------------|
+|Bulldog  |           |    __X__    |
+|O        |     __X__ |             |
+|bulldog  |     __X__ |             |
+|de       |     __X__ |             |
+|frances  |     __X__ |    __X__    |
+|na       |     __X__ |    __X__    |
+|pular    |     __X__ |             |
+|saltou   |           |   __X__     |
+|gosto    |           |   __X__     |
+|grama    |     __X__ |   __X__     |
+|gosta    |     __X__ |             |
+|com      |           |   __X__     |
+
+Se quisermos fazer uma pesquisa para encontrar "bulldog frances", precisamos apenas encontrar os documentos que cada termo aparece:
+
+| Termo   | Documento_1 | Documento_2 |
+| ------- |-----------|-------------|
+|bulldog  |     __X__ |             |
+|frances  |     __X__ |    __X__    |
+|TOTAL    |     __1__ |    __2__    |
+
+Os dois documentos coincidem com a pesquisa, porém o segundo documento possui mais proximidade com a busca. Ou seja, o segundo documento é mais __relevante__ para a nossa pesquisa. Porém, existem alguns problemas com o nosso índice invertido:
+
+__1°__ - "Bulldog" e "bulldog" aparecem como termos separados, enquanto para nós usuários, eles deveriam aparecer como a mesma palavra.
+__2°__ - "pular" e "saltou", por mais que não sejam a mesma palavra, são sinônimos, ou seja, possuem o significado similar, independente do tempo verbal.
+
+Seja por qualquer motivo, nosso usuário pode experar os documentos como resultado da busca. Portanto, se normalizarmos os termos em um formato padronizado, podemos apresentar documentos que contenham termos que não são exatamente o mesmo que o usuário requisitou, mas que são similares o suficiente para continuar relevante. Por exemplo:
+
+__1°__ - "Bulldog" e "O" podem ser colocados em minúsculo.
+__2°__ - "pular" e "saltou", podem ser indexados como apenas "pular".
+
+Agora o nosso índice ficou assim:
+
+| Termo   | Documento_1 | Documento_2 |
+| ------- |-----------|-------------|
+|o        |     __X__ |             |
+|bulldog  |     __X__ |    __X__    |
+|de       |     __X__ |             |
+|frances  |     __X__ |    __X__    |
+|na       |     __X__ |    __X__    |
+|pular    |     __X__ |    __X__    |
+|gosto    |           |    __X__    |
+|grama    |     __X__ |    __X__    |
+|gosta    |     __X__ |             |
+|com      |           |    __X__    |
+
+Agora nossos documentos estão mais "encontráveis", certo ? Esse processo de normalização é chamado de __"analysis"__ pelo Elasticsearch e é utilizado para facilitar a busca de documentos que possam indicar o mesmo significado, independente se o conteúdo não for exatamente o buscado.
+
+O Elasticsearch fornece diversos "analisadores" que você pode utilizar na padronização de seus documentos. Como este tópico é apenas explicativo, não iremos realizar nenhuma alteração em nossos dados. De qualquer forma, saiba que este é um ponto muito importante e que deve ser avaliado com atenção em um ambiente real. Para mais informações, segue o bom e velho link da documentação da [Elastic](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-analyzers.html).
+
+## Logstash e Kibana
+
+Estamos há um bom tempo falando somente sobre o Elasticsearch e há um motivo especial para isso. Ele é o coração da nossa stack. É essencial compreender bem o seu funcionamento para não haver nenhuma dúvida na hora de procurarmos nossos documentos ou quando começarmos a criar nossos dashboards no Kibana.
+
+## Instalação
+
+Agora, chega de enrolação ! Vamos realizar a instalação da mesma forma que instalamos o Elasticsearch, realizando o download do _.zip_ do [Kibana](https://www.elastic.co/downloads/kibana) e do [Logstash](https://www.elastic.co/downloads/logstash), realizando o unzip em um diretório separado para cada um deles e pronto, fácil né ? Elastic né filho...
+
+__OBS:__ Pode ser que não haja nenhum problema de compatibilidade, mas lembre-se que estamos utilizando a versão 5.6.5 para todas as ferramentas da stack neste repositório. Não se esqueça também de validar a quantidade de memória disponível do seu host para a subida do Kibana.
+
+Agora, entre no diretório da instalação do Kibana e navegue até o diretório _bin_. Execute o comando abaixo para subir uma instância:
+
+```
+nohup ./kibana &
+```
+
+Após a subida do processo, acesse o endereço http://localhost:5601 no seu browser.
+
+__OBS:__ Caso esteja utilizando uma máquina virtual, utilizar o endereço de IP da sua vm ao invés de _localhost_.
+
+Se tudo deu certo, você deve estar visualizando a tela inicial do Kibana com algumas informações sobre o seu cluster de Elasticsearch. Atualize esta página e provavelmente você será direcionado para a seção "Management" do Kibana. Nesta seção, escolhemos quais índices iremos buscar em nosso Elasticsearch para a visualização no Kibana. Mude no campo "index pattern" o valor "logstash-*" para "mycompany". Após isto, crie em "create":
+
+![](images/kibana_first.png)
+
+Após isto, você será direcionado para uma página onde todos os campos do seu index poderam ser visualizados. Nesta página é possível alterar algumas coisinhas em seus campos, como tipo de dado e etc. Não vamos mexer em nada nesta tela, ok ? Ao invés disso, vamos acessar no menu lateral esquerdo, a seção "Discover". E olha ! Todos os nossos dados estão aqui:
+
+![](images/kibana-second.png)
