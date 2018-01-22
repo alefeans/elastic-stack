@@ -21,7 +21,7 @@ Quando iniciamos uma instância de Elasticsearch, por default são criados 5 sha
 
 Avaliando a tabela com o resultado do nosso comando, vemos que o "health" do nosso cluster está em "yellow", certo ? Isso se deve ao fato de possuirmos cinco shards primários armazenando nossos dados em um mesmo node, e a perda de um deles, seja por uma falha de hardware por exemplo, pode resultar em uma perda real de dados. Veja a imagem abaixo para entender melhor em que cenário o nosso cluster se encontra:
 
-![](images/five_shards.png)
+![](/images/five_shards.png)
 
 __Legenda__: P = Primary.
 
@@ -120,13 +120,13 @@ Pois bem, o Elasticsearch em sua configuração padrão, já vem com o cluster_n
 
 Se quisessemos configurar um node de Elasticsearch em uma máquina remota para fazer parte do nosso cluster, teríamos que configurar alguns parâmetros a mais (endereço do servidor remoto, node name e etc), em seu arquivo de configuração principal: **config/elasticsearch.yml**. Mas isto não vem ao caso agora. Quer saber como os seus shards estão balanceados entre os seus nodes agora ? Veja a imagem abaixo:
 
-![](images/two_nodes.png)
+![](/images/two_nodes.png)
 
 __Legenda:__ P = Primary; R = Replica.
 
 Agora possuímos todas as nossas réplicas associadas ao nosso node 2. Perceba que qualquer requisição pode ser atendida por qualquer node, já que possuímos exatamente __todos__ os dados replicados em todos os nodes de nosso cluster. Para uma última ilustração, caso tivessemos 3 nodes e 2 réplicas, nosso cluster estaria representado mais ou menos desta forma:
 
-![](images/three_nodes.png)
+![](/images/three_nodes.png)
 
 
 Caso haja uma falha em qualquer um dos nodes, temos a garantia de que qualquer outro node restante será capaz de responder a qualquer tipo de requisição de inserção/leitura de documentos.

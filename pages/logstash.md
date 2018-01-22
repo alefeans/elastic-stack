@@ -68,7 +68,7 @@ nohup ./logstash -f ../config/logstash-apache.conf &
 
 Utilizamos o parâmetro "-f" para informar ao Logstash o arquivo de configuração que criamos. Feito isso, vamos validar o nosso index "apache" no Kibana:
 
-![](gifs/apache_index.gif)
+![](/gifs/apache_index.gif)
 
 Agora conseguimos visualizar todas as requisições feitas ao nosso servidor Web pelo Kibana ! Caso você não esteja visualizando nenhum dado, certifique-se de alterar o filtro de tempo no canto superior direito, ajustando com a data em que a entrada dos dados foi feita. É interessante também configurar um refresh automático para visualizar a entrada dos dados em real-time.
 
