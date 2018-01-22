@@ -1,6 +1,6 @@
 # Elastic Stack para iniciantes
 
-Quando iniciei meus estudos sobre o `Elastic Stack`, encontrei muitos livros e artigos que ofereciam ótimos conteúdos, porém com explicações muito "pesadas", o que em alguns momentos, me levavam a fazer várias pesquisas intermediárias para entender o significado de cada sub-tópico, conceito ou ferramenta adjacente, só para tentar entender o que assunto principal tratava. E geralmente, artigos técnicos são assim.
+Quando comecei a estudar sobre o `Elastic Stack`, encontrei muitos livros e artigos que ofereciam ótimos conteúdos, porém com explicações muito "pesadas". o que em alguns momentos, me levavam a fazer várias pesquisas intermediárias para entender o significado de cada sub-tópico, conceito ou ferramenta adjacente, só para tentar entender o que assunto principal tratava. E geralmente, artigos técnicos são assim.
 
 Não que seja algo completamente ruim, afinal cada tecnologia é um universo composto por outros "_universos menores_". Mas será que é sempre necessário utilizar a linguagem mais técnica e complexa para descrever um conceito ou uma ferramenta ?
 
@@ -175,7 +175,7 @@ Neste comando, chamamos a API ___search___, que é a API padrão de buscas do El
 
 No Elasticsearch existem três _tipos_ de pesquisa (full-text, estruturada e analítica) e duas _formas_ básicas de se pesquisar (query-string e query DSL).
 
-Para este exemplo, utilize o script [tweets.sh](https://github.com/alefeans/elastic-stack/tree/master/scripts/tweets.sh) para criar o índice twitter que irá conter diversos tweets de usuários diferentes. Caso queira visualizar os índices existentes no seu Elasticsearch, utilize a API **_cat**:
+Para este exemplo, utilize o script [tweets.sh](scripts/tweets.sh) para criar o índice twitter que irá conter diversos tweets de usuários diferentes. Caso queira visualizar os índices existentes no seu Elasticsearch, utilize a API **_cat**:
 
 ```
 curl -XGET http://localhost:9200/_cat/indices?v
@@ -244,7 +244,7 @@ Agora vamos aos três tipos básicos de pesquisa...
 
 ## Full-Text
 
-Na pesquisa full text você simplesmente pesquisa o que você quer, sem passar nenhuma regra, agregação ou algo do tipo. Quando apresentarmos o Kibana, este tipo de pesquisa vai se apresentar de forma mais simples ainda, como uma pesquisa no Google. Vamos pesquisar as palavras "easy to use" no campo "tweet" do nosso index:
+Na pesquisa full-text você simplesmente pesquisa o que você quer, sem passar nenhuma regra, agregação ou algo do tipo. Quando apresentarmos o Kibana, este tipo de pesquisa vai se apresentar de forma mais simples ainda, como uma pesquisa no Google. Vamos pesquisar as palavras "easy to use" no campo "tweet" do nosso index:
 
 ```
 curl -XGET http://localhost:9200/twitter/tweet/_search?pretty -d '
@@ -257,7 +257,7 @@ curl -XGET http://localhost:9200/twitter/tweet/_search?pretty -d '
 }'
 ```
 
-Se você não fez nenhuma alteração no script [tweets.sh](https://github.com/alefeans/elastic-stack/tree/master/scripts/tweets.sh), você deve estar visualizando 3 tweets agora, como estes aqui:
+Se você não fez nenhuma alteração no script [tweets.sh](scripts/tweets.sh), você deve estar visualizando 3 tweets agora, como estes aqui:
 
 ```
 {
@@ -395,7 +395,7 @@ Estamos entendidos com o full-text ?
 
 ## Estruturada
 
-Uma pesquisa estruturada diz respeito à pesquisas que possuem algum tipo de parametrização/regra envolvida. Para este exemplo, vamos usar o script [funcs.sh](https://github.com/alefeans/elastic-stack/tree/master/scripts/funcs.sh) para gerar os dados no nosso esquecido índice "mycompany".
+Uma pesquisa estruturada diz respeito à pesquisas que possuem algum tipo de parametrização/regra envolvida. Para este exemplo, vamos usar o script [funcs.sh](scripts/funcs.sh) para gerar os dados no nosso esquecido índice "mycompany".
 
 Após executar o script, execute a pesquisa estruturada abaixo. Tente interpretá-la juntamente com o seu resultado antes de ler a explicação, ok ?
 
@@ -563,7 +563,7 @@ curl -XGET http://localhost:9200/_count?pretty
 
 ##### Entendendo melhor os contextos
 
-Até agora, aprendemos a inserir dados em nosso Elasticsearch informando o __id__ que o documento irá possuir. Um exemplo disso foi a nossa primeira inserção e o conteúdo do script [funcs.sh](https://github.com/alefeans/elastic-stack/tree/master/scripts/funcs.sh), onde passamos o caminho completo que o documento será inserido:
+Até agora, aprendemos a inserir dados em nosso Elasticsearch informando o __id__ que o documento irá possuir. Um exemplo disso foi a nossa primeira inserção e o conteúdo do script [funcs.sh](scripts/funcs.sh), onde passamos o caminho completo que o documento será inserido:
 
 ```
 curl -XPUT http://localhost:9200/mycompany/funcionarios/1
@@ -951,11 +951,11 @@ Na imagem acima, perceba que fiz a expansão do documento da "Maria Costa", visu
 
 ![](images/kibana-third.png)
 
-Temos pouquíssimos dados para criar um dashboard bonitão para mostrar para o chefe ou para fazermos um quadro (que é o objetivo real desse treinamento). Mas enquanto estamos nesta situação, vamos criar uma visualização simples para apurarmos nossas habilidades estatísticas para o nosso __dashboard final__ (*música de tensão*). Siga as instruções abaixo para a criação da nossa primeira _view_:
+Temos pouquíssimos dados para criar um dashboard bonito e apresentá-lo ao chefe ou para fazermos um belo quadro (que é o objetivo real desse treinamento). Mas enquanto estamos nesta situação, vamos criar uma visualização simples para apurarmos nossas habilidades estatísticas para o nosso __dashboard final__ (*música de tensão*). Siga as instruções abaixo para a criação da nossa primeira _view_:
 
 ![](gifs/first_visualization.gif)
 
-Mexer no Kibana é muito simples e o gif é auto-explicativo... mas vamos mastigar um pouco mais o que foi feito. Escolhemos a opção default "Count" na primeira _"Aggregation"_, que irá fazer a contagem das vezes que um item é encontrado. Em nossos "buckets", fizemos a agregação (high translation capability), pelo termo "interesses". As "custom labels" são opcionais e só servem para facilitar a leitura dos campos nos gráficos. No final, tivemos um gráfico em formato de pizza, com as fatias separadas pelos interesses dos nossos funcionários, de acordo com a porcentagem de valores encontrados. Se parece com a busca analítica que fizemos mais acima no Elasticsearch não é verdade ? Pois é exatamente a mesma operação. Viu como é muito mais simples quando utilizamos o Kibana ?
+Mexer no Kibana é muito simples e o gif é auto-explicativo... mas vamos mastigar um pouco mais o que foi feito. Escolhemos a opção default "Count" na primeira _"Aggregation"_, que irá fazer a contagem das vezes que um item é encontrado. Em nossos "buckets", fizemos a agregação (high translation capability), pelo termo "interesses". As "custom labels" são opcionais e só servem para facilitar a leitura dos campos nos gráficos. No final, tivemos um gráfico em formato de pizza, com as fatias separadas pelos interesses dos nossos funcionários, de acordo com a porcentagem de valores encontrados. Se parece com a busca __analítica__ que fizemos mais acima no Elasticsearch não é verdade ? Pois é exatamente a mesma operação. Viu como é muito mais simples quando utilizamos o Kibana ?
 
 Para explorarmos o _Lucene Query Syntax_ e gerarmos gráficos mais interessantes, precisamos de uma massa de dados maior do que a que possuímos. Sendo assim, vamos gerar esta massa !
 
@@ -1021,15 +1021,90 @@ drwxr-xr-x. 12 root     root     4096 jan 16 12:40 logstash-5.6.5
 
 ```
 
-Agora, vá até o diretório "/bin" da instalação do Logstash e execute o comando abaixo para iniciá-lo
+Agora, vá até o diretório "/bin" da instalação do Logstash e execute o comando abaixo para iniciá-lo. Não se esqueça de executá-lo com o usuário __"root"__:
 
 ```
 nohup ./logstash -f ../config/logstash-apache.conf &
 ```
 
-Utilizamos o parâmetro "-f" para informar ao Logstash um arquivo de configuração à ser utilizado.
+Utilizamos o parâmetro "-f" para informar ao Logstash o arquivo de configuração que criamos. Feito isso, vamos validar o nosso index "apache" no Kibana:
+
+![](gifs/apache_index.gif)
+
+Agora conseguimos visualizar todas as requisições feitas ao nosso servidor Web pelo Kibana ! Caso você não esteja visualizando nenhum dado, certifique-se de alterar o filtro de tempo no canto superior direito, ajustando com a data em que a entrada dos dados foi feita. É interessante também configurar um refresh automático para visualizar a entrada dos dados em real-time.
+
+Faça algumas requisições ao seu Apache acessando o endereço http://localhost:80 e http://localhost:80/bla (para forçarmos um erro em nossas logs) ou simplesmente execute o script [requests.sh](scripts/requests.sh), para gerarmos uma massa de dados em nosso index:
+
+```
+nohup ./requests.sh &
+```
+
+__OBS:__ O script está apontando para o endereço __localhost__, então caso esteja utilizando mais de um servidor para as atividades deste repositório, certifique-se de executá-lo no servidor onde o seu Apache está executando.
+
+__OBS²:__ Executamos o script em background, pois o mesmo demora um pouquinho para finalizar sua execução. Caso queira aumentar a massa de dados, é só repetir a sua execução.
+
+## Pesquisas no Kibana
+
+Vamos executar algumas pesquisas para entendermos a Lucene Syntax e vermos como os tipos de pesquisas se comportam no Kibana.
+
+##### Full-Text
+
+Lembra que eu havia dito que pesquisas full-text no Kibana se parecem com pequisas feitas no Google ? Faça o seguinte teste, vá até a aba "Discover" e utilize a barra de search para procurar pelo nome do seu host:
+
+![](images/kibana_fulltext.png)
+
+Não está convencido ? Procure por "gif", "access_log" ou "curl":
+
+![](images/kibana_fulltext2.png)
+
+Vejam que não passamos nenhum campo como parâmetro de busca e mesmo assim ele foi capaz de encontrar os documentos.
+
+##### Estruturada
+
+Caso o nosso objetivo seja encontrar um valor em um campo específico, é só fazer da seguinte forma:
+
+![](images/kibana_structured.png)
+
+Na pesquisa acima, estamos buscando o retorno "200" do Apache no campo "message", que significa a requisição foi atendida com sucesso.
+
+E se quisermos adicionar uma condição em nossa pesquisa ? É só utilizarmos os [operadores condicionais](https://lucene.apache.org/core/2_9_4/queryparsersyntax.html) da Lucene Syntax. Na pesquisa abaixo, vamos pesquisar todas as respostas "200" em todos os hosts com o nome "fedora-host":
+
+![](images/kibana_conditional.png)
+
+##### Analítica
+
+Resultados analíticos são melhor observados utilizando as views do Kibana, e a nossa primeira view realizada mais acima, foi exatamente uma pesquisa analítica. Sendo assim, vamos partir para a criação de nossos dashboards !
+
+## Criando Dashboards
+
+Agora, vamos criar um dashboard utilizando diversos tipos de views diferentes. Não se atente aos dados que estamos pesquisando. Embora contabilizar a quantidade de retornos 200 e 404 seja importantes, o objetivo deste tópico é fornecer uma visão geral do mecanismo de criação das views:
+
+Line View:
+
+![](gif/line_view.gif)
+
+Metric View:
+
+![](gif/metric_view.gif)
+
+Pie View:
+
+![](gif/pie_view.gif)
+
+Area View:
+
+![](gif/area_view.gif)
+
+Gauge View:
+
+![](gif/gauge_view.gif)
+
+Bar View:
+
+![](gif/bar_view.gif)
 
 
+## Beats
 
 ## Monitorando Containers
 
