@@ -2,7 +2,7 @@
 
 Se tudo deu certo, você deve estar visualizando a tela inicial do Kibana com algumas informações sobre o seu cluster de Elasticsearch. Atualize esta página e provavelmente você será direcionado para a seção "Management" do Kibana. Nesta seção, escolhemos quais índices iremos buscar em nosso Elasticsearch para a visualização no Kibana. Mude no campo "index pattern" o valor "logstash-*" para "mycompany". Após isto, crie em "create":
 
-![](images/kibana_first.png)
+![](/images/kibana_first.png)
 
 Após isto, você será direcionado para uma página onde todos os campos do seu index poderam ser visualizados. Nesta página é possível alterar algumas coisinhas em seus campos, como tipo de dado e etc. Não vamos mexer em nada nesta tela, ok ? Ao invés disso, vamos entender as opções apresentadas no menu lateral esquerdo:
 
