@@ -15,11 +15,11 @@ __Management-__ Gerenciamento dos índices e configurações avançadas do Kiban
 
 Agora, vamos acessar no menu lateral esquerdo, a aba "Discover". E olha ! Todos os dados do nosso index "mycompany" estão aqui:
 
-![](/images/kibana-second.png)
+![](/images/kibana_second.png)
 
 Na imagem acima, perceba que fiz a expansão do documento da "Maria Costa", visualizando uma tabela com todos os campos e valores deste documento. Embaixo do nome do nosso index, podemos ver os campos disponíveis para realizarmos alguns filtros visuais. Veja na imagem abaixo que utilizei o filtro de "nome" e "interesses" para facilitar a visualização dos dados:
 
-![](/images/kibana-third.png)
+![](/images/kibana_third.png)
 
 Temos pouquíssimos dados para criar um dashboard bonito e apresentá-lo ao chefe ou para fazermos um belo quadro (que é o objetivo real desse treinamento). Mas enquanto estamos nesta situação, vamos criar uma visualização simples para apurarmos nossas habilidades estatísticas para o nosso __dashboard final__ (*música de tensão*). Siga as instruções abaixo para a criação da nossa primeira _view_:
 
