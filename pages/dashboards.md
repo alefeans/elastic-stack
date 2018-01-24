@@ -4,24 +4,24 @@ Agora, vamos criar um dashboard utilizando diversos tipos de views diferentes. N
 
 Line View:
 
-![](gif/line_view.gif)
+![](/gif/line_view.gif)
 
 Metric View:
 
-![](gif/metric_view.gif)
+![](/gif/metric_view.gif)
 
 Pie View:
 
-![](gif/pie_view.gif)
+![](/gif/pie_view.gif)
 
 Area View:
 
-![](gif/area_view.gif)
+![](/gif/area_view.gif)
 
 Gauge View:
 
-![](gif/gauge_view.gif)
+![](/gif/gauge_view.gif)
 
 Bar View:
 
-![](gif/bar_view.gif)
+![](/gif/bar_view.gif)

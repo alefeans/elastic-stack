@@ -1,7 +1,8 @@
-## Elastic Stack para Iniciantes
+# Elastic Stack para Iniciantes
 
-> Autor: __[Álefe Silva](https://github.com/alefeans)__
+> Autor: __[Álefe Silva - Em Conclusão](https://github.com/alefeans)__
 
+## Sumário
 
 1. [Introdução](pages/introduction.md)
 1. [Elasticsearch](pages/elasticsearch.md)
