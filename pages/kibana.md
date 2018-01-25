@@ -1,4 +1,4 @@
-## "Kibanando"
+## Kibana
 
 Se tudo deu certo, você deve estar visualizando a tela inicial do Kibana com algumas informações sobre o seu cluster de Elasticsearch. Atualize esta página e provavelmente você será direcionado para a seção "Management" do Kibana. Nesta seção, escolhemos quais índices iremos buscar em nosso Elasticsearch para a visualização no Kibana. Mude no campo "index pattern" o valor "logstash-\*" para "mycompany". Após isto, crie em "create":
 
@@ -7,10 +7,15 @@ Se tudo deu certo, você deve estar visualizando a tela inicial do Kibana com al
 Após isto, você será direcionado para uma página onde todos os campos do seu index poderam ser visualizados. Nesta página é possível alterar algumas coisinhas em seus campos, como tipo de dado e etc. Não vamos mexer em nada nesta tela, ok ? Ao invés disso, vamos entender as opções apresentadas no menu lateral esquerdo:
 
 __Discover -__  Nesta aba, podemos ver graficamente os dados armazenados no Elasticsearch. Podemos nesta página, utilizar filtros e pesquisar nossos dados através de _Lucene Syntax_, que é uma sintáxe de busca super simples (vocês vão ver).
+
 __Visualize -__ Permite a criação de visualizações customizadas, utilizando de diversos modelos "já prontos" para sua utilização.
+
 __Dashboard -__ Nesta página, conseguimos agregar as views criadas na aba “Visualize” em um só dashboard.
+
 __Timelion -__ Permite gerar gráficos de diferentes índices em diferentes períodos de tempo, através de expressões regulares. É um pouco complexo de se utilizar, porém oferece um grande poder de busca e comparação.
+
 __Dev Tools -__ Possibilita realizar as pesquisas através de chamadas REST, como estavamos fazendo via linha de comando.
+
 __Management-__ Gerenciamento dos índices e configurações avançadas do Kibana.
 
 Agora, vamos acessar no menu lateral esquerdo, a aba "Discover". E olha ! Todos os dados do nosso index "mycompany" estão aqui:

@@ -23,7 +23,7 @@
 1. [Shards e Replicas](pages/shards_replicas.md)
 1. [Inverted Index](pages/inverted_index.md)
 1. [Avançando na Stack](pages/logs_kiba.md)
-1. ["Kibanando"](pages/kibaning.md)
+1. ["Kibana"](pages/kibana.md)
 1. [Logstash](pages/logstash.md)
 1. [Pesquisas no Kibana](pages/kibana_searches.md)
 1. [Criando Dashboards](pages/dashboards.md)
