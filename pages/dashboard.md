@@ -6,7 +6,7 @@ No nosso exemplo, vamos preenche-lo com todas as views que [criamos anteriorment
 
 ![](/gifs/dashboard.gif)
 
-Viu como é fácil ? Agora salve este dashboard no botão __"Save"__ e atribua algum nome de sua preferência. O interessante é que é possível aumentar e movimentar as views individualmente dentro do dashboard.
+Viu como é fácil ? Agora salve este dashboard utilizando o botão __"Save"__ e escolha algum nome de sua preferência. O interessante é que é possível aumentar e movimentar as views individualmente dentro do dashboard.
 
 É possível compartilhar este dashboard de forma _estática_ utilizando a URL disponibilizada pela opção __"Share"__. Assim o você pode compartilhar a sua criação com outros usuários (que possuam acesso ao endereço do seu Kibana, obviamente) e estes poderam visualizar os gráficos sem nenhum problema.
 
