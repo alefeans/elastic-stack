@@ -67,7 +67,7 @@ vagrant ssh
 Após a instalação, faça a subida do processo do Apache na sua VM:
 
 ```
-[vagrant@elastic ~]$ sudo systemctl status httpd
+[vagrant@elastic ~]$ sudo systemctl start httpd
 ```
 
 Ótimo, vamos ver se esse Apache está funcionando ?
@@ -77,5 +77,7 @@ No nosso Vagrantfile, correlacionamos a porta __8080__ do nosso host com a porta
 Agora vamos instalar o Filebeat para começarmos a enviar as logs da nossa nova instância de Apache para o nosso Elasticsearch:
 
 ```
-[vagrant@elastic ~]$
+[vagrant@elastic ~]$ curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.6.5-x86_64.rpm ; sudo rpm -vi filebeat-5.6.5-x86_64.rpm
 ```
+
+O comando acima fará o download do pacote do Filebeat e fará a instalação do mesmo.
