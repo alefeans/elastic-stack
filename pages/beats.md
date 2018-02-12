@@ -4,7 +4,7 @@ Ainda falando de Elastick Stack, temos mais um componente que até o momento nã
 
 Existem 6 módulos do Beats para diferentes propósitos:
 
-__Filebeat:__ Faz a leitura do seu arquivo de log, faz o envio através da rede para o Logstash e este o transforma (ou não), para realizar a inserção no Elasticsearch.
+__Filebeat:__ Faz a leitura do arquivo da log desejada, enviando-a para o Logstash que fará a inserção no Elasticsearch.
 
 __Metricbeat:__ Coleta as métricas do seu servidor (CPU, memória, IO, File system e etc) e os envia para o Elasticsearch.
 
@@ -12,7 +12,7 @@ __Packetbeat:__ Faz a coleta de métricas de tráfego de rede e você já deve i
 
 __Winlogbeat:__ Faz a coleta das logs de eventos da sua infraestrutura Windows (blé).
 
-__Auditbeat:__ Faz um serviço de auditoria, monitorando a atividade dos usuários e processos dos seus servidores Linux (like a _auditd_).
+__Auditbeat:__ Realiza um serviço de auditoria, monitorando a atividade dos usuários e processos dos seus servidores Linux (like an _auditd_).
 
 __Heartbeat:__ Verifica a disponibilidade dos seus serviços, através de pings ICPM, TCP, HTTP e etc.
 
@@ -24,9 +24,9 @@ Para este exemplo, vamos subir uma máquina virtual através do __Vagrant__ para
 
 __OBS:__ Se você já conhece um pouco mais da vida e está pensando em utilizar um container Docker de Apache, fique tranquilo que em breve iremos comentar sobre monitoração de containers.
 
-__OBS²:__ Para dar sequência à este passo, você não precisa necessariamente instalar o Vagrant, embora seja _extremamente recomendado_ pela facilidade que isso te dará na criação e configuração da sua máquina virtual. Mas, se quiser criar manualmente uma máquina virtual pelo Virtual Box ou VMWare e instalar o Apache nela, fique a vontade.
+__OBS²:__ Para dar sequência à este passo, você não precisa necessariamente instalar o Vagrant, embora seja _extremamente recomendado_ pela facilidade que ele te trará na criação e configuração da sua máquina virtual. Mas, se quiser criar manualmente uma máquina virtual pelo Virtual Box ou VMWare e instalar o Apache nela, fique a vontade.
 
-O Vagrant é um software que facilita a criação de máquinas virtuais através de arquivos de definição. De forma bem simples, você escreve como o seu servidor será configurado e o Vagrant faz a criação conforme está descrito no seu _Vagrantfile_. Instale o Vagrant conforme a indicação para sua distribuição no [site oficial](https://www.vagrantup.com/downloads.html). É importante que você tenha o [Virtual Box](https://www.virtualbox.org/wiki/Downloads) instalado no seu host para o Vagrant conseguir utilizá-lo como _provider_ da sua máquina virtual. Após fazer o download, faça conforme abaixo para criar o seu Vagrantfile:
+O Vagrant é um software que facilita a criação de máquinas virtuais através de arquivos de definição. De forma bem simples, você escreve como o seu servidor será configurado e o Vagrant faz a criação conforme está descrito no seu _Vagrantfile_. Instale o Vagrant conforme a indicação para sua distribuição no [site oficial](https://www.vagrantup.com/downloads.html). É importante que você tenha o [Virtual Box](https://www.virtualbox.org/wiki/Downloads) instalado no seu host para o Vagrant utilizá-lo como _provider_ da sua máquina virtual. Após realizar o download, faça conforme abaixo para criar o seu Vagrantfile:
 
 ```
 mkdir elastic_stack/
@@ -34,7 +34,7 @@ cd elastic_stack/
 vagrant init .
 ```
 
-O comando `vagrant init .` criará um Vagrantfile para você editar com as configurações que você deseja para a configuração da sua máquina virtual. Mas, para facilitar ainda mais a sua vida, deixei um [Vagrantfile](/vagrant/Vagrantfile) pronto para você utilizar ! Use-o no lugar do Vagrantfile default que foi gerado e faça conforme abaixo para subir a sua _VM_ (lembrando que os comandos do Vagrant posteriores só funcionam no diretório que você utilizou o `vagrant init`):
+O comando `vagrant init .` criará um Vagrantfile para você editar com as configurações que você deseja para a sua máquina virtual. Mas, para facilitar ainda mais a sua vida, deixei um [Vagrantfile](/vagrant/Vagrantfile) pronto para você utilizar ! Use-o no lugar do Vagrantfile default que foi gerado e faça conforme abaixo para subir a sua _VM_ (lembrando que os comandos abaixo só irão funcionar no diretório que você utilizou o `vagrant init`):
 
 ```
 vagrant up
