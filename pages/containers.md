@@ -14,7 +14,7 @@ docker --version
 Docker version 17.12.0-ce, build c97c6d6
 ```
 
-Ótimo, agora vamos subir uma instância de Logstash utilizando um outro arquivo de configuração. Crie o arquivo _logstash-docker.conf_ no diretório /config da instalação do seu Logstash (como fizemos no passo [logstash](/pages/logstash.md)), com o seguinte conteúdo:
+Ótimo, agora vamos subir uma instância de Logstash utilizando um outro arquivo de configuração. Crie o arquivo _logstash-docker.conf_ no diretório /config da instalação do seu Logstash (como fizemos [neste passo](/pages/logstash.md)), com o seguinte conteúdo:
 
 ```
 input {
@@ -33,9 +33,9 @@ output {
 }
 ```
 
-A configuração acima receberá as logs do nosso container através do driver __[gelf](https://docs.docker.com/config/containers/logging/gelf/)__, que fará a leitura das logs do nosso container Docker. Estamos associando a porta __12201__, onde o Logstash receberá as entradas e enviará para o Elasticsearch, inserindo os dados no index "docker".
+A configuração acima, fará com que o nosso Logstash receba as logs do nosso container através do driver __[gelf](https://docs.docker.com/config/containers/logging/gelf/)__. Estamos associando a porta __12201__, onde o Logstash receberá as entradas e enviará para o Elasticsearch, inserindo os dados no index "docker".
 
-Faça a subida do Logstash:
+Faça a subida do Logstash utilizando este novo arquivo de configuração:
 
 ```
 nohup ./logstash -f ../config/logstash-docker.conf &
@@ -47,13 +47,13 @@ Agora, vamos fazer a subida de um container de Apache, utilizando o comando abai
 docker run -d -p 8080:80 --log-driver gelf --log-opt gelf-address=udp://localhost:12201 httpd
 ```
 
-O comando acima, realiza o download (caso você não possua a imagem em seu host), de uma imagem com o nome __"httpd"__ do [Docker Hub](https://hub.docker.com/), que é o repositório oficial de imagens do Docker. Essa é a imagem oficial do Apache. Após o download, a imagem é executada. Vamos entender os parâmetros que passamos:
+O comando acima realiza o download da imagem oficial do Apache, que possui o nome __"httpd"__, diretamente do [Docker Hub](https://hub.docker.com/), que é o repositório público de imagens do Docker. Após o download, a imagem é executada. Vamos entender os parâmetros que passamos na subida do nosso container:
 
 __-d__ - Executa o container em background.
 __-p__ - Correlaciona a porta 8080 do seu host, com a porta 80 do container.
 __--log-driver gelf__ - Informa qual será o driver de log utilizado pelo nosso container Docker.
-__--log-opt gelf-address__ - Com este parâmetro, informarmos o protocolo e servidor "gelf" (nesse caso, o Logstash), que receberá as logs do container.
-__httpd__ - Apenas o nome do container que será executado.
+__--log-opt gelf-address__ - Com este parâmetro, informarmos o protocolo e o _servidor "gelf"_ (nesse caso, o nosso Logstash), que receberá as logs do container Docker.
+__httpd__ - Nome do container que será executado.
 
 Verifique a instância em execução com o comando abaixo:
 
@@ -63,9 +63,9 @@ CONTAINER ID        IMAGE               COMMAND              CREATED            
 a893835da10e        httpd               "httpd-foreground"   34 minutes ago      Up 34 minutes       0.0.0.0:8080->80/tcp   clever_dijkstra
 ```
 
-Teste o seu container de Apache acessando o endereço http://localhost:8080 no seu host. Se apareceu a mensagem "It Works", quer dizer que está tudo ok.
+Teste o seu container de Apache acessando o endereço http://localhost:8080 no seu browser. Se a mensagem "It Works" aparecer, quer dizer que está tudo ok.
 
-Agora vamos até o nosso Kibana, criar o nosso index "docker":
+Agora vamos até o nosso Kibana criar o index "docker":
 
 ![](/gifs/docker.gif)
 
