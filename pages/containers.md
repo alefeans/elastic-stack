@@ -9,8 +9,8 @@ O primeiro passo para iniciarmos a prática deste tópico, é instalar o Docker 
 Após ter o Docker instalado, faça a subida do processo e verifique a versão do mesmo:
 
 ```
-$ sudo systemctl start Docker
-$ docker --version
+sudo systemctl start docker
+docker --version
 Docker version 17.12.0-ce, build c97c6d6
 ```
 
