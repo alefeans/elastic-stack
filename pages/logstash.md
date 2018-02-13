@@ -73,7 +73,7 @@ Utilizamos o parâmetro "-f" para informar ao Logstash o arquivo de configuraç�
 
 Agora conseguimos visualizar todas as requisições feitas ao nosso servidor Web pelo Kibana ! Caso você não esteja visualizando nenhum dado, certifique-se de alterar o filtro de tempo no canto superior direito, ajustando com a data em que a entrada dos dados foi feita. É interessante também configurar um refresh automático para visualizar a entrada dos dados em real-time.
 
-Faça algumas requisições ao seu Apache acessando o endereço http://localhost:80 e http://localhost:80/bla (para forçarmos um erro em nossas logs) ou simplesmente execute o script [requests.sh](scripts/requests.sh), para gerarmos uma massa de dados em nosso index:
+Faça algumas requisições ao seu Apache acessando o endereço http://localhost:80 e http://localhost:80/bla (para forçarmos um erro em nossas logs) ou simplesmente execute o script [requests.sh](/scripts/requests.sh), para gerarmos uma massa de dados em nosso index:
 
 ```
 nohup ./requests.sh &

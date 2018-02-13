@@ -2,7 +2,7 @@
 
 No Elasticsearch existem três _tipos_ de pesquisa (full-text, estruturada e analítica) e duas _formas_ básicas de se pesquisar (query-string e query DSL).
 
-Para este exemplo, utilize o script [tweets.sh](scripts/tweets.sh) para criar o índice twitter que irá conter diversos tweets de usuários diferentes. Caso queira visualizar os índices existentes no seu Elasticsearch, utilize a API **_cat**:
+Para este exemplo, utilize o script [tweets.sh](/scripts/tweets.sh) para criar o índice twitter que irá conter diversos tweets de usuários diferentes. Caso queira visualizar os índices existentes no seu Elasticsearch, utilize a API **_cat**:
 
 ```
 curl -XGET http://localhost:9200/_cat/indices?v

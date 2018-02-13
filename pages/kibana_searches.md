@@ -2,7 +2,7 @@
 
 Vamos executar algumas pesquisas para entendermos a Lucene Syntax e vermos como os tipos de pesquisas se comportam no Kibana.
 
-##### Full-Text
+### Full-Text
 
 Lembra que eu havia dito que pesquisas full-text no Kibana se parecem com pequisas feitas no Google ? Faça o seguinte teste, vá até a aba "Discover" e utilize a barra de search para procurar pelo nome do seu host:
 
@@ -14,7 +14,7 @@ Não está convencido ? Procure por "gif", "access_log" ou "curl":
 
 Vejam que não passamos nenhum campo como parâmetro de busca e mesmo assim ele foi capaz de encontrar os documentos.
 
-##### Estruturada
+### Estruturada
 
 Caso o nosso objetivo seja encontrar um valor em um campo específico, é só fazer da seguinte forma:
 
@@ -26,7 +26,7 @@ E se quisermos adicionar uma condição em nossa pesquisa ? É só utilizarmos o
 
 ![](/images/kibana_conditional.png)
 
-##### Analítica
+### Analítica
 
 Resultados analíticos são melhor observados utilizando as views do Kibana, e a nossa primeira view realizada mais acima, foi exatamente uma pesquisa analítica. Sendo assim, vamos partir para a criação de nossos dashboards !
 

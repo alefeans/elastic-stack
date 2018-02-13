@@ -18,6 +18,6 @@ curl -XGET http://localhost:9200/mycompany/funcionarios/1
 
 Tenha bastante cuidado ao apagar um dado, pois caso você esqueça de passar o "type" e o "id" do documento, podemos acabar apagando um index inteiro (types estão seguros nesta situação, pois estes são removidos utilizando um método chamado "[delete_by_query](https://www.elastic.co/guide/en/elasticsearch/reference/6.1/docs-delete-by-query.html)").
 
-Caso queira contratar o funcionário "João Silva" execute a inserção que [fizemos anteriormente](/pages/index_type_document.md)).
+Caso queira contratar o funcionário "João Silva" execute a inserção que [fizemos anteriormente](/pages/index_type_document.md).
 
 Próximo: [Atualizando](/pages/updating.md)

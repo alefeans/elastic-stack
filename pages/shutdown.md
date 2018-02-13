@@ -2,7 +2,7 @@
 
 Agora que entendemos sobre as formas e os tipos de pesquisa de forma básica, vamos aprender mais alguns comandos e funcionalidades utilizando as APIs do Elasticsearch, antes de partirmos para o Logstash e o Kibana.
 
-##### Shutdown
+## Shutdown
 
 Depois de tanto tempo no ar, vamos dar um descanço pro cara né ? Para finalizar o seu Elasticsearch, você pode OU pará-lo via __service management__  utilizando, por exemplo, o comando "_systemctl stop elasticsearch_" OU enviando um _SIGTERM_ para o seu processo. Como fizemos a instalação diretamente do .zip, usaremos a segunda forma:
 
