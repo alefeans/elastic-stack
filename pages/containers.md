@@ -71,4 +71,12 @@ Agora vamos até o nosso Kibana criar o index "docker":
 
 Pronto, agora estamos coletando todas as logs do nosso container ! Para fazer a leitura das logs de outros containers, é só utilizar os mesmos parâmetros que utilizamos na subida do container, que o comportamento será o mesmo.
 
-Caso queira finalizar o seu container, utilize o comando `docker stop <CONTAINER ID>`.
+Caso queira finalizar o seu container, utilize o comando `docker stop <CONTAINER ID>`:
+
+```
+docker ps
+CONTAINER ID        IMAGE               COMMAND              CREATED             STATUS              PORTS                  NAMES
+1b6ec41f9add        httpd               "httpd-foreground"   34 minutes ago       Up 1 second         0.0.0.0:8080->80/tcp   xenodochial_easley
+
+docker stop 1b6ec41f9add
+```
