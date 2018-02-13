@@ -14,9 +14,11 @@ curl -XPUT http://localhost:9200/mycompany/funcionarios/1 -d '
 ```
 
 Provavelmente você recebeu uma resposta parecida com esta:
+
 ```
 {"_index":"mycompany","_type":"funcionarios","_id":"1","_version":1,"result":"created","_shards":{"total":2,"__successful__":1,"failed":0},"created":true}
 ```
+
 Isto significa que o nosso documento JSON foi _indexado_ com sucesso. O verbo PUT utilizado, basicamente diz para o Elasticsearch, "guarde este documento __NESTA__ url" (o POST se assemelha em funcionalidade, porém dizendo a frase: "guarde o documento __ABAIXO__ desta url". Entenderemos melhor a diferença posteriormente).
 
 Para facilitar o entedimento do conceito de _index_, _type_ e _document_, vamos fazer uma analogia com um banco de dados SQL padrão:
@@ -27,7 +29,7 @@ Para facilitar o entedimento do conceito de _index_, _type_ e _document_, vamos 
 | ------------- | mycompany| funcionarios|1|Documento JSON|nome, idade...|
 
 
-__Importante:__ Os termos "indexar" e "index" possuem significados diferentes no universo do Elasticsearch e também, se diferenciam do conceito de índices utilizados em Banco de Dados. Indexar no Elasticsearch é o mesmo que adicionar um documento JSON (como realizar um INSERT), e index é uma forma de separar logicamente dados de diferentes propósitos.
+__Importante:__ Os termos "indexar" e "index" possuem significados diferentes no universo do Elasticsearch, e também se diferenciam do conceito de _índices_ utilizados em [Banco de Dados](https://pt.wikipedia.org/wiki/%C3%8Dndice_(estruturas_de_dados)). Indexar no Elasticsearch é o mesmo que adicionar um documento JSON (como realizar um INSERT), e index é uma forma de separar logicamente dados de diferentes propósitos.
 
 Ok, temos o nosso primeiro funcionário João Silva __indexado__ no nosso __index__ mycompany ! Vamos fazer a nossa primeira consulta:
 
@@ -35,4 +37,6 @@ Ok, temos o nosso primeiro funcionário João Silva __indexado__ no nosso __inde
 curl -XGET http://localhost:9200/mycompany/funcionarios/_search?pretty
 ```
 
-Neste comando, chamamos a API ___search___, que é a API padrão de buscas do Elasticsearch (o parâmetro __?pretty__ é opcional e só serve para formatar a saída em JSON). Como não passamos nenhum parâmetro, a API sempre nos retorna os 10 primeiros resultados, que neste caso nos trouxe apenas o João (we're hiring). Sinta-se livre para criar e consultar mais funcionários para exercitar a sintáxe :) .
+Neste comando, chamamos a API __search__, que é a API padrão de buscas do Elasticsearch (o parâmetro __?pretty__ é opcional e só serve para formatar a saída em JSON). Como não passamos nenhum parâmetro, a API sempre nos retorna os 10 primeiros resultados, que neste caso nos trouxe apenas o João (_we're hiring_). Sinta-se livre para criar e consultar mais funcionários para exercitar a sintáxe :) .
+
+Próximo: [Tipos e Formas de Pesquisa](/pages/types_forms.md)

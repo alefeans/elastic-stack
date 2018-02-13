@@ -1,12 +1,12 @@
 ##### Entendendo melhor os contextos
 
-Até agora, aprendemos a inserir dados em nosso Elasticsearch informando o __id__ que o documento irá possuir. Um exemplo disso foi a nossa primeira inserção e o conteúdo do script [funcs.sh](scripts/funcs.sh), onde passamos o caminho completo que o documento será inserido:
+Até agora, aprendemos a inserir dados em nosso Elasticsearch informando o __id__ que o documento irá possuir. Um exemplo disso foi a nossa primeira inserção e o conteúdo do script [funcs.sh](/scripts/funcs.sh), onde passamos o caminho completo que o documento será inserido:
 
 ```
 curl -XPUT http://localhost:9200/mycompany/funcionarios/1
 ```
 
-Neste tipo de inserção, informamos o index, o type e o id (1 no exemplo acima). O que nos ajuda no momendo de fazer uma busca, por já sabermos o caminho completo do dado. Por ex:
+Neste tipo de inserção, informamos o index, o type e o id (1 no exemplo acima). O que nos ajuda no momento de fazer uma busca, por já sabermos o caminho completo do dado. Por ex:
 
 ```
 curl -XGET http://localhost:9200/mycompany/funcionarios/1
@@ -17,15 +17,16 @@ A nível de teste, não há problemas neste tipo de abordagem. Mas não é comum
 ```
 curl -XPOST http://localhost:9200/mycompany/diretores/ -d '
 {
-"nome": "Roberto Roberts",
-"idade": 40,
-"endereco": "Rua da Chiqueza",
-"hobbies": ["Jogar golf", "Fazer chiquezas"],
-"interesses": ["orquestras", "coisas chiques"]
+  "nome": "Roberto Roberts",
+  "idade": 40,
+  "endereco": "Rua da Chiqueza",
+  "hobbies": ["Jogar golf", "Fazer chiquezas"],
+  "interesses": ["orquestras", "coisas chiques"]
 }'
 ```
 
 Veja que utilizamos o verbo HTTP __POST__ ao invés de __PUT__. Como vimos muito anteriormente, o verbo __PUT__ fala para o Elasticsearch armazenar o dado em uma URL específica, ou seja, em um caminho completo. Já o __POST__ diz para o Elasticsearch armazenar o dado _ABAIXO_ de uma URL. Algo parecido com isso:
+
 ```
 PUT:"Oi Elasticsearch."
 Elasticsearch:"Fala..."
@@ -46,7 +47,7 @@ POST:"Esse é o problema.. eu não tenho o número, mas precisamos entregar isso
 Elasticsearch:"Ah.. que ótimo. Vou entregar em qualquer número que eu escolher então !"
 ```
 
-Tirando o incrível mau humor do Elasticsearch em realizar inserções de dados, é mais ou menos isso que acontece. Se não informarmos o id, o Elasticsearch gera automaticamente um id para o nosso documento. Vamos ver qual o id que ele escolheu para o nosso fino diretor:
+Tirando o _incrível mau humor_ do Elasticsearch em realizar inserções de dados, é mais ou menos isso que acontece. Se não informarmos o id, o Elasticsearch gera automaticamente um id para o nosso documento. Vamos ver qual o id que ele escolheu para o nosso _fino_ diretor:
 
 ```
 curl -XGET http://localhost:9200/mycompany/diretores/_search?pretty
@@ -59,10 +60,12 @@ Outro ponto que talvez você não tenha reparado, é que podemos realizar consul
 ```
 curl -XGET http://localhost:9200/mycompany/_search?pretty -d '
 {
-"query": {
-"match_phrase": { "nome": "Claudio Silva"}
-}
+  "query": {
+    "match_phrase": { "nome": "Claudio Silva"}
+  }
 }'
 ```
 
 Mude o valor de "nome" para "Robert Roberts" e sua busca também encontrará o resultado. Isto acontece, pois os types "funcionarios" e "diretores" estão inseridos no mesmo index (mycompany).
+
+Próximo: [Deletando](/pages/delete.md)

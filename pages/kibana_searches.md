@@ -29,3 +29,6 @@ E se quisermos adicionar uma condição em nossa pesquisa ? É só utilizarmos o
 ##### Analítica
 
 Resultados analíticos são melhor observados utilizando as views do Kibana, e a nossa primeira view realizada mais acima, foi exatamente uma pesquisa analítica. Sendo assim, vamos partir para a criação de nossos dashboards !
+
+
+Próximo: [Criando Views](/pages/views.md)

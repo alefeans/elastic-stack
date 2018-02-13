@@ -7,6 +7,7 @@ Como fonte de dados, vamos utilizar o Web Server mais famoso do mundo, o _Apache
 ```
 sudo dnf install httpd
 ```
+
 Após realizar a instalação, faça a subida do processo:
 
 ```
@@ -81,3 +82,5 @@ nohup ./requests.sh &
 __OBS:__ O script está apontando para o endereço __localhost__, então caso esteja utilizando mais de um servidor para as atividades deste repositório, certifique-se de executá-lo no servidor onde o seu Apache está executando.
 
 __OBS²:__ Executamos o script em background, pois o mesmo demora um pouquinho para finalizar sua execução. Caso queira aumentar a massa de dados, é só repetir a sua execução.
+
+Próximo: [Pesquisas no Kibana](/pages/kibana_searches.md)

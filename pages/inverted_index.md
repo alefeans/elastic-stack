@@ -62,3 +62,5 @@ Agora o nosso índice ficou assim:
 Agora nossos documentos estão mais "encontráveis", certo ? Esse processo de normalização é chamado de __"analysis"__ pelo Elasticsearch e é utilizado para facilitar a busca de documentos que possam indicar o mesmo significado, independente se o conteúdo não for exatamente o buscado.
 
 O Elasticsearch fornece diversos "analisadores" que você pode utilizar na padronização de seus documentos. Como este tópico é apenas explicativo, não iremos realizar nenhuma alteração em nossos dados. De qualquer forma, saiba que este é um ponto muito importante e que deve ser avaliado com atenção em um ambiente real. Para mais informações, segue o bom e velho link da documentação da [Elastic](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-analyzers.html).
+
+Próximo: [Avançando na Stack](/pages/stack.md)

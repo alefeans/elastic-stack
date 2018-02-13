@@ -28,3 +28,5 @@ Bar View:
 ![](/gifs/bars_view.gif)
 
 Finalizada a criação das views, vamos criar o nosso primeiro dashboard :) !
+
+Próximo: [Nosso primeiro Dashboard](/pages/dashboard.md)

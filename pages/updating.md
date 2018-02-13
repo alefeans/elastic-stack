@@ -1,6 +1,6 @@
 ##### Atualizando
 
-Documentos no Elasticsearch são _imutáveis_. Caso haja a necessidade de atualizar um documento existente, nós o _reindexamos_ ou o substituimos completamente, utilizando a mesma API que usamos para inserir um documento. Vamos alterar o endereço da funcionária "Maria" de id "2":
+Documentos no Elasticsearch são entidades _imutáveis_. Caso haja a necessidade de atualizar um documento existente, nós o _reindexamos_ ou o substituimos completamente, utilizando a mesma API que usamos para inserir um documento. Vamos alterar o endereço da funcionária "Maria" de id "2":
 
 ```
 curl -XPUT http://localhost:9200/mycompany/funcionarios/2 -d '
@@ -12,6 +12,7 @@ curl -XPUT http://localhost:9200/mycompany/funcionarios/2 -d '
   "interesses": ["esportes", "musica"]
 }'
 ```
+
 Observe a resposta do Elasticsearch ao seu comando:
 
 ```
@@ -20,7 +21,7 @@ Observe a resposta do Elasticsearch ao seu comando:
 
 Podemos ver que o campo **"_version"** foi incrementado e que o campo **"created"** possui o valor _false_ (pois o documento que atualizamos já existia anteriormente). Por debaixo dos panos, o Elasticsearch marca o documento antigo como removido e adiciona o novo documento inteiro.
 
-Existe uma forma de realizar atualizações parciais utilizando a API **_update**. Este tipo de atualização também segue a mesma regra descrita para o update total, diferenciando-se apenas nos fatos de que é possivel atualizar os campos necessários sem precisar digitar o documento inteiro como parâmetro, como fizemos anteriormente, e que o processo acontece no "interior de um shard", o que é transparente para nós usuários. Por exemplo:
+Existe uma forma de realizar atualizações parciais utilizando a API **_update**. Este tipo de atualização também segue a mesma regra descrita para o update total, diferenciando-se apenas nos fatos de que é possivel atualizar os campos necessários sem precisar digitar o documento inteiro como parâmetro e que o processo acontece no "interior de um shard", o que é transparente para nós usuários. Por exemplo:
 
 ```
 curl -XPOST http://localhost:9200/mycompany/funcionarios/2/_update -d '
@@ -32,3 +33,5 @@ curl -XPOST http://localhost:9200/mycompany/funcionarios/2/_update -d '
 ```
 
 Podemos utilizar esta mesma API para acrescentarmos mais campos em nossos documentos. Faça o teste, altere o campo __"idade" : 35__ por um campo que não exista no nosso documento, atribuia um valor de sua preferência e acrescente-o no documento acima.
+
+Próximo: [Cluster, Shards e Replicas](/pages/cluster_shards_replicas.md)

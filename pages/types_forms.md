@@ -7,6 +7,7 @@ Para este exemplo, utilize o script [tweets.sh](scripts/tweets.sh) para criar o 
 ```
 curl -XGET http://localhost:9200/_cat/indices?v
 ```
+
 Não se preocupe com todas as informações retornadas (nem se estiver com seus índices com o "health" em "yellow"), tome por nota apenas a informação dos índices que você possui (mycompany e twitter).
 
 Agora que geramos a massa de dados, vamos as queries ! Primeiro, vamos ver como a query-string funciona. Vamos pesquisar todos os tweets do usuário "Phill":
@@ -21,16 +22,14 @@ Apesar de parecer bastante simples de se utilizar, esse formato é o menos utili
 curl -XGET http://localhost:9200/twitter/tweet/_search?q=%2Bname%3Atom+%2Btweet%3Alina
 ```
 
-Perceba que mesmo sendo uma pesquisa relativamente simples, a string de pesquisa é menos legível e mais "encriptada".
-
-Agora, vamos realizar a primeira pesquisa feita no index twitter anteriormente, utilizando agora, a __query DSL__:
+Perceba que mesmo sendo uma pesquisa relativamente simples, a string de pesquisa se tornou um pouco menos _legível_. Agora, vamos realizar a primeira pesquisa feita no index twitter anteriormente, utilizando a __query DSL__:
 
 ```
 curl -XGET http://localhost:9200/twitter/tweet/_search?pretty -d '
 {
-"query": {
-"match": { "name": "Phill"}
-}
+  "query": {
+    "match": { "name": "Phill" }
+  }
 }'
 ```
 
@@ -38,7 +37,7 @@ Neste formato, passamos um documento JSON como parâmetro de pesquisa. Antes de 
 
 ```
 {
-"took" : 8,                 		# Tempo em milissegundos que a query demorou para  retornar.
+"took" : 8,                 		# Tempo em milissegundos que a query demorou para retornar.
 "timed_out" : false,        		# Houve Time Out na busca (True or False) ?
 "_shards" : {               		# Falaremos sobre shards mais tarde...
 "total" : 5,
@@ -65,6 +64,9 @@ Neste formato, passamos um documento JSON como parâmetro de pesquisa. Antes de 
 }
 }
 ```
+
 Inicialmente pode parecer estranho ou até um pouco frustrante ter que decifrar um documento JSON. Você tem que parar, analisar, entender o que está dentro de uma tag ou de outra... mas a medida que vamos praticando e brincando mais com o Elasticsearch, esta tarefa vai se tornando menos dolorosa ("_if it hurts, do it more often_", Martin Fowler). E relaxa, daqui a pouco estaremos usando o Kibana para nos ajudar nesta tarefa :)
 
 Agora vamos aos três tipos básicos de pesquisa...
+
+Próximo: [Full-text](/pages/full-text.md)

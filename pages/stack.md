@@ -17,3 +17,5 @@ nohup ./kibana &
 Após a subida do processo, acesse o endereço http://localhost:5601 no seu browser.
 
 __OBS:__ Caso esteja utilizando uma máquina virtual, utilizar o endereço de IP da sua vm ao invés de _localhost_.
+
+[Kibana](/pages/kibana.md)

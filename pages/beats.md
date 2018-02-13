@@ -81,3 +81,5 @@ Agora vamos instalar o Filebeat para começarmos a enviar as logs da nossa nova 
 ```
 
 O comando acima fará o download do pacote do Filebeat e fará a instalação do mesmo.
+
+[Monitorando Containers](/pages/containers.md)

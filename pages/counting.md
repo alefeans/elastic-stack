@@ -5,6 +5,7 @@ Eu odiava ver tutoriais que me ensinavam a baixar a aplicação, para logo em se
 ```
 nohup ./elasticsearch &
 ```
+
 Vamos utilizar a API **_count** para contar quantos documentos existem no index "mycompany":
 
 ```
@@ -16,3 +17,5 @@ Caso você queira contar a quantidade de documentos totais em seu Elasticsearch,
 ```
 curl -XGET http://localhost:9200/_count?pretty
 ```
+
+Próximo: [Entendendo melhor os contextos](/pages/contexts.md)

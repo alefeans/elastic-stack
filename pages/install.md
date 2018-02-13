@@ -2,8 +2,7 @@
 
 Instalar o Elasticsearch é a segunda coisa mais fácil do mundo de se fazer. A primeira é desinstalar. Vamos ver como se faz ?
 
-Podemos fazer o download pelo repositório da Elastic atravéz de um gerenciador de pacotes como `dnf` ou `apt-get`, ou podemos realizar o download do .zip no site da [Elastic]( https://www.elastic.co/downloads/elasticsearch ). Para conseguir realizar todo o treinamento, não se esqueça de garantir pelo menos 3GB de memória para sua máquina, VM ou container, ok ?
-
+Podemos fazer o download pelo repositório da Elastic atravéz de um gerenciador de pacotes como `dnf` ou `apt-get`, ou podemos realizar o download do .zip no site da [Elastic]( https://www.elastic.co/downloads/elasticsearch ). Para conseguir realizar todo o treinamento, não se esqueça de garantir pelo menos 4GB de memória para o seu host, ok ?
 
 Para este exemplo, vamos utilizar a segunda opção:
 
@@ -16,6 +15,7 @@ __3°__ - Pronto, Elasticsearch instalado. Fácil né ? Agora vamos ver se tudo 
 __OBS:__ Acredito que haja retrocompatibilidade na maioria das operações que iremos realizar, mas para este guia estamos utilizando especificamente a versão 5.6.5 de todas as ferramentas da stack.
 
 Dentro do diretório gerado após a descompactação, vamos executar:
+
 ```
 nohup bin/elasticsearch &
 ```
@@ -25,7 +25,9 @@ Dessa forma, o processo do Elasticsearch se iniciará em background. Após algun
 ```
 curl -XGET http://localhost:9200/
 ```
+
 Se você recebeu um retorno parecido com esse, quer dizer que tudo está funcionando como deveria:
+
 ```
 {
 "name" : "XJWzjDi",                           # Nome da instância (iremos alterar isto mais tarde).
@@ -41,3 +43,5 @@ Se você recebeu um retorno parecido com esse, quer dizer que tudo está funcion
 "tagline" : "You Know, for Search"            # Uma resposta amigável do Elasticsearch.
 }
 ```
+
+Próximo: [REST e JSON](/pages/rest_json.md)

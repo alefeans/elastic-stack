@@ -33,3 +33,6 @@ Temos pouquíssimos dados para criar um dashboard bonito e apresentá-lo ao chef
 Mexer no Kibana é muito simples e o gif é auto-explicativo... mas vamos mastigar um pouco mais o que foi feito. Escolhemos a opção default "Count" na primeira _"Aggregation"_, que irá fazer a contagem das vezes que um item é encontrado. Em nossos "buckets", fizemos a agregação (high translation capability), pelo termo "interesses". As "custom labels" são opcionais e só servem para facilitar a leitura dos campos nos gráficos. No final, tivemos um gráfico em formato de pizza, com as fatias separadas pelos interesses dos nossos funcionários, de acordo com a porcentagem de valores encontrados. Se parece com a busca __analítica__ que fizemos mais acima no Elasticsearch não é verdade ? Pois é exatamente a mesma operação. Viu como é muito mais simples quando utilizamos o Kibana ?
 
 Para explorarmos o _Lucene Query Syntax_ e gerarmos gráficos mais interessantes, precisamos de uma massa de dados maior do que a que possuímos. Sendo assim, vamos gerar esta massa !
+
+
+[Logstash](/pages/logstash.md)

@@ -6,9 +6,9 @@ Falando da forma mais simples possível, uma API RESTful é uma API que faz/acei
 
 No exemplo acima, fizemos uma chamada __REST__ solicitando uma resposta para o nosso Elasticsearch através do método HTTP __GET__ e como retorno à nossa requisição, recebemos uma resposta no formato __JSON__ com algumas informações básicas sobre a nossa instância de Elasticsearch.
 
-Trabalhando com o Elasticsearch, sempre usaremos o formato JSON, tanto para enviar requisições, quanto na resposta (como no exemplo acima).
+Trabalhando com o Elasticsearch, sempre usaremos o formato JSON, tanto para enviar requisições, quanto no recebimento das respostas.
 
-Sobre o JSON, imagine que você precise fazer duas aplicações totalmente distintas se comunicarem entre si ? Como fazer essa troca de informação ? O JSON por ser um formato padrão aceito pela maioria das linguagens de programação, pode ser utilizado para garantir que as duas aplicações possam "entender" o que a outra está querendo dizer de forma mais simples e legível se comparada com outros padrões como o _XML_ por exemplo. Vamos ver como este padrão funciona ?
+Sobre o JSON, imagine que você precise fazer duas aplicações totalmente distintas se comunicarem entre si ? Como fazer essa troca de informação ? O JSON por ser um formato padrão aceito pela maioria das linguagens de programação, pode ser utilizado para garantir que as duas aplicações possam "entender" o que a outra está querendo dizer de forma mais simples e legível se comparada com outros padrões (como o _XML_, por exemplo). Vamos ver como este padrão funciona ?
 
 ```
 { # Abertura de sequência.
@@ -43,3 +43,5 @@ __PATH__ -> Aonde você quer pesquisar, atualizar ou deletar (qual o _index_, _t
 __QUERY_STRING__ -> A pesquisa propriamente dita.
 
 __BODY__ -> O documento JSON que você quer enviar ou utilizar como parâmetro de pesquisa.
+
+Próximo: [Index, Type e Document ?](/pages/index_type_document.md)

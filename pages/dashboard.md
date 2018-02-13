@@ -11,3 +11,5 @@ Veja que podemos movimentar as views individualmente e também trocar as cores d
 É possível compartilhar este dashboard de forma _estática_ utilizando a URL disponibilizada pela opção __"Share"__. Assim você pode compartilhar a sua criação com outros usuários (que possuam acesso ao endereço do seu Kibana, obviamente) e estes poderão visualizar os gráficos sem nenhum problema.
 
 Agora é por sua conta... pratique um pouco mais, crie outros dashboards, mude as cores e formatos disponíveis em suas views e veja o que é possível fazer com os seus dados através do Kibana.
+
+Próximo: [Beats](/pages/beats.md)
