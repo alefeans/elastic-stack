@@ -1,4 +1,4 @@
-##### Shards e Replicas
+## Shards e Replicas
 
 Quando indexamos nossos documentos no Elasticsearch (lembre-se do significado de _indexar_ explicado anteriormente), estamos adicionando nossos dados em um __shard__, que são basicamente "containers" que armazenam os dados que indexamos no Elasticsearch. Porém, nossas aplicações não falam diretamente com o shard em si, mas sim com os índices (lembre-se das inserções que fizemos anteriormente). A realidade é que os índices, "mycompany" ou "twitter" por exemplo, são apenas _"caminhos lógicos"_ ou _"namespaces"_, que apontam para um ou mais __shards__. Ou seja, quando realizamos uma inserção de um documento em um index no Elasticsearch, passamos o caminho do index que queremos utilizar, e este, irá armazenar este documento em algum shard qualquer (funciona como um balanceador).
 

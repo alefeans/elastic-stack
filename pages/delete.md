@@ -1,4 +1,4 @@
-##### Deletando
+## Deletando
 
 Para remover algum dado do Elasticsearch, utilizamos o verbo HTTP __DELETE__ e passamos o caminho completo do dado, conforme o exemplo abaixo:
 

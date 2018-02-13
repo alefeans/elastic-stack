@@ -1,4 +1,4 @@
-##### Atualizando
+## Atualizando
 
 Documentos no Elasticsearch são entidades _imutáveis_. Caso haja a necessidade de atualizar um documento existente, nós o _reindexamos_ ou o substituimos completamente, utilizando a mesma API que usamos para inserir um documento. Vamos alterar o endereço da funcionária "Maria" de id "2":
 

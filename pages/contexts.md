@@ -1,4 +1,4 @@
-##### Entendendo melhor os contextos
+## Entendendo melhor os contextos
 
 Até agora, aprendemos a inserir dados em nosso Elasticsearch informando o __id__ que o documento irá possuir. Um exemplo disso foi a nossa primeira inserção e o conteúdo do script [funcs.sh](/scripts/funcs.sh), onde passamos o caminho completo que o documento será inserido:
 
