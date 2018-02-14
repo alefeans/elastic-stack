@@ -1,6 +1,6 @@
 # Elastic Stack para iniciantes
 
-Quando comecei a estudar sobre `Elastic Stack`, encontrei diversos livros e artigos que ofereciam ótimos conteúdos, porém que apresentavam explicações um pouco "pesadas" para quem estava iniciando no assunto. Em alguns momentos, me vi em meio a _algumas_ pesquisas intermediárias para entender o significado de cada sub-tópico, conceito ou ferramenta adjacente, para entender sobre o que o assunto principal tratava.
+Quando comecei a estudar sobre `Elastic Stack`, encontrei diversos livros e artigos que ofereciam ótimos conteúdos, porém que apresentavam explicações um pouco "pesadas" para quem estava iniciando no assunto. Em algums momentos, me vi gastando muito tempo em pesquisas intermediárias sobre os conceitos, sub-tópicos ou ferramentas adjacentes à stack, para tentar entender sobre o que o assunto principal tratava.
 
 Não que isso seja algo completamente ruim, afinal cada tecnologia é um universo composto por outros "_universos menores_" e geralmente, estudar artigos técnicos tende a ser desta forma. Porém, penso que muitas vezes isso pode acabar dificultando o aprendizado de alguém que está querendo aprender uma tecnologia nova.
 
