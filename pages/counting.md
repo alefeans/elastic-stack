@@ -1,6 +1,6 @@
 ## Contagem de Documentos
 
-Eu odiava ver tutoriais que me ensinavam a baixar a aplicação, para logo em seguida pedir para subir e fazer alguma outra coisa. Chegou a hora de dar o troco ! Vamos subir novamente a nossa instância de Elasticsearch e vamos contar quantos documentos existem em nossos índices:
+Eu odiava ver tutoriais que me ensinavam a baixar a aplicação, para logo em seguida pedir para subir e fazer alguma outra coisa. Chegou a hora de dar o troco ! Vamos subir novamente a nossa instância de Elasticsearch para realizar a contagem de documentos existentes em nossos índices:
 
 ```
 nohup ./elasticsearch &

@@ -33,6 +33,8 @@ output {
 }
 ```
 
+__OBS:__ É possível utilizar apenas __uma__ instância de Logstash com __um__ arquivo de configuração subdividido pelos tipos de entrada de dados, o que faz mais sentido do que subir diversas instâncias para cada .conf que criamos. Estamos fazendo desta forma, apenas para facilitar o entendimento.
+
 A configuração acima, fará com que o nosso Logstash receba as logs do nosso container através do driver __[gelf](https://docs.docker.com/config/containers/logging/gelf/)__. Estamos associando a porta __12201__, onde o Logstash receberá as entradas e enviará para o Elasticsearch, inserindo os dados no index "docker".
 
 Faça a subida do Logstash utilizando este novo arquivo de configuração:

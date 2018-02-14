@@ -1,6 +1,6 @@
 ## Full-Text
 
-Na pesquisa full-text você simplesmente pesquisa o que você quer, sem passar nenhuma regra, agregação ou algo do tipo. Quando apresentarmos o Kibana, este tipo de pesquisa vai se apresentar de forma mais simples ainda, como uma pesquisa no Google. Vamos pesquisar as palavras "easy to use" no campo "tweet" do nosso index:
+Na pesquisa full-text você simplesmente pesquisa o que você quer sem passar nenhuma regra, agregação ou algo do tipo. Quando apresentarmos o Kibana, este tipo de pesquisa vai se apresentar de forma mais simples ainda, como uma pesquisa no Google. Vamos pesquisar as palavras "easy to use" no campo "tweet" do nosso index:
 
 ```
 curl -XGET http://localhost:9200/twitter/tweet/_search?pretty -d '
@@ -13,7 +13,7 @@ curl -XGET http://localhost:9200/twitter/tweet/_search?pretty -d '
 }'
 ```
 
-Se você não fez nenhuma alteração no script [tweets.sh](/scripts/tweets.sh), você deve estar visualizando 3 tweets agora, como estes aqui:
+Se você não fez nenhuma alteração no script [tweets.sh](/scripts/tweets.sh), você deve estar visualizando 3 tweets como resposta, como estes abaixo:
 
 ```
 {
@@ -72,11 +72,11 @@ Se você não fez nenhuma alteração no script [tweets.sh](/scripts/tweets.sh),
 
 Talvez você não tenha reparado, mas você acabou de fazer uma pesquisa full text. Mas calma ai... porque eu tenho três respostas para a pequisa "easy to use" se em apenas um dos tweets eu realmente tenho as palavras "easy to use" ?
 
-Bem, é ai que a graça (ou desgraça) do full text entra em ação. Repare que os três tweets retornados possuem a palavra "easy". Como a sua busca não possui nenhum filtro ou parametrização adicional, qualquer uma das três palavras que compõe a sua busca (easy to use), serão pesquisadas no index informado. Porém no primeiro resultado (tweet do Tom Michael), vemos que o campo **"_score"** possui o número **"1.9187583"** como valor, correto ? Compare este número com o "\_score" dos outros resultados...
+Bem, é ai que a graça (ou desgraça) do full text entra em ação. Repare que os três tweets retornados possuem a palavra "easy". Como a sua busca não possui nenhum filtro ou parametrização adicional, qualquer uma das três palavras "easy", "to" e "use" que compõe a sua busca, serão pesquisadas no index informado. Porém, no primeiro resultado (tweet do Tom Michael), vemos que o campo **"_score"** possui o número **"1.9187583"** como valor, correto ? Compare este número com o "\_score" dos outros resultados...
 
 O Elasticsearch verifica a relevância de um documento pela proximidade da busca realizada. Como o primeiro resultado é o que mais se aproxima da busca feita, por possuir as três palavras pesquisadas, este documento recebe um número de \_score mais alto do que os demais. É assim que o Elasticsearch mede a relevância de uma pesquisa feita com o resultado encontrado.
 
-Este é o tipo de pesquisa mais simples de se fazer, porém é também o mais suscetível a falhas por acabar retornando resultados que podem não ser relevantes (e por conta do campo **"_all"** que será explicado em breve). Agora, se quisermos pesquisar a sequência exata "easy to use", podemos utilizar o recurso "match_phrase" em nossa busca:
+Este é o tipo de pesquisa mais simples de se fazer e também, o mais suscetível a falhas, por acabar retornando resultados que podem não ser relevantes para a sua busca e por conta do campo **"_all"** que será explicado em breve. Agora, se quisermos pesquisar a sequência exata das palavras "easy to use", podemos utilizar o recurso "match_phrase" em nossa busca:
 
 ```
 curl -XGET http://localhost:9200/twitter/tweet/_search?pretty -d '
@@ -113,7 +113,7 @@ O campo "\_all" deste documento ficaria assim:
 }
 ```
 
-Sendo assim, ao realizarmos uma busca full-text sem passarmos nenhum campo como parâmetro, o Elasticsearch realiza a pesquisa em todos os campos "\_all" do index escolhido, o que é muito mais rápido do que ter que avaliar campo a campo de cada documento. Porém, pode acontecer de um campo diferente do que você quer buscar possuir um valor igual ao que você procura. Ficou estranho né ? Veja o exemplo abaixo:
+Sendo assim, ao realizarmos uma pesquisa full-text sem passarmos nenhum campo como parâmetro, o Elasticsearch realiza a pesquisa em todos os campos "\_all" do index escolhido, o que é muito mais rápido do que ter que avaliar campo a campo de cada documento. Porém, pode acontecer de um campo diferente do que você quer buscar possuir um valor igual ao que você procura. Ficou estranho né ? Veja o exemplo abaixo:
 
 ```
 {
@@ -146,7 +146,7 @@ Ao inserir estes dois documentos, o Elasticsearch geraria para cada um, as segui
 
 Se eu quiser saber quantas pessoas de nome "Carlos" eu tenho no meu index e fizer uma pesquisa full-text para encontrar "Carlos", quantos retornos eu terei ? E se eu pesquisar por "Freitas", quantos retornos eu terei ?
 
-Se o meu index só possuir estes dois documentos apenas, o retorno da nossa pesquisa seria: **dois** Carlos e **um** Freitas, mesmo eu só possuindo **um** Carlos e **nenhum** Freitas.
+Se o meu index só possuir apenas estes dois documentos, o retorno da nossa pesquisa seria: **dois** Carlos e **um** Freitas, mesmo eu só possuindo **um** Carlos e **nenhum** Freitas.
 
 Estamos entendidos com o full-text ?
 

@@ -4,7 +4,7 @@ Vamos executar algumas pesquisas para entendermos a Lucene Syntax e vermos como 
 
 ### Full-Text
 
-Lembra que eu havia dito que pesquisas full-text no Kibana se parecem com pequisas feitas no Google ? Faça o seguinte teste, vá até a aba "Discover" e utilize a barra de search para procurar pelo nome do seu host:
+Lembra que eu havia dito que pesquisas full-text no Kibana se parecem com pequisas feitas no Google ? Faça o seguinte, vá até a aba "Discover" e utilize a barra de search para procurar pelo nome do seu host:
 
 ![](/images/kibana_fulltext.png)
 
@@ -20,7 +20,7 @@ Caso o nosso objetivo seja encontrar um valor em um campo específico, é só fa
 
 ![](/images/kibana_structured.png)
 
-Na pesquisa acima, estamos buscando o retorno "200" do Apache no campo "message", que significa a requisição foi atendida com sucesso.
+Na pesquisa acima, estamos buscando o retorno "200" do Apache no campo "message", que significa a requisição foi atendida com sucesso pelo Apache.
 
 E se quisermos adicionar uma condição em nossa pesquisa ? É só utilizarmos os [operadores condicionais](https://lucene.apache.org/core/2_9_4/queryparsersyntax.html) da Lucene Syntax. Na pesquisa abaixo, vamos pesquisar todas as respostas "200" em todos os hosts com o nome "fedora-host":
 
@@ -28,7 +28,7 @@ E se quisermos adicionar uma condição em nossa pesquisa ? É só utilizarmos o
 
 ### Analítica
 
-Resultados analíticos são melhor observados utilizando as views do Kibana, e a nossa primeira view realizada mais acima, foi exatamente uma pesquisa analítica. Sendo assim, vamos partir para a criação de nossos dashboards !
+Resultados analíticos são melhor observados utilizando as views do Kibana e a nossa [primeira view](/pages/kibana.md) foi um ótimo exemplo disto. Sendo assim, vamos partir para a criação de nossos dashboards !
 
 
 Próximo: [Criando Views](/pages/views.md)

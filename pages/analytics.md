@@ -34,7 +34,7 @@ curl -XGET http://localhost:9200/mycompany/funcionarios/_search?pretty -d '
 }'
 ```
 
-O parâmetro **"aggs"** é utilizado para descrevermos todas as nossas agregações que serão realizadas. O **"maiores_interesses"** foi um nome fictício (como um _apelido_), dado para o nosso conjunto de resultados e poderia ter sido qualquer outro (ex: total_de_interesses, interesses_gerais, etc). Após nomear o nosso conjunto de resultados, usamos o parâmetro **"terms"**, para descrevermos por qual(is) **"field(s)"** queremos agregar os resultados.
+O parâmetro **"aggs"** é utilizado para descrevermos todas as nossas agregações que serão realizadas. O parâmetro **"maiores_interesses"** foi um nome fictício (como um _apelido_), dado para o nosso conjunto de resultados e poderia ter sido qualquer outro (ex: total_de_interesses, interesses_gerais, etc). Após nomear o nosso conjunto de resultados, usamos o parâmetro **"terms"** para descrevermos por qual(is) **"field(s)"** queremos agregar os resultados.
 
 Para facilitar a visualização, vamos observar apenas o final do resultado obtido:
 
@@ -71,7 +71,7 @@ Para facilitar a visualização, vamos observar apenas o final do resultado obti
 
 ```
 
-Dentro de **"maiores_interesses"**, temos a separação dos resultados por **"buckets"**, que nos revelam a quantidade de documentos que foram encontrados fazendo menção a cada resultado. Algo que mais "embelezado" ficaria assim:
+Dentro de **"maiores_interesses"** temos a separação dos resultados por **"buckets"**, que nos revelam a quantidade de documentos que foram encontrados fazendo menção a cada resultado. Algo que mais "embelezado" ficaria assim:
 
 | Interesses        | Documentos Encontrados
 | ------------- |:-------------:|
@@ -81,7 +81,7 @@ Dentro de **"maiores_interesses"**, temos a separação dos resultados por **"bu
 | Games | 1|
 | Musculação | 1|
 
-Ou seja, com uma simples pesquisa conseguimos encontrar fatores em comum sobre nossos funcionários e agora sabemos quais sãos os maiores interesses dentro de nossa empresa. Possuímos poucos dados para brincar até o momento, mas imagine em uma empresa com 5.000 funcionários. Será que conseguimos tirar algum proveito disso ? Será que conseguimos correlacionar nossos dados para encontrar benefícios que possam ser mais úteis para nossos colaboradores ? Pense só, temos poucos dados, mas já sabemos que a maioria dos funcionários gostam de "música" e "esportes".
+Ou seja, com uma simples pesquisa conseguimos encontrar fatores em comum sobre nossos funcionários e agora sabemos quais sãos os maiores interesses dentro de nossa empresa. Possuímos poucos dados para brincar até o momento, mas imagine em uma empresa com 5.000 funcionários. Será que conseguimos tirar algum proveito disso ? Será que conseguimos correlacionar nossos dados para encontrar benefícios que possam ser mais úteis para nossos colaboradores ? Pense só, temos poucos dados, mas já sabemos que a maioria dos nossos funcionários gostam de "música" e "esportes".
 
 Apesar de abordarmos tarefas simples com os tipos de pesquisa do Elasticsearch, a quantidade de operações, agregações e filtros possíveis são quase infinitos ! Tudo vai depender da quantidade de dados que você possui e a quantidade de regras que você quer especificar em suas buscas.
 

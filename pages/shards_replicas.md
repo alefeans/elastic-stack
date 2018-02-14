@@ -1,6 +1,6 @@
 ## Shards e Replicas
 
-Quando indexamos nossos documentos no Elasticsearch (lembre-se do significado de _indexar_ explicado anteriormente), estamos adicionando nossos dados em um __shard__, que são basicamente "containers" que armazenam os dados que indexamos no Elasticsearch. Porém, nossas aplicações não falam diretamente com o shard em si, mas sim com os índices (lembre-se das inserções que fizemos anteriormente). A realidade é que os índices, "mycompany" ou "twitter" por exemplo, são apenas _"caminhos lógicos"_ ou _"namespaces"_, que apontam para um ou mais __shards__. Ou seja, quando realizamos uma inserção de um documento em um index no Elasticsearch, passamos o caminho do index que queremos utilizar, e este, irá armazenar este documento em algum shard qualquer (funciona como um balanceador).
+Quando indexamos nossos documentos no Elasticsearch (lembre-se do significado de _indexar_ explicado anteriormente), estamos adicionando nossos dados em um __shard__, que são basicamente "containers" que armazenam os dados que indexamos no Elasticsearch. Porém, nossas aplicações não falam diretamente com o shard em si, mas sim com os índices. A realidade é que os índices, "mycompany" ou "twitter" por exemplo, são apenas _"caminhos lógicos"_ ou _"namespaces"_, que apontam para um ou mais __shards__. Ou seja, quando realizamos uma inserção de um documento em um index no Elasticsearch, passamos o caminho do index que queremos utilizar, e este, irá armazenar este documento em algum shard qualquer (se assemelha com o funcionamento de um _balanceador_ ).
 
 Após o direcionamento para um shard, o Apache Lucene entra em ação. Dentro de cada shard há uma instância de Lucene em execução, utilizando o seu motor de busca e indexação para acessar/armazenar os nossos dados. Isso nos garante toda a inteligência e velocidade que esta biblioteca possui na busca de documentos.
 
@@ -31,7 +31,7 @@ Mas aonde estão as nossas réplicas ? Execute o comando utilizado para verifica
 
 __OBS:__ Caso seja necessário, valide os resultados acima utilizando uma calculadora.
 
-Pense na estratégia adotada pelo Elasticsearch em não associar nenhuma réplica ao nosso _single node_. Faz todo o sentido ! Não há nenhuma vantagem em armazenar as cópias dos mesmos dados em um mesmo node, pois caso venhamos a perder este node, tanto a cópia quanto a "original" seriam comprometidas. Sendo assim, o status do nosso cluster é classificado como "yellow" e permanecerá assim, até adicionarmos novos nodes em nosso cluster e termos nossas réplicas balanceadas entre eles.
+Pense na estratégia adotada pelo Elasticsearch em não associar nenhuma réplica ao nosso node. Faz todo o sentido ! Não há nenhuma vantagem em armazenar as cópias dos mesmos dados em um mesmo node, pois caso venhamos a perder este node, tanto a cópia quanto a "original" seriam comprometidas. Sendo assim, o status do nosso cluster é classificado como "yellow" e permanecerá assim até adicionarmos novos nodes em nosso cluster e termos nossas réplicas balanceadas entre eles.
 
 Para termos uma melhor visualização nos próximos passos, vamos deletar os nossos índices "mycompany" e "twitter". Sim eu sei que é doloroso, _but we have to do it_:
 
@@ -39,7 +39,7 @@ Para termos uma melhor visualização nos próximos passos, vamos deletar os nos
 curl -XDELETE http://localhost:9200/mycompany,twitter
 ```
 
-__OBS:__ Veja que podemos apagar mais de um index em um só comando, separando-os por vírgula. _Wildcards_ também são aceitos como parâmetro (Ex: \*, ?, e etc), porém não são recomendados devido a grande capacidade que temos de fazer merda ao utilizá-los.
+__OBS:__ Veja que podemos apagar mais de um index em um só comando, separando-os por vírgula. _Wildcards_ também são aceitos como parâmetro (Ex: \*, ?, e etc), porém não são recomendados devido a grande capacidade que temos de fazer alguma merda ao utilizá-los.
 
 O número de shards primários é fixado no momento da criação do index, enquanto a quantida de réplicas pode ser alterada a qualquer momento. Vamos criar um novo index chamado "market" e alterar a quantidade de shards primários que serão criados pelo Elasticsearch:
 
@@ -47,7 +47,7 @@ O número de shards primários é fixado no momento da criação do index, enqua
 curl -XPUT http://localhost:9200/market -d '
 {
   "settings" : {
-    "index" : {but we have to do it
+    "index" : {
         "number_of_shards" : 3,
         "number_of_replicas" : 1
     }
@@ -77,7 +77,7 @@ Legal, se chamarmos novamente a API \_cluster para verificarmos a saúde novamen
 }
 ```
 
-Temos agora 3 shards primários ativos e 3 shards desassociados, como esperávamos, certo ? Vamos adicionar mais um node de Elasticsearch em nosso cluster para resolvermos essa questão de "alta disponibilidade" (leia com a voz que você faz quando está debochando de alguém). Sem precisar alterar nada, vá até o diretório "bin/" da instalação do seu Elasticsearch e execute o comando de subida da instância, conforme abaixo:
+Temos agora 3 shards primários ativos e 3 shards desassociados, como esperávamos. Vamos adicionar mais um node de Elasticsearch em nosso cluster para resolvermos essa questão de "alta disponibilidade" (leia com a voz que você faz quando está debochando de alguém). Sem precisar alterar nada, vá até o diretório "bin/" da instalação do seu Elasticsearch e execute o comando de subida da instância, conforme abaixo:
 
 ```
 nohup ./elasticsearch -Epath.data=data2 -Epath.logs=log2 &
@@ -115,11 +115,11 @@ Caso queira alterar para um outro caminho de sua preferência, sinta-se a vontad
 }
 ```
 
-Olha que legal, agora o nosso cluster status está como "green", possuimos um "number_of_nodes" de 2, temos 6 "active_shards" e nenhum "unassigned_shards". Apesar de estarmos utilizando o mesmo hardware (o que não garante nenhuma alta disponibilidade real), por possuirmos 2 nodes em nosso cluster, o Elasticsearch já o considera como "green" por conta da distribuilão dos shards primários e réplicas.
+Olha que legal, agora o nosso cluster está com o status "green", possuimos um "number_of_nodes" de 2, temos 6 "active_shards" e nenhum "unassigned_shards". Apesar de estarmos utilizando o mesmo hardware (o que não garante nenhuma alta disponibilidade real), por possuirmos 2 nodes em nosso cluster, o Elasticsearch já o considera como "green" por conta da distribuilão dos shards primários e réplicas.
 
 Mas vamos lá ... como esta nova instância _simplesmente_ começou a fazer parte do meu cluster ? E como minhas replicas e shards foram distribuidas pelo Elasticsearch ?
 
-Pois bem, o Elasticsearch em sua configuração padrão, já vem com o cluster_name __"elasticsearch"__ e ao ser iniciado, realiza a busca por um node master em sua máquina local. Ao subirmos esta outra instância com a mesma configuração, ele procurou por estas informações em sua máquina local e pronto, começou a fazer parte do nosso cluster.
+Pois bem, o Elasticsearch em sua configuração padrão vem com o cluster_name __"elasticsearch"__ e ao ser iniciado, realiza a busca por um node master em sua máquina local. Ao subirmos esta outra instância com a mesma configuração, ele procurou por estas informações em seu host e pronto, começou a fazer parte do nosso cluster.
 
 Se quisessemos configurar um node de Elasticsearch em uma máquina remota para fazer parte do nosso cluster, teríamos que configurar alguns parâmetros a mais (endereço do servidor remoto, node name e etc), em seu arquivo de configuração principal: **config/elasticsearch.yml**. Mas isto não vem ao caso agora. Quer saber como os seus shards estão balanceados entre os seus nodes agora ? Veja a imagem abaixo:
 

@@ -4,7 +4,7 @@ Agora que entendemos sobre as formas e os tipos de pesquisa de forma básica, va
 
 ## Shutdown
 
-Depois de tanto tempo no ar, vamos dar um descanço pro cara né ? Para finalizar o seu Elasticsearch, você pode OU pará-lo via __service management__  utilizando, por exemplo, o comando "_systemctl stop elasticsearch_" OU enviando um _SIGTERM_ para o seu processo. Como fizemos a instalação diretamente do .zip, usaremos a segunda forma:
+Depois de tanto tempo no ar, vamos dar um descanço pro cara né ? Para finalizar o seu Elasticsearch, você pode OU pará-lo via __service management__  utilizando, por exemplo, o comando "_ sudo systemctl stop elasticsearch_" OU enviando um _SIGTERM_ para o seu processo. Como fizemos a instalação diretamente do .zip, usaremos a segunda forma:
 
 ```
 $ jps | grep Elasticsearch
