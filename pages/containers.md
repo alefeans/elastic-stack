@@ -52,9 +52,13 @@ docker run -d -p 8080:80 --log-driver gelf --log-opt gelf-address=udp://localhos
 O comando acima realiza o download da imagem oficial do Apache, que possui o nome __"httpd"__, diretamente do [Docker Hub](https://hub.docker.com/), que é o repositório público de imagens do Docker. Após o download, o container é executado automaticamente. Vamos entender os parâmetros que passamos na subida do nosso container:
 
 __-d__ - Executa o container em background.
+
 __-p__ - Correlaciona a porta 8080 do seu host com a porta 80 do container.
+
 __--log-driver gelf__ - Informa qual será o driver de log utilizado pelo nosso container Docker.
+
 __--log-opt gelf-address__ - Com este parâmetro, informarmos o protocolo e o _servidor "gelf"_ (nesse caso, o nosso Logstash), que receberá as logs do container Docker.
+
 __httpd__ - Nome do container que será executado.
 
 Verifique a instância em execução com o comando abaixo:

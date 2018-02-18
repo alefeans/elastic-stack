@@ -6,7 +6,7 @@ Não que isso seja algo completamente ruim, afinal cada tecnologia é um univers
 
 Tendo esse pensamento em mente, decidi criar este repositório para explicar um pouco do que aprendi sobre a _stack_, utilizando uma linguagem mais informal e amigável, mas sem deixar de apresentar os conceitos essenciais. Como pré-requisito para o bom andamento deste treinamento, um conhecimento _razoável_ em Linux é o suficiente.
 
-Aviso desde já que o objetivo deste repositório não é ser um guia de referência ou apresentar um conteúdo nível _expert_, mas sim te tornar apto a utilizar as ferramentas no seu dia-a-dia, compreendendo o funcionamento básico de cada componente que compõe a stack.
+Aviso desde já, que o objetivo deste repositório não é ser um guia de referência ou apresentar um conteúdo nível _expert_, mas sim te tornar apto a utilizar as ferramentas no seu dia-a-dia, compreendendo o funcionamento básico de cada componente que compõe a stack.
 
 Sendo assim, todos os passos descritos neste repositório tendem a demonstrar a forma mais rápida de se chegar ao objetivo proposto, sem perder tempo com configurações paralelas.
 

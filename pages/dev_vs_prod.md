@@ -4,7 +4,7 @@ Até o momento, temos utilizado o Elasticsearch em modo de _desenvolvimento_. Es
 
 Em um cenário ideal, o Elasticsearch deve ser executado sem nenhuma outra aplicação concorrente, em um servidor dedicado ao seu uso e deve ter acesso a todos os recursos computacionais disponíveis. Para isso, precisamos realizar algumas configurações no nosso sistema operacional para permitir que ele tenha mais acesso à estes recursos do que é disponibilizado por default.
 
-Pode ser que você desconheça alguns dos parâmetros de sistema operacional que iremos alterar abaixo. Como o objetivo deste repositório é ser o mais objetivo possível no aprendizado do Elastic Stack, tente não se prender muito a isto, para podermos focar no que realmente precisamos aprender sobre a nossa stack, ok :) ?
+Pode ser que você desconheça alguns dos parâmetros de sistema operacional que iremos alterar abaixo. Tente não se prender muito a isto, para podermos forcar no que precisamos aprender sobre a nossa stack, ok :) ?
 
 Antes de mais nada, finalize todas as suas instâncias de Elasticsearch, Logstash e Kibana executando um `kill` em seus respectivos processos em execução.
 
@@ -19,11 +19,17 @@ Antes de mais nada, finalize todas as suas instâncias de Elasticsearch, Logstas
 
 #### Aumentar a quantidade de "file descriptors"
 
-O Elasticsearch pode vir a utilizar uma grande quantidade de "file descriptors" e manter uma quantidade baixa disponível pode acarretar em uma real perda de dados. Edite o arquivo /etc/security/limits.conf com as seguintes diretivas para configurarmos um valor aceitável:
+O Elasticsearch pode utilizar uma grande quantidade de "file descriptors" e manter uma quantidade baixa disponível em seu sistema operacional, pode acarretar em uma real perda de dados. Edite o arquivo /etc/security/limits.conf com as seguintes diretivas para configurarmos um valor aceitável:
 
 ```
 elasticsearch soft nofile 65536
 elasticsearch hard nofile 65536
+```
+
+Ou, execute o comando abaixo:
+
+```
+ulimit -n 65536
 ```
 
 __OBS:__ "elasticsearch" é o usuário utilizado para a subida da instância. Caso esteja utilizando um usuário diferente, apenas troque e seja feliz.
@@ -45,7 +51,7 @@ Agora a nossa instância está pronta para ser utilizada em  o modo de produçã
 ```
 network.host: <IP_DO_SEU_HOST>
 ```
-__OBS:__ Caso esteja com vontade de nomear a sua instância, altere o parâmetro `node.name:` e adicione um nome de sua preferência.
+__OBS:__ Caso esteja querendo nomear a sua instância, altere o parâmetro `node.name:` e adicione um nome de sua preferência.
 
 Como declaramos que a nossa instância de Elasticsearch utilizará um endereço fixo no nosso host, precisamos também alterar os arquivos de configuração do Kibana e do Logstash:
 

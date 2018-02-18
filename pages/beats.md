@@ -80,7 +80,7 @@ Agora vamos instalar o Filebeat para começarmos a enviar as logs da nossa nova 
 [vagrant@elastic ~]$ curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.6.5-x86_64.rpm ; sudo rpm -vi filebeat-5.6.5-x86_64.rpm
 ```
 
-O comando acima fará o download do pacote do Filebeat e fará a instalação do mesmo na sua VM. Agora vamos editar alguns campos do arquivo de configuração do Filebeat para que ele possa se conectar ao nosso Elasticsearch. Procure no arquivo /etc/filebeat/filebeat.yml os parâmetros abaixo e os edite para que contenham o seguinte conteúdo:
+O comando acima fará o download do pacote do Filebeat e fará a instalação do mesmo na sua VM. Vamos editar alguns campos do arquivo de configuração do Filebeat para que ele possa se conectar ao nosso Elasticsearch. Procure no arquivo /etc/filebeat/filebeat.yml os parâmetros abaixo e os edite para que contenham o seguinte conteúdo:
 
 ```
 - input_type: log                         

@@ -20,7 +20,7 @@ Caso o nosso objetivo seja encontrar um valor em um campo específico, é só fa
 
 ![](/images/kibana_structured.png)
 
-Na pesquisa acima, estamos buscando o retorno "200" do Apache no campo "message", que significa a requisição foi atendida com sucesso pelo Apache.
+Na pesquisa acima, estamos buscando o retorno "200" no campo "message", que é o código de requisição atendida com sucesso pelo Apache
 
 E se quisermos adicionar uma condição em nossa pesquisa ? É só utilizarmos os [operadores condicionais](https://lucene.apache.org/core/2_9_4/queryparsersyntax.html) da Lucene Syntax. Na pesquisa abaixo, vamos pesquisar todas as respostas "200" em todos os hosts com o nome "fedora-host":
 
