@@ -8,7 +8,7 @@ Tendo esse pensamento em mente, decidi criar este repositório para explicar um 
 
 Aviso desde já que o objetivo deste repositório não é ser um guia de referência ou apresentar um conteúdo nível _expert_, mas sim te tornar apto a utilizar as ferramentas no seu dia-a-dia, compreendendo o funcionamento básico de cada componente que compõe a stack.
 
-Sendo assim, todos os passos descritos neste repositório tendem a demonstrar a forma mais rápida de se chegar ao objetivo proposto, sem perder tempo com configurações paralelas (nada de desabilitar _SELinux, Firewalld, configurar num sei o que, bla bla bla..._).
+Sendo assim, todos os passos descritos neste repositório tendem a demonstrar a forma mais rápida de se chegar ao objetivo proposto, sem perder tempo com configurações paralelas.
 
 Não se preocupe se em alguns momentos aparecerem termos confusos que ainda não foram explicados, pois ao longo do treinamento eles se tornarão claros para você :)
 

@@ -4,10 +4,10 @@ O `Elasticsearch` é uma ferramenta de buscas _open source_ desenvolvido em Java
 
 Seu desenvolvimento tem como base uma biblioteca Java chamada [Apache Lucene](https://github.com/apache/lucene-solr), que é o motor de buscas open source mais avançado oferecido hoje em dia. Porém, usar todo o poder de fogo do Lucene exige um certo esforço, afinal por ser apenas uma biblioteca, você precisa trabalhar com o Java para integrá-lo com a sua aplicação (e esta tarefa pode apresentar uma certa complexidade).
 
-O Elasticsearch no entanto, se aproveita do Lucene na _indexação_ e pesquisa de documentos, retirando a sua complexidade através de uma _API RESTful_ super fácil de se utilizar. Além disso, vamos citar algumas características que o tornam uma ferramenta excelente e extremamente veloz:
+O Elasticsearch no entanto, se aproveita do Lucene na _indexação_ e pesquisa de documentos, retirando a sua complexidade através de uma interface super fácil de se utilizar. Além disso, vamos citar algumas características que o tornam uma ferramenta excelente e extremamente veloz:
 
-* Uma API RESTful para inclusão, remoção e acesso aos dados utilizando o padrão JSON.
-* Totalmente livre de normalização.
+* Uma API RESTful para pesquisa, inclusão, remoção e acesso aos dados utilizando o padrão JSON.
+* Totalmente livre de [normalização](https://pt.wikipedia.org/wiki/Normaliza%C3%A7%C3%A3o_de_dados).
 * Qualquer palavra _indexada_ no Elasticsearch pode ser pesquisada da mesma forma que você faz uma busca no Google.
 * Altamente escalável (feito para o _Cloud Computing_).
 * Permite pesquisas estruturadas e analíticas em _"real time"_.
