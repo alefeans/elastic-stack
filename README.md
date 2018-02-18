@@ -29,5 +29,7 @@
 1. [Pesquisas no Kibana](pages/kibana_searches.md)
 1. [Criando Views](pages/views.md)
 1. [Nosso primeiro Dashboard](pages/dashboard.md)
+1. [Desenvolvimento vs Produção](pages/dev_vs_prod.md)
 1. [Beats](pages/beats.md)
 1. [Monitorando Containers](pages/containers.md)
+1. [Conclusão](pages/conclusion.md)

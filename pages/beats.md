@@ -24,7 +24,7 @@ Para este exemplo, vamos subir uma máquina virtual através do __Vagrant__ para
 
 __OBS:__ Se você já conhece um pouco mais da vida e está pensando em utilizar um container Docker de Apache, fique tranquilo que em breve iremos comentar sobre monitoração de containers.
 
-__OBS²:__ Para dar sequência à este passo, você não precisa necessariamente instalar o Vagrant, embora seja _extremamente recomendado_ pela facilidade que ele te trará na criação e configuração da sua máquina virtual. Mas, se quiser criar manualmente uma máquina virtual pelo Virtual Box ou VMWare e instalar o Apache nela, fique a vontade.
+__OBS²:__ Para dar sequência à este passo você não precisa necessariamente instalar o Vagrant, embora seja _extremamente recomendado_ pela facilidade que ele te trará na criação e configuração da sua máquina virtual. Mas, se quiser criar manualmente uma máquina virtual pelo Virtual Box ou VMWare e instalar o Apache nela, fique a vontade.
 
 O Vagrant é um software que facilita a criação de máquinas virtuais através de arquivos de definição. De forma bem simples, você escreve como o seu servidor será configurado e o Vagrant faz a criação conforme está descrito no seu _Vagrantfile_. Instale o Vagrant conforme a indicação para sua distribuição no [site oficial](https://www.vagrantup.com/downloads.html). É importante que você tenha o [Virtual Box](https://www.virtualbox.org/wiki/Downloads) instalado no seu host para o Vagrant utilizá-lo como _provider_ da sua máquina virtual. Após realizar o download, faça conforme abaixo para criar o seu Vagrantfile:
 
@@ -34,7 +34,7 @@ cd elastic_stack/
 vagrant init .
 ```
 
-O comando `vagrant init .` criará um Vagrantfile para você editar com as configurações que você deseja para a sua máquina virtual. Mas, para facilitar ainda mais a sua vida, deixei um [Vagrantfile](/vagrant/Vagrantfile) pronto para você utilizar ! Use-o no lugar do Vagrantfile default que foi gerado e faça conforme abaixo para subir a sua _VM_ (lembrando que os comandos abaixo só irão funcionar no diretório que você utilizou o `vagrant init`):
+O comando `vagrant init .` fará a criação de um Vagrantfile para você editar com as configurações que você deseja para a sua máquina virtual. Mas, para facilitar ainda mais a sua vida, deixei um [Vagrantfile](/vagrant/Vagrantfile) pronto para você utilizar ! Use-o no lugar do Vagrantfile default que foi gerado e faça conforme abaixo para subir a sua _VM_ (lembrando que os comandos abaixo só irão funcionar no diretório que você utilizou o `vagrant init`):
 
 ```
 vagrant up
@@ -80,6 +80,29 @@ Agora vamos instalar o Filebeat para começarmos a enviar as logs da nossa nova 
 [vagrant@elastic ~]$ curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.6.5-x86_64.rpm ; sudo rpm -vi filebeat-5.6.5-x86_64.rpm
 ```
 
-O comando acima fará o download do pacote do Filebeat e fará a instalação do mesmo.
+O comando acima fará o download do pacote do Filebeat e fará a instalação do mesmo na sua VM. Agora vamos editar alguns campos do arquivo de configuração do Filebeat para que ele possa se conectar ao nosso Elasticsearch. Procure no arquivo /etc/filebeat/filebeat.yml os parâmetros abaixo e os edite para que contenham o seguinte conteúdo:
+
+```
+- input_type: log                         
+  - /var/log/httpd/*_log
+
+output.elasticsearch:
+  # Array of hosts to connect to.
+  hosts: ["<IP_HOST_ELASTICSEARCH>:9200"]
+```
+
+Com os parâmetros acima, estamos informando os arquivos que o Filebeat fará a leitura. Como não faremos nenhum processamento extra em nossos arquivos de log, podemos fazer o envio direto para o Elasticsearch, sem necessariamente  passar pelo Logstash. Faça a subida do processo do Filebeat com o comando abaixo:
+
+```
+[vagrant@elastic ~]$ sudo systemctl start filebeat
+```
+
+Agora, acesse o Kibana novamente e faça a criação do index gerado pelo Filebeat:
+
+![](/gifs/filebeat.gif)
+
+Para cada servidor que desejarmos monitorar, simplesmente repetimos os passos de instalação do Filebeat e configuração do _filebeat.yml_ com os parâmetros necessários e pronto... simples não é mesmo ?
+
+Para mais informações à respeito de configuração e parametrização, acesse este __[link](https://www.elastic.co/guide/en/beats/filebeat/current/configuring-howto-filebeat.html)__ e veja as opções disponíveis que temos para configurarmos o nosso Filebeat.
 
 [Monitorando Containers](/pages/containers.md)

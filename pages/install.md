@@ -14,6 +14,8 @@ __3°__ - Pronto, Elasticsearch instalado. Fácil né ? Agora vamos ver se tudo 
 
 __OBS:__ Acredito que não teremos problemas de compatibilidade na maioria das operações que iremos realizar, mas para este guia estamos utilizando especificamente a versão __5.6.5__ de todas as ferramentas da stack.
 
+__OBS²:__ Como pré-requisito para utilizarmos o Elasticsearch, precisamos ter o Java 1.8 instalado em nosso host. Confira como realizar a instalação do pacote para o seu sistema operacional através deste __[ link](https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html)__.
+
 Dentro do diretório gerado após a descompactação, vamos executar:
 
 ```
