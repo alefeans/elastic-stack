@@ -1,6 +1,6 @@
 ## Analítica
 
-Finalizando os tipos de pesquisa existentes, temos a pesquisa analítica. O Elasticsearch possui uma funcionalidade chamada _aggregations_, que permite a geração de análises sofisticadas sobre os seus dados (se parece com o GROUP BY do SQL, só que bem mais poderoso). Vamos pesquisar quais são os interesses mais populares entre nossos funcionários. Mas antes, precisamos habilitar uma estrutura chamada __fielddata__ em nosso Elasticsearch, que vem desabilitada por padrão:
+Finalizando os tipos de pesquisa existentes, temos a pesquisa analítica. O Elasticsearch possui uma funcionalidade chamada _aggregations_ que permite a geração de análises sofisticadas sobre os seus dados (se parece com o GROUP BY do SQL, só que bem mais poderoso). Vamos pesquisar quais são os interesses mais populares entre nossos funcionários. Mas antes, precisamos habilitar uma estrutura chamada __fielddata__ em nosso Elasticsearch que vem desabilitada por padrão:
 
 ```
 curl -XPUT http://localhost:9200/mycompany/_mapping/funcionarios -d '
@@ -14,7 +14,7 @@ curl -XPUT http://localhost:9200/mycompany/_mapping/funcionarios -d '
 }'
 ```
 
-Esta feature vem desabilitada por conta do consumo de memória que uma pesquisa de texto muito grande pode gerar (já que há outras formas de estruturar os seus dados à tornarem agregações mais simples de serem executadas). Como estamos apenas brincando com alguns dados fictícios, não há necessidade de se preocupar com isto agora ou se aprofundar neste assunto. Masssss, caso queira entender um pouco mais, acesse este link da [documentação da Elastic](https://www.elastic.co/guide/en/elasticsearch/reference/current/fielddata.html).
+Esta feature vem desabilitada por conta do consumo de memória que uma pesquisa de texto muito grande pode gerar (já que há outras formas de estruturar os seus dados à tornarem agregações mais simples de serem executadas). Como estamos apenas brincando com alguns dados fictícios, não há necessidade de se preocupar com isto agora ou se aprofundar neste assunto. Masssss, caso queira entender um pouco mais, dê uma olhada neste [link](https://www.elastic.co/guide/en/elasticsearch/reference/current/fielddata.html).
 
 Agora que habilitamos o fielddata, vamos fazer nossa pesquisa analítica:
 
@@ -34,7 +34,7 @@ curl -XGET http://localhost:9200/mycompany/funcionarios/_search?pretty -d '
 }'
 ```
 
-O parâmetro **"aggs"** é utilizado para descrevermos todas as nossas agregações que serão realizadas. O parâmetro **"maiores_interesses"** foi um nome fictício (como um _apelido_), dado para o nosso conjunto de resultados e poderia ter sido qualquer outro (ex: total_de_interesses, interesses_gerais, etc). Após nomear o nosso conjunto de resultados, usamos o parâmetro **"terms"** para descrevermos por qual(is) **"field(s)"** queremos agregar os resultados.
+O parâmetro **"aggs"** é utilizado para descrevermos todas as nossas agregações que serão realizadas. O parâmetro **"maiores_interesses"** foi um nome fictício dado para o nosso conjunto de resultados (como um apelido), e poderia ter sido qualquer outro (ex: total_de_interesses, interesses_gerais, etc). Após nomear o nosso conjunto de resultados, usamos o parâmetro **"terms"** para descrevermos por qual(is) **"field(s)"** queremos agregar os resultados.
 
 Para facilitar a visualização, vamos observar apenas o final do resultado obtido:
 
@@ -81,7 +81,7 @@ Dentro de **"maiores_interesses"** temos a separação dos resultados por **"buc
 | Games | 1|
 | Musculação | 1|
 
-Ou seja, com uma simples pesquisa conseguimos encontrar fatores em comum sobre nossos funcionários e agora sabemos quais sãos os maiores interesses dentro de nossa empresa. Possuímos poucos dados para brincar até o momento, mas imagine em uma empresa com 5.000 funcionários. Será que conseguimos tirar algum proveito disso ? Será que conseguimos correlacionar nossos dados para encontrar benefícios que possam ser mais úteis para nossos colaboradores ? Pense só, temos poucos dados, mas já sabemos que a maioria dos nossos funcionários gostam de "música" e "esportes".
+Ou seja, com uma simples pesquisa conseguimos encontrar fatores em comum sobre nossos funcionários e agora sabemos quais sãos os maiores interesses dentro de nossa empresa. Possuímos poucos dados para brincar até o momento, mas imagine em uma empresa com 5.000 funcionários. Será que conseguimos tirar algum proveito disso ? Será que conseguimos correlacionar nossos dados para encontrar benefícios que possam ser mais úteis para nossos colaboradores ? Veja possuímos poucos dados, mas já sabemos que a maioria dos nossos funcionários gostam de "música" e "esportes".
 
 Apesar de abordarmos tarefas simples com os tipos de pesquisa do Elasticsearch, a quantidade de operações, agregações e filtros possíveis são quase infinitos ! Tudo vai depender da quantidade de dados que você possui e a quantidade de regras que você quer especificar em suas buscas.
 

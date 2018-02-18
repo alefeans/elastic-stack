@@ -21,7 +21,7 @@ Observe a resposta do Elasticsearch ao seu comando:
 
 Podemos ver que o campo **"_version"** foi incrementado e que o campo **"created"** possui o valor _false_ (pois o documento que atualizamos já existia anteriormente). Por debaixo dos panos, o Elasticsearch marca o documento antigo como removido e adiciona o novo documento inteiro.
 
-Existe uma forma de realizar atualizações parciais utilizando a API **_update**. Este tipo de atualização também segue a mesma regra descrita para o update total, diferenciando-se apenas nos fatos de que é possivel atualizar os campos necessários sem precisar digitar o documento inteiro como parâmetro e que o processo acontece no "interior de um shard", o que é transparente para nós usuários. Por exemplo:
+Existe uma forma de realizar atualizações parciais utilizando a API **_update**. Este tipo de atualização também segue a mesma regra descrita para o update total, diferenciando-se apenas no fato de que é possivel atualizar os campos necessários sem precisar digitar o documento inteiro como parâmetro. Por exemplo:
 
 ```
 curl -XPOST http://localhost:9200/mycompany/funcionarios/2/_update -d '

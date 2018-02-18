@@ -7,22 +7,22 @@ Após executar o script, faça a pesquisa estruturada abaixo. Tente interpretá-
 ```
 curl -XGET http://localhost:9200/mycompany/_search\?pretty -d '
 {
-	"query": {
-		"bool": {
-			"must": {
-				"match": {
-					"nome": "Silva"
-				}
-			},
-			"filter": {
-				"range": {
-					"idade": {
-						"gt": 30
-					}
-				}
-			}
-		}
-	}
+  "query": {
+    "bool": {
+      "must": {
+        "match": {
+          "nome": "Silva"
+        }
+     },
+      "filter": {
+        "range": {
+          "idade": {
+            "gt": 30
+          }
+        }
+      }
+    }
+  }
 }
 '
 ```

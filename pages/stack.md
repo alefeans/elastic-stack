@@ -2,7 +2,7 @@
 
 Estamos há um bom tempo falando somente sobre o Elasticsearch e há um motivo especial para isso. Ele é o coração da nossa stack. É essencial compreendermos bem o seu funcionamento para não haver nenhuma dúvida na hora de pesquisarmos nossos documentos ou quando começarmos a criar nossos dashboards no Kibana.
 
-## Instalação - Logstash e Kibana
+#### Instalação - Logstash e Kibana
 
 Agora, chega de enrolação ! Vamos realizar a instalação da mesma forma que instalamos o Elasticsearch, realizando o download do _.zip_ do [Kibana](https://www.elastic.co/downloads/kibana) e do [Logstash](https://www.elastic.co/downloads/logstash), realizando o unzip em um diretório separado para cada um deles e pronto. Fácil né ? Elastic né filho...
 

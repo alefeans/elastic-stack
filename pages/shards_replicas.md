@@ -1,6 +1,6 @@
 ## Shards e Replicas
 
-Quando indexamos nossos documentos no Elasticsearch (lembre-se do significado de _indexar_ explicado anteriormente), estamos adicionando nossos dados em um __shard__, que são basicamente "containers" que armazenam os dados que indexamos no Elasticsearch. Porém, nossas aplicações não falam diretamente com o shard em si, mas sim com os índices. A realidade é que os índices, "mycompany" ou "twitter" por exemplo, são apenas _"caminhos lógicos"_ ou _"namespaces"_, que apontam para um ou mais __shards__. Ou seja, quando realizamos uma inserção de um documento em um index no Elasticsearch, passamos o caminho do index que queremos utilizar, e este, irá armazenar este documento em algum shard qualquer (se assemelha com o funcionamento de um _balanceador_ ).
+Quando indexamos nossos documentos no Elasticsearch (lembre-se do significado de _indexar_ explicado anteriormente), estamos adicionando nossos dados em um __shard__, que são basicamente "containers" que armazenam os dados que indexamos no Elasticsearch. Porém, nossas aplicações não falam diretamente com o shard em si, mas sim com os índices. A realidade é que os índices, "mycompany" ou "twitter" por exemplo, são apenas _"caminhos lógicos"_ ou _"namespaces"_, que apontam para um ou mais __shards__. Ou seja, quando realizamos uma inserção de um documento em um index no Elasticsearch, passamos o caminho do index que queremos utilizar, e este, fará o armazenamento do documento em algum shard qualquer, de forma balanceada.
 
 Após o direcionamento para um shard, o Apache Lucene entra em ação. Dentro de cada shard há uma instância de Lucene em execução, utilizando o seu motor de busca e indexação para acessar/armazenar os nossos dados. Isso nos garante toda a inteligência e velocidade que esta biblioteca possui na busca de documentos.
 
@@ -115,11 +115,11 @@ Caso queira alterar para um outro caminho de sua preferência, sinta-se a vontad
 }
 ```
 
-Olha que legal, agora o nosso cluster está com o status "green", possuimos um "number_of_nodes" de 2, temos 6 "active_shards" e nenhum "unassigned_shards". Apesar de estarmos utilizando o mesmo hardware (o que não garante nenhuma alta disponibilidade real), por possuirmos 2 nodes em nosso cluster, o Elasticsearch já o considera como "green" por conta da distribuilão dos shards primários e réplicas.
+Olha que legal, agora o nosso cluster está com o status "green", possuimos um "number_of_nodes" de 2, temos 6 "active_shards" e nenhum "unassigned_shards". Apesar de estarmos utilizando o mesmo hardware (o que não garante nenhuma alta disponibilidade real), por possuirmos 2 nodes em nosso cluster, o Elasticsearch já o considera como "green" por conta da distribuição dos shards primários e réplicas.
 
 Mas vamos lá ... como esta nova instância _simplesmente_ começou a fazer parte do meu cluster ? E como minhas replicas e shards foram distribuidas pelo Elasticsearch ?
 
-Pois bem, o Elasticsearch em sua configuração padrão vem com o cluster_name __"elasticsearch"__ e ao ser iniciado, realiza a busca por um node master em sua máquina local. Ao subirmos esta outra instância com a mesma configuração, ele procurou por estas informações em seu host e pronto, começou a fazer parte do nosso cluster.
+Pois bem, o Elasticsearch em sua configuração padrão vem com o cluster_name __"elasticsearch"__ e ao ser iniciado, ele realiza a busca por um node master em sua máquina local. Ao subirmos esta outra instância com a mesma configuração, ele buscou por estas informações em seu host e pronto, começou a fazer parte do nosso cluster.
 
 Se quisessemos configurar um node de Elasticsearch em uma máquina remota para fazer parte do nosso cluster, teríamos que configurar alguns parâmetros a mais (endereço do servidor remoto, node name e etc), em seu arquivo de configuração principal: **config/elasticsearch.yml**. Mas isto não vem ao caso agora. Quer saber como os seus shards estão balanceados entre os seus nodes agora ? Veja a imagem abaixo:
 

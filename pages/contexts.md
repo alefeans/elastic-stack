@@ -6,7 +6,7 @@ Até agora, aprendemos a inserir dados em nosso Elasticsearch informando o __id_
 curl -XPUT http://localhost:9200/mycompany/funcionarios/1
 ```
 
-Neste tipo de inserção, informamos o index, o type e o id (1 no exemplo acima). O que nos ajuda no momento de fazer uma busca, por já sabermos o caminho completo do dado. Por ex:
+Neste tipo de inserção, informamos o index, o type e o id (1 no exemplo acima) do documento à ser inserido. Isso nos  ajuda no momento de fazer uma busca, por já sabermos o caminho completo do dado. Por ex:
 
 ```
 curl -XGET http://localhost:9200/mycompany/funcionarios/1
