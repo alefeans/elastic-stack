@@ -12,4 +12,4 @@ Veja que podemos movimentar as views individualmente e também trocar as cores d
 
 Agora é por sua conta... pratique um pouco mais, crie outros dashboards, mude as cores e formatos disponíveis em suas views e veja o que é possível fazer com os seus dados através do Kibana.
 
-Próximo: [Desenvolvimento vs Produção](pages/dev_vs_prod.md)
+Próximo: [Desenvolvimento vs Produção](/pages/dev_vs_prod.md)
