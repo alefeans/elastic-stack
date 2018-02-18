@@ -20,7 +20,6 @@
 1. [Entendendo melhor os contextos](pages/contexts.md)
 1. [Deletando](pages/delete.md)
 1. [Atualizando](pages/updating.md)
-1. [Cluster, Shards e Replicas](pages/cluster_shards_replicas.md)
 1. [Node e Cluster](pages/node_cluster.md)
 1. [Shards e Replicas](pages/shards_replicas.md)
 1. [Inverted Index](pages/inverted_index.md)

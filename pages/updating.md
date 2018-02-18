@@ -34,4 +34,4 @@ curl -XPOST http://localhost:9200/mycompany/funcionarios/2/_update -d '
 
 Podemos utilizar esta mesma API para acrescentarmos mais campos em nossos documentos. Faça o teste, altere o campo __"idade" : 35__ por um campo que não exista no nosso documento, atribuia um valor de sua preferência e acrescente-o no documento acima.
 
-Próximo: [Cluster, Shards e Replicas](/pages/cluster_shards_replicas.md)
+Próximo: [Node e Cluster](/pages/node_cluster.md)
