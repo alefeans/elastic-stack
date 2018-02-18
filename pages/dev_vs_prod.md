@@ -2,9 +2,7 @@
 
 Até o momento, temos utilizado o Elasticsearch em modo de _desenvolvimento_. Este modo é assumido por padrão pela ferramenta, caso você não modifique o parâmetro `network.host` no arquivo principal _/config/elasticsearch.yml_. Ao configurarmos um endereço de IP para a nossa instância, o Elasticsearch passa a __exigir__ que algumas configurações adicionais sejam feitas no host em que o mesmo reside para o seu funcionamento, caso contrário será impossível até mesmo de iniciar a sua instância.
 
-Sendo assim, vamos entender melhor estas configurações para darmos mais um passo para tornar a nossa instância mais parecida com uma instância utilizada em um ambiente _produtivo_ real.
-
-Em um cenário ideal, o Elasticsearch deve ser executado sem nenhuma outra aplicação concorrente, em um servidor dedicado ao seu uso e ter acesso a todos os recursos computacionais disponíveis. Para isso, precisamos realizar algumas configurações no nosso sistema operacional para permitir que ele tenha mais acesso à estes recursos do que é disponibilizado por default.
+Em um cenário ideal, o Elasticsearch deve ser executado sem nenhuma outra aplicação concorrente, em um servidor dedicado ao seu uso e deve ter acesso a todos os recursos computacionais disponíveis. Para isso, precisamos realizar algumas configurações no nosso sistema operacional para permitir que ele tenha mais acesso à estes recursos do que é disponibilizado por default.
 
 Pode ser que você desconheça alguns dos parâmetros de sistema operacional que iremos alterar abaixo. Como o objetivo deste repositório é ser o mais objetivo possível no aprendizado do Elastic Stack, tente não se prender muito a isto, para podermos focar no que realmente precisamos aprender sobre a nossa stack, ok :) ?
 
