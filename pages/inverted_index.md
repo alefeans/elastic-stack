@@ -31,7 +31,7 @@ Se quisermos fazer uma pesquisa para encontrar "bulldog frances", precisamos ape
 | ------- |-----------|-------------|
 |bulldog  |     __X__ |             |
 |frances  |     __X__ |    __X__    |
-|TOTAL    |     __1__ |    __2__    |
+|TOTAL    |     __2__ |    __1__    |
 
 Os dois documentos coincidem com a pesquisa, porém o primeiro documento possui mais proximidade com a busca, ou seja, ele é mais __relevante__ para a nossa pesquisa. Porém, existem alguns problemas com o nosso índice invertido:
 
