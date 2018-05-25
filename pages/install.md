@@ -12,9 +12,10 @@ __2°__ - Realizar o unzip do pacote baixado em algum diretório do seu servidor
 
 __3°__ - Pronto, Elasticsearch instalado. Fácil né? Agora vamos ver se tudo ocorreu bem?
 
-__OBS:__ Acredito que não teremos problemas de compatibilidade na maioria das operações que iremos realizar, mas para este guia estamos utilizando especificamente a versão __5.6.5__ de todas as ferramentas da stack.
+__OBS:__ Acredito que não teremos problemas de compatibilidade na maioria das operações que iremos realizar, mas para este guia estamos utilizando especificamente a versão __5.6.5__ de todas as ferramentas da stack. Caso esteja utilizando uma versão superior a 6.0 do Elasticsearch, se faz necessário adicionar um _header_ nas requisições. É só acrescentar o parâmetro _-H 'Content-Type: application/json'_ no ínicio de cada requisição que está resolvido.
 
 __OBS²:__ Como pré-requisito para utilizarmos o Elasticsearch, precisamos ter o Java 1.8 instalado em nosso host. Confira como realizar a instalação do pacote para o seu sistema operacional através deste __[ link](https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html)__.
+
 
 Dentro do diretório gerado após a descompactação, vamos executar:
 
