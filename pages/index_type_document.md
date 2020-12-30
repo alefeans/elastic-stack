@@ -3,7 +3,7 @@
 Agora que fizemos a instalação e garantimos que o nosso Elasticsearch está operacional, vamos entender na prática o que é um _index_, _type_ e um _document_. Para isto, vamos começar a colocar alguns dados no nosso Elasticsearch ! Execute o comando abaixo:
 
 ```
-curl -XPUT http://localhost:9200/mycompany/funcionarios/1 -d '
+curl -XPUT -H "Content-Type: application/json" http://localhost:9200/mycompany/funcionarios/1 -d '
 {
   "nome": "João Silva",
   "idade": 19,
